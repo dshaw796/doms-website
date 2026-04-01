@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOM'S MUSIC CARTRIDGES</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+body {margin:0;font-family:'Press Start 2P', monospace;color:#e8f8e8;background:url('https://opengameart.org/sites/default/files/WaterTileOcean.gif');background-size:128px 128px;image-rendering:pixelated;}
+.overlay {background: rgba(0,20,30,0.4);min-height:100vh;padding:15px;}
+.container {max-width:520px;margin:0 auto;}
+
+.header {position:relative;padding:16px;margin-bottom:16px;text-align:center;background:rgba(10,40,30,0.6);border:4px solid #a8e0a8;box-shadow:0 0 0 4px #0b2e13,0 0 10px rgba(168,224,168,0.4);} 
+.header::before,.header::after {content:"";position:absolute;width:12px;height:12px;background:#a8e0a8;}
+.header::before {top:-6px;left:-6px;} .header::after {bottom:-6px;right:-6px;}
+
+h1 {font-size:12px;margin:0;display:inline-block;text-shadow:0 0 4px #a8e0a8;}
+
+.panel {background: rgba(16, 40, 32, 0.65);border:4px solid #a8e0a8;padding:12px;margin-bottom:12px;box-shadow:0 0 0 4px #0b2e13;backdrop-filter: blur(2px);}
+
+.top-row {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;margin-bottom:12px;}
+.player,.info{min-width:0;}
+
+.player {background:#081c15;border:3px solid #a8e0a8;padding:10px;font-size:8px;}
+.controls {display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.btn {border:3px solid #a8e0a8;padding:6px 10px;cursor:pointer;background:#183828;} 
+.btn:active {background:#2e5a3f;}
+
+.cursor::after {content:"_";animation:blink 1s infinite;} 
+@keyframes blink {50%{opacity:0;}}
+
+.info {border:3px solid #a8e0a8;padding:10px;font-size:7px;background:rgba(10,40,30,0.6);backdrop-filter: blur(1px);min-height:80px;display:grid;grid-template-columns:auto 1fr;row-gap:4px;column-gap:8px;}
+.info .label {color:#a8e0a8;} .info .value {color:#e8f8e8;}
+
+.discography {display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative;}
+
+.album {background:#cfd8cf;border:3px solid #333;padding:6px;cursor:pointer;position:relative;box-shadow:inset 0 -3px #888,2px 2px #000;transition:transform 0.1s;}
+.album:active {transform:scale(0.92);} 
+
+.album.loaded {animation:pulse 1.5s infinite;}
+
+@keyframes pulse {
+  0% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 0px #a8e0a8; }
+  50% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 6px #a8e0a8; }
+  100% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 0px #a8e0a8; }
+}
+
+.album::before {content:'';position:absolute;top:-6px;left:10px;right:10px;height:6px;background:#999;border:2px solid #333;border-bottom:none;}
+.album::after {content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:60%;height:3px;background:#888;}
+.album img {width:100%;image-rendering:pixelated;border:2px solid #333;} 
+.album p {font-size:6px;margin-top:4px;text-align:center;color:#000;}
+
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #0f241b;
+}
+
+.cursor-arrow {position:absolute;width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #fff;animation:float 0.5s infinite alternate;pointer-events:none;} 
+@keyframes float {from{transform:translateY(-1px);}to{transform:translateY(1px);}}
+
+.external-module {
+  display:none;
+  margin:12px;
+  border:2px solid #000;
+  background:#c0c0c0;
+  box-shadow:
+    inset -2px -2px #fff,
+    inset 2px 2px #808080,
+    3px 3px 0px #000;
+  font-family:'Press Start 2P', monospace;
+}
+
+.external-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:8px;
+  padding:4px 6px;
+  background:linear-gradient(to right, #000080, #1084d0);
+  color:#fff;
+  border-bottom:2px solid #000;
+}
+
+.external-title {
+  letter-spacing:0.3px;
+}
+
+.external-buttons {
+  display:flex;
+  gap:3px;
+}
+
+.win-btn {
+  width:14px;
+  height:14px;
+  background:#c0c0c0;
+  border:2px solid #000;
+  box-shadow:inset -1px -1px #fff, inset 1px 1px #808080;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9px;
+  color:#000;
+}
+
+.win-btn:active {
+  box-shadow:inset 1px 1px #fff, inset -1px -1px #808080;
+}
+
+.external-body {
+  padding:6px;
+  background:#c0c0c0;
+}
+
+.external-body iframe {
+  width:100%;
+  height:80px;
+  border:2px inset #808080;
+  background:#000;
+}
+
+@keyframes flickerIn {0%{opacity:0;}50%{opacity:0.3;}100%{opacity:1;}}
+
+@media (max-width:500px){
+  .discography { grid-template-columns:repeat(2,1fr); }
+  .top-row { gap:6px; }
+  .panel { padding: 10px; }
+  .player { font-size: 7px; padding: 8px; }
+  .info { font-size: 6px; padding: 8px; }
+  .btn { padding: 8px; font-size: 7px; }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay"><div class="container">
+
+<div class="header"><h1>DOM'S MUSIC CARTRIDGES</h1></div>
+
+<div class="panel">
+
+<div class="top-row">
+<div class="player">
+<div id="screen" class="cursor">READY</div>
+<div class="controls">
+<div class="btn" onclick="play()">PLAY</div>
+<div class="btn" onclick="stop()">STOP</div>
+</div>
+</div>
+
+<div class="info" id="info"></div>
+</div>
+
+<div id="external" class="external-module">
+<div class="external-header">
+  <div class="external-title" id="externalHeader">EXTERNAL STREAM</div>
+  <div class="external-buttons">
+    <div class="win-btn">_</div>
+    <div class="win-btn">□</div>
+    <div class="win-btn">×</div>
+  </div>
+</div>
+<div class="external-body">
+<iframe id="spotifyFrame"></iframe>
+</div>
+</div>
+
+<div class="discography" id="discography">
+<div class="cursor-arrow" id="cursor"></div>
+</div>
+
+</div>
+
+<div class="footer"><span style="display:block;text-align:center;font-size:5px;letter-spacing:1px;opacity:0.7;">SYSTEM ONLINE</span></div>
+
+</div></div>
+
+<script>
+const albums=[
+{title:"01 A_SC",audio:"audio/asco.mp3",info:"SONG: A. SCOTT\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/asco.png"},
+{title:"02 DUST",audio:"audio/dust.mp3",info:"SONG: DUST\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"images/dust.png"},
+{title:"03 BFLY",audio:"audio/bfly.mp3",info:"SONG: BUTTERFLY EYES\nARTIST: WATERLOG\nCREDITS: PRODUCER, ARTIST, SONGWRITER",art:"images/bfly.png"},
+{title:"04 SCAR",audio:null,spotify:"https://open.spotify.com/embed/track/4lC6jD3ZpjTSVJ0GuV7qv0",info:"SONG: SCAR\nARTIST: ELI CARVAJAL\nCREDITS: MIXING",art:"images/scar.png"},
+{title:"05 NADA",audio:null,spotify:"https://open.spotify.com/embed/track/6QfHU8sGMN1wYrzUqrljAt",info:"SONG: NADA, NADA, NADA\nARTIST: BERNARDO\nCREDITS: MIXING",art:"images/nada.png"},
+{title:"06 MTNS",audio:"audio/mtns.mp3",info:"SONG: MERTENS\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/mtns.png"},
+{title:"07 DO_I",audio:"audio/dooi.mp3",info:"SONG: DO I\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"images/dooi.png"},
+{title:"08 TCSN",audio:"audio/tcsn.mp3",info:"SONG: TOUCHSCREEN\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/tcsn.png"}
+];
+
+// Pre-load all local audio files into Audio objects up front
+const audioCache = {};
+albums.forEach(album => {
+  if (album.audio) {
+    const a = new Audio();
+    a.preload = "auto";
+    a.src = album.audio;
+    audioCache[album.audio] = a;
+  }
+});
+
+// Also preload the UI sound effects
+let clickSound, whirrSound;
+try {
+  clickSound = new Audio('audio/click.mp3');
+  clickSound.preload = "auto";
+  whirrSound = new Audio('audio/whirr.mp3');
+  whirrSound.preload = "auto";
+} catch(e) {
+  clickSound = { play:()=>{}, currentTime:0 };
+  whirrSound = { play:()=>{}, currentTime:0 };
+}
+
+const discographyEl=document.getElementById("discography");
+const cursorEl=document.getElementById("cursor");
+let current=null;let currentEl=null;
+let audio=new Audio();
+
+// Throttle: block repeated clicks within 500ms
+let lastClick = 0;
+function isThrottled() {
+  const now = Date.now();
+  if (now - lastClick < 500) return true;
+  lastClick = now;
+  return false;
+}
+
+function typeTextLines(lines,el){
+  el.innerHTML="";
+  let i=0;
+  function next(){
+    if(i>=lines.length) return;
+    const [label,value]=lines[i];
+    const l=document.createElement("div");
+    l.className="label";
+    l.textContent=label;
+    const v=document.createElement("div");
+    v.className="value";
+    el.appendChild(l);
+    el.appendChild(v);
+    let c=0;
+    function type(){
+      if(c<value.length){
+        v.textContent+=value[c++];
+        setTimeout(type,15);
+      } else { i++; setTimeout(next,120);} }
+    type(); }
+  next(); }
+
+function renderAlbums(){
+  albums.forEach((album,index)=>{
+    const div=document.createElement("div");
+    div.className="album";
+    div.innerHTML=`<img src="${album.art}"><p>${album.title}</p>`;
+    div.onclick=()=>selectAlbum(index,div);
+    div.onmouseenter=()=>moveCursor(div);
+    discographyEl.appendChild(div);
+  });
+}
+
+function moveCursor(el){
+  const rect=el.getBoundingClientRect();
+  const parentRect=discographyEl.getBoundingClientRect();
+  cursorEl.style.left=(rect.left-parentRect.left-10)+'px';
+  cursorEl.style.top=(rect.top-parentRect.top+rect.height/2-4)+'px';
+}
+
+function selectAlbum(index,el){
+  if(isThrottled()) return;
+
+  audio.pause();
+  audio.currentTime = 0;
+  current=albums[index];
+  
+  const buttons = document.querySelectorAll(".btn");
+
+  if(current.spotify){
+    buttons.forEach(btn => btn.classList.add("disabled"));
+  } else {
+    buttons.forEach(btn => btn.classList.remove("disabled"));
+  }
+
+  const sound = current.spotify ? whirrSound : clickSound;
+
+  if(sound){
+    try {
+      sound.currentTime = 0;
+      sound.play();
+    } catch(e){}
+  }
+
+  if(currentEl) currentEl.classList.remove('loaded');
+  currentEl=el;
+  el.classList.add('loaded');
+
+  moveCursor(el);
+
+  document.getElementById("screen").textContent="> LOADING...";
+
+  setTimeout(()=>{
+    const external=document.getElementById("external");
+    const frame=document.getElementById("spotifyFrame");
+    const header=document.getElementById("externalHeader");
+
+    if(current.audio){
+      // Swap in the pre-loaded Audio object from cache
+      audio = audioCache[current.audio];
+      audio.pause();
+      audio.currentTime = 0;
+      external.style.display="none";
+      frame.src="";
+      document.getElementById("screen").textContent="> LOADED "+current.title;
+    } else if(current.spotify){
+      external.style.display="none";
+      frame.src="";
+      document.getElementById("screen").textContent="> NO LOCAL FILE";
+
+      setTimeout(()=>{
+        document.getElementById("screen").textContent="> CONNECTING...";
+
+        setTimeout(()=>{
+          header.textContent="::EXTERNAL STREAM CONNECTED";
+          frame.src=current.spotify;
+          external.style.display="block";
+        },400);
+      },500);
+    }
+
+    const lines=current.info.split("\n").map(l=>{
+      const p=l.split(":");
+      return [p[0]+":",p[1]||""];
+    });
+
+    typeTextLines(lines,document.getElementById("info"));
+  },400);
+}
+
+function play(){
+  if(!current || current.spotify) return;
+  if(current.audio){
+    audio.play();
+    document.getElementById("screen").textContent="> PLAYING";
+  }
+}
+
+function stop(){
+  if(current && current.spotify) return;
+  audio.pause();
+  audio.currentTime=0;
+  document.getElementById("screen").textContent="> STOPPED";
+}
+
+renderAlbums();
+</script>
+
+</body>
+</html>
