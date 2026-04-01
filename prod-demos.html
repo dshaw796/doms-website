@@ -8,7 +8,7 @@
 
 <style>
 * { box-sizing: border-box; }
-body {margin:0;font-family:'Press Start 2P', monospace;color:#e8f8e8;background:url('images/WaterTileOcean.gif');background-size:128px 128px;image-rendering:pixelated;}
+body {margin:0;font-family:'Press Start 2P', monospace;color:#e8f8e8;background:url('assets/images/WaterTileOcean.gif');background-size:128px 128px;image-rendering:pixelated;}
 .overlay {background: rgba(0,20,30,0.4);min-height:100vh;padding:15px;}
 .container {max-width:520px;margin:0 auto;}
 
@@ -180,14 +180,14 @@ h1 {font-size:12px;margin:0;display:inline-block;text-shadow:0 0 4px #a8e0a8;}
 
 <script>
 const albums=[
-{title:"01 A_SC",audio:"audio/asco.mp3",info:"SONG: A. SCOTT\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/asco.png"},
-{title:"02 DUST",audio:"audio/dust.mp3",info:"SONG: DUST\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"images/dust.png"},
-{title:"03 BFLY",audio:"audio/bfly.mp3",info:"SONG: BUTTERFLY EYES\nARTIST: WATERLOG\nCREDITS: PRODUCER, ARTIST, SONGWRITER",art:"images/bfly.png"},
-{title:"04 SCAR",audio:null,spotify:"https://open.spotify.com/embed/track/4lC6jD3ZpjTSVJ0GuV7qv0",info:"SONG: SCAR\nARTIST: ELI CARVAJAL\nCREDITS: MIXING",art:"images/scar.png"},
-{title:"05 NADA",audio:null,spotify:"https://open.spotify.com/embed/track/6QfHU8sGMN1wYrzUqrljAt",info:"SONG: NADA, NADA, NADA\nARTIST: BERNARDO\nCREDITS: MIXING",art:"images/nada.png"},
-{title:"06 MTNS",audio:"audio/mtns.mp3",info:"SONG: MERTENS\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/mtns.png"},
-{title:"07 DO_I",audio:"audio/dooi.mp3",info:"SONG: DO I\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"images/dooi.png"},
-{title:"08 TCSN",audio:"audio/tcsn.mp3",info:"SONG: TOUCHSCREEN\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"images/tcsn.png"}
+{title:"01 A_SC",audio:"assets/audio/asco.mp3",info:"SONG: A. SCOTT\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"assets/images/asco.png"},
+{title:"02 DUST",audio:"assets/audio/dust.mp3",info:"SONG: DUST\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"assets/images/dust.png"},
+{title:"03 BFLY",audio:"assets/audio/bfly.mp3",info:"SONG: BUTTERFLY EYES\nARTIST: WATERLOG\nCREDITS: PRODUCER, ARTIST, SONGWRITER",art:"assets/images/bfly.png"},
+{title:"04 SCAR",audio:null,spotify:"https://open.spotify.com/embed/track/4lC6jD3ZpjTSVJ0GuV7qv0",info:"SONG: SCAR\nARTIST: ELI CARVAJAL\nCREDITS: MIXING",art:"assets/images/scar.png"},
+{title:"05 NADA",audio:null,spotify:"https://open.spotify.com/embed/track/6QfHU8sGMN1wYrzUqrljAt",info:"SONG: NADA, NADA, NADA\nARTIST: BERNARDO\nCREDITS: MIXING",art:"assets/images/nada.png"},
+{title:"06 MTNS",audio:"assets/audio/mtns.mp3",info:"SONG: MERTENS\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"assets/images/mtns.png"},
+{title:"07 DO_I",audio:"assets/audio/dooi.mp3",info:"SONG: DO I\nARTIST: CADMIUM RED\nCREDITS: CO-PRODUCTION, PERFORMING, ARRANGING",art:"assets/images/dooi.png"},
+{title:"08 TCSN",audio:"assets/audio/tcsn.mp3",info:"SONG: TOUCHSCREEN\nARTIST: WATERLOG\nCREDITS: PRODUCTION, PERFORMING, SONGWRITING",art:"assets/images/tcsn.png"}
 ];
 
 // Pre-load all local audio files into Audio objects up front
@@ -204,9 +204,9 @@ albums.forEach(album => {
 // Also preload the UI sound effects
 let clickSound, whirrSound;
 try {
-  clickSound = new Audio('audio/click.mp3');
+  clickSound = new Audio('assets/audio/click.mp3');
   clickSound.preload = "auto";
-  whirrSound = new Audio('audio/whirr.mp3');
+  whirrSound = new Audio('assets/audio/whirr.mp3');
   whirrSound.preload = "auto";
 } catch(e) {
   clickSound = { play:()=>{}, currentTime:0 };
