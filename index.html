@@ -186,7 +186,9 @@
     cloud.className = 'cloud';
     cloud.src = cloudImages[Math.floor(Math.random() * cloudImages.length)];
 
-    const scaleW = 200 + Math.random() * 180;
+    const maxCloud = Math.min(380, window.innerWidth * 0.45);
+    const minCloud = Math.min(200, window.innerWidth * 0.25);
+    const scaleW = minCloud + Math.random() * (maxCloud - minCloud);
     cloud.style.width = scaleW + 'px';
     cloud.style.height = 'auto';
 
