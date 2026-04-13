@@ -1,17 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Mountain</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow-x: hidden;
+    background: #1a1a2e;
+  }
+
+  #scene {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #bg {
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    image-rendering: pixelated;
+    z-index: 0;
+  }
+
+  #cloud-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 60%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  .cloud {
+    position: absolute;
+    image-rendering: pixelated;
+    opacity: 0.88;
+  }
+
+  #content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #title-spacer {
+    height: calc(2 * 1.4em);
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(8px, 1.5vw, 14px);
+  }
+
+  #main-title {
+    display: block;
+    max-width: min(80vw, 600px);
+    width: auto;
+    image-rendering: pixelated;
+    margin-bottom: clamp(24px, 5vh, 56px);
+  }
+
+  #menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 3vh, 26px);
+    padding-bottom: 60px;
+    width: 100%;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 18px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(10px, 2.2vw, 18px);
+    color: #f0e6c8;
+    text-decoration: none;
+    text-shadow: 2px 2px 0px #000, 3px 3px 0px rgba(0,0,0,0.4);
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.05s;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover,
+  .menu-item.active {
+    color: #ffe066;
+    text-shadow: 2px 2px 0px #000, 0 0 12px rgba(255,224,80,0.18);
+  }
+
+  .arrow-slot {
+    display: inline-block;
+    width: 1.2em;
+    text-align: center;
+    font-size: 1em;
+    color: #ffe066;
+    text-shadow: 2px 2px 0px #000;
+    visibility: hidden;
+  }
+
+  .arrow-slot.visible {
+    visibility: visible;
+    animation: blink 0.7s step-start infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+</style>
 </head>
 <body>
-  <h1>Welcome to My Site</h1>
 
-  <nav>
-    <a href="prod-demos.html">Main Page</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+<img id="bg" src="assets/images/home2.png" alt="">
+
+<div id="cloud-layer"></div>
+
+<div id="content">
+  <div id="title-spacer" aria-hidden="true"></div>
+  <img id="main-title" src="assets/images/maintitle.png" alt="Main Title">
+
+  <nav id="menu" aria-label="Main menu">
+    <a class="menu-item active" href="start.html">
+      <span class="arrow-slot visible">▶</span>START GAME
+    </a>
+    <a class="menu-item" href="adventure.html">
+      <span class="arrow-slot">▶</span>ADVENTURE
+    </a>
+    <a class="menu-item" href="gallery.html">
+      <span class="arrow-slot">▶</span>GALLERY
+    </a>
+    <a class="menu-item" href="settings.html">
+      <span class="arrow-slot">▶</span>SETTINGS
+    </a>
+    <a class="menu-item" href="about.html">
+      <span class="arrow-slot">▶</span>ABOUT
+    </a>
   </nav>
+</div>
 
-  <p>Select a page to explore.</p>
+<script>
+  const items = document.querySelectorAll('.menu-item');
+  let currentIndex = 0;
+
+  function setActive(index) {
+    items.forEach((item, i) => {
+      const arrow = item.querySelector('.arrow-slot');
+      if (i === index) {
+        item.classList.add('active');
+        arrow.classList.add('visible');
+      } else {
+        item.classList.remove('active');
+        arrow.classList.remove('visible');
+      }
+    });
+    currentIndex = index;
+  }
+
+  items.forEach((item, i) => {
+    item.addEventListener('mouseenter', () => setActive(i));
+  });
+
+  setActive(0);
+
+  const cloudLayer = document.getElementById('cloud-layer');
+  const cloudImages = ['assets/images/nube1.png', 'assets/images/nube2.png'];
+
+  function spawnCloud(startX, rtl) {
+    const cloud = document.createElement('img');
+    cloud.className = 'cloud';
+    cloud.src = cloudImages[Math.floor(Math.random() * cloudImages.length)];
+
+    const scaleW = 200 + Math.random() * 180;
+    cloud.style.width = scaleW + 'px';
+    cloud.style.height = 'auto';
+
+    const cloudH = scaleW * 0.5;
+    const maxTop = window.innerHeight * 0.5 - cloudH;
+    const r = Math.random();
+    const biasedR = r * r;
+    const topPx = Math.max(0, biasedR * maxTop);
+    cloud.style.top = topPx + 'px';
+
+    const duration = 55000 + Math.random() * 25000;
+    cloudLayer.appendChild(cloud);
+
+    let fromX, endX, fullDist;
+    if (rtl) {
+      fromX = (startX !== undefined) ? startX : window.innerWidth + scaleW + 10;
+      endX = -scaleW - 10;
+      fullDist = window.innerWidth + scaleW * 2;
+    } else {
+      fromX = (startX !== undefined) ? startX : -scaleW - 10;
+      endX = window.innerWidth + scaleW + 10;
+      fullDist = window.innerWidth + scaleW * 2;
+    }
+
+    cloud.style.left = fromX + 'px';
+    const thisDist = Math.abs(endX - fromX);
+    const adjustedDuration = duration * (thisDist / fullDist);
+
+    cloud.animate(
+      [{ left: fromX + 'px' }, { left: endX + 'px' }],
+      { duration: adjustedDuration, easing: 'linear', fill: 'forwards' }
+    ).onfinish = () => {
+      cloud.remove();
+      spawnCloud(undefined, rtl);
+    };
+  }
+
+  const ltrCount = 3;
+  const rtlCount = 1;
+  const ltrGap = Math.floor(window.innerWidth / ltrCount);
+  for (let i = 0; i < ltrCount; i++) {
+    const startX = i * ltrGap + Math.random() * (ltrGap * 0.4);
+    setTimeout(() => spawnCloud(startX, false), i * 600);
+  }
+  const rtlGap = Math.floor(window.innerWidth / rtlCount);
+  for (let i = 0; i < rtlCount; i++) {
+    const startX = window.innerWidth - (i * rtlGap + Math.random() * (rtlGap * 0.4));
+    setTimeout(() => spawnCloud(startX, true), 3000 + i * 800);
+  }
+</script>
 </body>
 </html>
