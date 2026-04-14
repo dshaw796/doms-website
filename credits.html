@@ -181,24 +181,36 @@ body {
 }
 
 .power-box {
-  min-width: 88px;
+  min-width: 118px;
   background: linear-gradient(180deg, #fff5cd 0%, #f6dd83 100%);
   color: #7a4118;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  gap: 6px;
+  padding: 6px 8px;
   text-align: center;
 }
 
-.power-label {
-  font-size: 6px;
-  margin-bottom: 5px;
+.power-symbols {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  max-width: 44px;
+}
+
+.power-symbols img {
+  width: 14px;
+  height: 14px;
+  image-rendering: pixelated;
+  display: block;
 }
 
 .power-value {
   font-size: 13px;
+  line-height: 1;
 }
 
 .info-art {
@@ -349,17 +361,134 @@ body {
 }
 
 @media (max-width: 768px) {
+  body {
+    background-position: center top;
+  }
+
   .wrapper {
     margin: 0;
     max-width: 100%;
+    padding: 8px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 10px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+  }
+
+  .title span {
+    font-size: 7px;
+    margin-top: 6px;
+  }
+
+  .categories {
+    position: sticky;
+    top: 8px;
+    z-index: 20;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    padding: 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.12) 100%);
+    border: 3px solid #8c3b2a;
+    box-shadow: 4px 4px var(--shadow);
+    scrollbar-width: none;
+  }
+
+  .categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-btn {
+    flex: 0 0 auto;
+    font-size: 7px;
+    padding: 10px 10px;
+    min-height: 40px;
+    white-space: nowrap;
   }
 
   .content {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .info-panel {
     min-height: unset;
+    order: 2;
+  }
+
+  .grid {
+    order: 1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
+  .album {
+    padding: 5px;
+  }
+
+  .album-art {
+    min-height: unset;
+    padding: 5px;
+    margin-bottom: 3px;
+  }
+
+  .album p {
+    font-size: 5px;
+    line-height: 1.4;
+    margin-top: 3px;
+  }
+
+  .info-card {
+    min-height: unset;
+  }
+
+  .info-header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .nameplate {
+    min-height: 42px;
+    font-size: 7px;
+    padding: 7px;
+  }
+
+  .power-box {
+    min-width: 100%;
+    justify-content: space-between;
+    padding: 7px 9px;
+  }
+
+  .power-value {
+    font-size: 11px;
+  }
+
+  .power-symbols img {
+    width: 12px;
+    height: 12px;
+  }
+
+  .info-art {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+  .info-meta {
+    font-size: 6px;
+    line-height: 1.5;
+    padding: 7px;
   }
 }
 </style>
@@ -393,6 +522,13 @@ const TYPE_COLORS = {
   "MIXING": "var(--mixing)",
   "ENGINEERING": "var(--engineering)",
   "ASST. ENG": "var(--asst-eng)"
+};
+const TYPE_SYMBOLS = {
+  "PRODUCTION": "assets/images/lightning.png",
+  "PERFORMING": "assets/images/fire.png",
+  "MIXING": "assets/images/water.png",
+  "ENGINEERING": "assets/images/nature.png",
+  "ASST. ENG": "assets/images/dragon.png"
 };
 
 let credits = [];
@@ -446,10 +582,12 @@ function resetInfoPanel(message = "SELECT AN ALBUM") {
 }
 
 function showInfo(credit) {
-  const topTypes = getTopTypes(credit);
   const fullTypes = normalizeTypes(credit.types || []).join(" / ");
   const artBg = getCardBackground(credit);
   const shinyClass = (credit.types || []).includes("PRODUCTION") ? "shiny" : "";
+  const symbolMarkup = normalizeTypes(credit.types || [])
+    .map(type => `<img src="${TYPE_SYMBOLS[type]}" alt="${type} symbol" loading="lazy">`)
+    .join("");
 
   infoPanel.innerHTML = `
     <div class="card-shell">
@@ -457,7 +595,7 @@ function showInfo(credit) {
         <div class="info-header">
           <div class="nameplate">${credit.name}</div>
           <div class="power-box">
-            <div class="power-label">POWER</div>
+            <div class="power-symbols">${symbolMarkup}</div>
             <div class="power-value">${credit.power || "88"}</div>
           </div>
         </div>
