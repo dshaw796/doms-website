@@ -6,6 +6,22 @@
 <title>Credits Catalogue</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+:root {
+  --production: #f0b43c;
+  --performing: #c93b4d;
+  --mixing: #3a86ff;
+  --engineering: #4fbf74;
+  --asst-eng: #9b6bdb;
+  --neutral: #cfd8cf;
+  --neutral-dark: #8e9890;
+  --ink: #1c1c1c;
+  --shadow: #194242;
+  --border: #333;
+  --silver-1: #f3f4f7;
+  --silver-2: #d9dde4;
+  --silver-3: #b7bcc5;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,24 +39,38 @@ body {
 }
 
 .wrapper {
-  max-width: 800px;
-  margin: 40px auto;
+  max-width: 1020px;
+  margin: 36px auto;
   padding: 10px;
 }
 
 .panel {
   backdrop-filter: blur(2px);
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.16);
   border: 3px solid #8c3b2a;
   padding: 20px;
-  box-shadow: 4px 4px #194242;
+  box-shadow: 4px 4px var(--shadow);
 }
 
 .title {
   text-align: center;
-  font-size: 12px;
-  margin-bottom: 20px;
-  color: #8c3b2a;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 22px;
+  color: #fff7d6;
+  padding: 14px 18px;
+  border: 3px solid #5d2418;
+  background: linear-gradient(180deg, #b45a3c 0%, #8c3b2a 52%, #6e2a1e 100%);
+  box-shadow: inset 0 3px rgba(255,255,255,0.25), inset 0 -4px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,241,188,0.15), 4px 4px #3f1b13;
+  text-shadow: 2px 2px rgba(0,0,0,0.45);
+  letter-spacing: 1px;
+}
+
+.title span {
+  display: block;
+  font-size: 8px;
+  color: #ffe8a6;
+  margin-top: 7px;
 }
 
 .categories {
@@ -53,63 +83,181 @@ body {
 
 .category-btn {
   font-size: 8px;
-  padding: 8px;
-  border: 2px solid #2b6f6f;
-  background: #8c3b2a;
+  padding: 9px 10px;
+  border: 2px solid var(--border);
   color: #fff;
   cursor: pointer;
+  box-shadow: inset 0 -3px rgba(0,0,0,0.25), 2px 2px #000;
+  text-shadow: 1px 1px rgba(0,0,0,0.45);
 }
 
+.category-btn[data-type="ALL"] {
+  background: linear-gradient(135deg, var(--production) 0%, var(--production) 20%, var(--performing) 20%, var(--performing) 40%, var(--mixing) 40%, var(--mixing) 60%, var(--engineering) 60%, var(--engineering) 80%, var(--asst-eng) 80%, var(--asst-eng) 100%);
+}
+.category-btn[data-type="PRODUCTION"] { background: var(--production); }
+.category-btn[data-type="PERFORMING"] { background: var(--performing); }
+.category-btn[data-type="MIXING"] { background: var(--mixing); }
+.category-btn[data-type="ENGINEERING"] { background: var(--engineering); }
+.category-btn[data-type="ASST. ENG"] { background: var(--asst-eng); }
+
 .category-btn.active {
-  background: #2b6f6f;
+  transform: translateY(1px);
+  box-shadow: inset 0 -2px rgba(255,255,255,0.22), 1px 1px #000, 0 0 0 3px rgba(255,255,255,0.36);
 }
 
 .content {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 320px 1fr;
   gap: 20px;
   align-items: start;
 }
 
 .info-panel {
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.25);
-  border: 3px solid #2b6f6f;
-  padding: 15px;
+  min-height: 340px;
+}
+
+.card-shell {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.2) 100%);
+  border: 3px solid var(--border);
+  padding: 10px;
+  box-shadow: inset 0 -3px rgba(0,0,0,0.22), 4px 4px #000;
+  overflow: hidden;
+}
+
+.card-shell::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 14px;
+  right: 14px;
+  height: 6px;
+  background: #999;
+  border: 2px solid var(--border);
+  border-bottom: none;
+}
+
+.card-shell::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  height: 3px;
+  background: rgba(0,0,0,0.28);
+}
+
+.info-card {
+  position: relative;
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 100%);
+  min-height: 300px;
+}
+
+.info-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+
+.nameplate,
+.power-box {
+  border: 2px solid var(--border);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12);
+}
+
+.nameplate {
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  padding: 8px;
+  color: #414854;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  line-height: 1.45;
+  font-size: 8px;
+}
+
+.power-box {
+  min-width: 88px;
+  background: linear-gradient(180deg, #fff5cd 0%, #f6dd83 100%);
+  color: #7a4118;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 220px;
-}
-
-.info-panel img {
-  width: 100%;
-  margin-bottom: 10px;
-  border: 2px solid #333;
-  image-rendering: pixelated;
-}
-
-.info-title {
-  font-size: 9px;
-  margin-bottom: 10px;
+  justify-content: center;
+  padding: 6px;
   text-align: center;
 }
 
-.info-type,
-.info-meta {
-  font-size: 7px;
-  color: #8c3b2a;
-  margin-bottom: 6px;
-  line-height: 1.6;
+.power-label {
+  font-size: 6px;
+  margin-bottom: 5px;
 }
 
-.info-text {
+.power-value {
+  font-size: 13px;
+}
+
+.info-art {
+  position: relative;
+  padding: 10px;
+  border: 3px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: inset 0 -3px rgba(0,0,0,0.18);
+}
+
+.info-art img {
   width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border: 2px solid var(--border);
+  display: block;
+  background: rgba(255,255,255,0.35);
+}
+
+.info-art.shiny::after,
+.album-art.shiny::after {
+  content: '';
+  position: absolute;
+  top: -15%;
+  left: -45%;
+  width: 34%;
+  height: 140%;
+  transform: rotate(24deg);
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.22) 60%, rgba(255,255,255,0) 100%);
+  animation: shineSweep 6.8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes shineSweep {
+  0%, 70% { left: -50%; }
+  87% { left: 118%; }
+  100% { left: 118%; }
+}
+
+.info-meta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-meta {
+  font-size: 7px;
+  line-height: 1.55;
+  color: #4b2222;
+  padding: 8px;
+  border: 2px solid rgba(51,51,51,0.7);
+  background: rgba(255,255,255,0.48);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
   gap: 12px;
   max-height: 70vh;
   overflow-y: auto;
@@ -117,71 +265,87 @@ body {
 }
 
 .album {
-  background:#cfd8cf;
-  border:3px solid #333;
-  padding:6px;
-  cursor:pointer;
-  position:relative;
-  box-shadow:inset 0 -3px #888,2px 2px #000;
-  transition:transform 0.1s;
+  border: 3px solid var(--border);
+  padding: 6px;
+  cursor: pointer;
+  position: relative;
+  background: var(--neutral);
+  box-shadow: inset 0 -3px rgba(0,0,0,0.24), 2px 2px #000;
+  transition: transform 0.1s;
+  overflow: hidden;
 }
 
-.album:active {
-  transform:scale(0.92);
-}
+.album:active { transform: scale(0.94); }
 
 .album.loaded {
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 0px #a8e0a8; }
-  50% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 6px #a8e0a8; }
-  100% { box-shadow: inset 0 -3px #888,2px 2px #000,0 0 0px #a8e0a8; }
+  outline: 3px solid rgba(255,255,255,0.66);
+  outline-offset: -3px;
 }
 
 .album::before {
-  content:'';
-  position:absolute;
-  top:-6px;
-  left:10px;
-  right:10px;
-  height:6px;
-  background:#999;
-  border:2px solid #333;
-  border-bottom:none;
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  right: 10px;
+  height: 6px;
+  background: #999;
+  border: 2px solid var(--border);
+  border-bottom: none;
+  z-index: 3;
 }
 
 .album::after {
-  content:'';
-  position:absolute;
-  bottom:4px;
-  left:50%;
-  transform:translateX(-50%);
-  width:60%;
-  height:3px;
-  background:#888;
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: rgba(0,0,0,0.28);
+  z-index: 3;
+}
+
+.album-art {
+  position: relative;
+  z-index: 1;
+  padding: 7px;
+  margin-bottom: 4px;
+  min-height: 86px;
+  border: 2px solid rgba(0,0,0,0.18);
+  overflow: hidden;
 }
 
 .album img {
-  width:100%;
-  image-rendering:pixelated;
-  border:2px solid #333;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border: 2px solid var(--border);
+  display: block;
+  background: rgba(255,255,255,0.35);
+  position: relative;
+  z-index: 1;
 }
 
 .album p {
-  font-size:6px;
-  margin-top:4px;
-  text-align:center;
-  color:#000;
-  line-height: 1.4;
+  position: relative;
+  z-index: 2;
+  font-size: 6px;
+  margin-top: 4px;
+  text-align: center;
+  color: #000;
+  line-height: 1.45;
 }
 
 .status {
   font-size: 8px;
+  padding: 14px;
+  border: 2px dashed #8c3b2a;
+  background: rgba(255,255,255,0.35);
   text-align: center;
-  color: #8c3b2a;
-  padding: 16px;
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {
@@ -195,20 +359,7 @@ body {
   }
 
   .info-panel {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .info-panel img {
-    width: 40%;
-    margin: 0;
-  }
-
-  .info-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    min-height: unset;
   }
 }
 </style>
@@ -216,56 +367,126 @@ body {
 <body>
 <div class="wrapper">
   <div class="panel">
-    <div class="title">CREDITS DATABASE</div>
+    <div class="title">CREDITS DATABASE<span>MASTER DISCOGRAPHY CARTRIDGE INDEX</span></div>
 
     <div class="categories">
       <button class="category-btn active" data-type="ALL">ALL</button>
-      <button class="category-btn" data-type="ENGINEER">ENGINEER</button>
+      <button class="category-btn" data-type="ENGINEERING">ENGINEERING</button>
       <button class="category-btn" data-type="PERFORMING">PERFORMING</button>
-      <button class="category-btn" data-type="MIX">MIX</button>
+      <button class="category-btn" data-type="MIXING">MIXING</button>
       <button class="category-btn" data-type="PRODUCTION">PRODUCTION</button>
       <button class="category-btn" data-type="ASST. ENG">ASST. ENG</button>
     </div>
 
     <div class="content">
-      <div class="info-panel" id="infoPanel">
-        <div class="info-title">SELECT AN ALBUM</div>
-      </div>
-
-      <div class="grid" id="grid">
-        <div class="status">LOADING CREDITS...</div>
-      </div>
+      <div class="info-panel" id="infoPanel"></div>
+      <div class="grid" id="grid"></div>
     </div>
   </div>
 </div>
 
 <script>
+const TYPE_PRIORITY = ["PRODUCTION", "PERFORMING", "MIXING", "ENGINEERING", "ASST. ENG"];
+const TYPE_COLORS = {
+  "PRODUCTION": "var(--production)",
+  "PERFORMING": "var(--performing)",
+  "MIXING": "var(--mixing)",
+  "ENGINEERING": "var(--engineering)",
+  "ASST. ENG": "var(--asst-eng)"
+};
+
 let credits = [];
 let currentFilter = "ALL";
 let selectedCredit = null;
-
 const grid = document.getElementById("grid");
 const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
 const clickSound = new Audio("assets/audio/click.mp3");
 clickSound.preload = "auto";
 
-function playClickSound() {
-  clickSound.currentTime = 0;
-  clickSound.play().catch(() => {});
+function normalizeTypes(types = []) {
+  return [...types].sort((a, b) => TYPE_PRIORITY.indexOf(a) - TYPE_PRIORITY.indexOf(b));
 }
 
-function renderCredits(filter) {
+function getTopTypes(credit) {
+  const ordered = normalizeTypes(credit.types || []);
+  return ordered.slice(0, 2);
+}
+
+function getCardBackground(credit) {
+  const topTypes = getTopTypes(credit);
+  if (topTypes.length === 0) return "var(--neutral)";
+  if (topTypes.length === 1) return TYPE_COLORS[topTypes[0]];
+  return `linear-gradient(135deg, ${TYPE_COLORS[topTypes[0]]} 0%, ${TYPE_COLORS[topTypes[0]]} 49%, ${TYPE_COLORS[topTypes[1]]} 51%, ${TYPE_COLORS[topTypes[1]]} 100%)`;
+}
+
+function isSameCredit(a, b) {
+  if (!a || !b) return false;
+  return a.name === b.name && a.artist === b.artist && a.year === b.year;
+}
+
+function playClickSound() {
+  try {
+    clickSound.currentTime = 0;
+    clickSound.play().catch(() => {});
+  } catch (_) {}
+}
+
+function resetInfoPanel(message = "SELECT AN ALBUM") {
+  infoPanel.innerHTML = `
+    <div class="card-shell">
+      <div class="info-card">
+        <div class="nameplate">${message}</div>
+        <div class="info-meta-wrap" style="margin-top:12px;">
+          <div class="info-meta">LOAD A CARTRIDGE TO VIEW FULL CREDIT DATA.</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showInfo(credit) {
+  const topTypes = getTopTypes(credit);
+  const fullTypes = normalizeTypes(credit.types || []).join(" / ");
+  const artBg = getCardBackground(credit);
+  const shinyClass = (credit.types || []).includes("PRODUCTION") ? "shiny" : "";
+
+  infoPanel.innerHTML = `
+    <div class="card-shell">
+      <div class="info-card">
+        <div class="info-header">
+          <div class="nameplate">${credit.name}</div>
+          <div class="power-box">
+            <div class="power-label">POWER</div>
+            <div class="power-value">${credit.power || "88"}</div>
+          </div>
+        </div>
+        <div class="info-art ${shinyClass}" style="background:${artBg};">
+          <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
+        </div>
+        <div class="info-meta-wrap">
+          <div class="info-meta">ARTIST: ${credit.artist}</div>
+          <div class="info-meta">YEAR: ${credit.year}</div>
+          <div class="info-meta">ROLE: ${credit.role}</div>
+          <div class="info-meta">TYPE: ${fullTypes}</div>
+          <div class="info-meta">TRACK(S): ${credit.tracks}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCredits(filter = "ALL") {
   currentFilter = filter;
   grid.innerHTML = "";
 
   const filtered = filter === "ALL"
     ? credits
-    : credits.filter(c => c.type === filter);
+    : credits.filter(c => (c.types || []).includes(filter));
 
   if (!filtered.length) {
     grid.innerHTML = '<div class="status">NO CREDITS FOUND</div>';
-    if (selectedCredit && !credits.some(c => c.name === selectedCredit.name && c.type === selectedCredit.type)) {
+    if (selectedCredit && !credits.some(c => isSameCredit(c, selectedCredit))) {
       selectedCredit = null;
       resetInfoPanel();
     }
@@ -275,62 +496,49 @@ function renderCredits(filter) {
   filtered.forEach(credit => {
     const card = document.createElement("div");
     card.className = "album";
-
-    if (selectedCredit && credit.name === selectedCredit.name && credit.type === selectedCredit.type) {
+    if (selectedCredit && isSameCredit(credit, selectedCredit)) {
       card.classList.add("loaded");
     }
 
-    card.innerHTML = `
-      <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
-      <p>${credit.name}</p>
-    `;
+    const art = document.createElement("div");
+    art.className = `album-art ${(credit.types || []).includes("PRODUCTION") ? "shiny" : ""}`;
+    art.style.background = getCardBackground(credit);
 
-    card.onclick = () => {
+    const img = document.createElement("img");
+    img.src = credit.image;
+    img.alt = `${credit.name} cover`;
+    img.loading = "lazy";
+
+    const label = document.createElement("p");
+    label.textContent = credit.name;
+
+    art.appendChild(img);
+    card.appendChild(art);
+    card.appendChild(label);
+
+    card.addEventListener("click", () => {
       selectedCredit = credit;
       document.querySelectorAll(".album").forEach(a => a.classList.remove("loaded"));
       card.classList.add("loaded");
       showInfo(credit);
       playClickSound();
-    };
+    });
 
     grid.appendChild(card);
   });
 
   if (selectedCredit) {
-    const selectedStillVisible = filtered.some(c => c.name === selectedCredit.name && c.type === selectedCredit.type);
+    const selectedStillVisible = filtered.some(c => isSameCredit(c, selectedCredit));
     if (selectedStillVisible) {
       showInfo(selectedCredit);
     }
   }
 }
 
-function showInfo(credit) {
-  infoPanel.innerHTML = `
-    <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
-    <div class="info-text">
-      <div class="info-title">${credit.name}</div>
-      <div class="info-type">${credit.role}</div>
-      <div class="info-meta">ARTIST: ${credit.artist}</div>
-      <div class="info-meta">YEAR: ${credit.year}</div>
-      <div class="info-meta">TYPE: ${credit.type}</div>
-      <div class="info-meta">LABEL: ${credit.label}</div>
-      <div class="info-meta">STUDIO: ${credit.studio}</div>
-      <div class="info-meta">GENRE: ${credit.genre}</div>
-    </div>
-  `;
-}
-
-function resetInfoPanel(message = "SELECT AN ALBUM") {
-  infoPanel.innerHTML = `<div class="info-title">${message}</div>`;
-}
-
 async function loadCredits() {
   try {
     const response = await fetch("assets/data/credits.json");
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     credits = await response.json();
     renderCredits(currentFilter);
   } catch (error) {
@@ -348,6 +556,7 @@ buttons.forEach(btn => {
   });
 });
 
+resetInfoPanel();
 loadCredits();
 </script>
 </body>
