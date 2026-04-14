@@ -3,11 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Credits Catalogue</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
 <style>
 * {
   box-sizing: border-box;
@@ -25,14 +22,12 @@ body {
   color: #083c3c;
 }
 
-/* ===== WRAPPER ===== */
 .wrapper {
   max-width: 800px;
   margin: 40px auto;
   padding: 10px;
 }
 
-/* ===== PANEL ===== */
 .panel {
   backdrop-filter: blur(2px);
   background: rgba(255,255,255,0.15);
@@ -41,7 +36,6 @@ body {
   box-shadow: 4px 4px #194242;
 }
 
-/* ===== TITLE ===== */
 .title {
   text-align: center;
   font-size: 12px;
@@ -49,7 +43,6 @@ body {
   color: #8c3b2a;
 }
 
-/* ===== FILTERS ===== */
 .categories {
   display: flex;
   flex-wrap: wrap;
@@ -71,7 +64,6 @@ body {
   background: #2b6f6f;
 }
 
-/* ===== MAIN LAYOUT ===== */
 .content {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -79,7 +71,6 @@ body {
   align-items: start;
 }
 
-/* ===== INFO PANEL (TRADING CARD) ===== */
 .info-panel {
   backdrop-filter: blur(10px);
   background: rgba(255,255,255,0.25);
@@ -88,6 +79,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 220px;
 }
 
 .info-panel img {
@@ -99,26 +91,31 @@ body {
 
 .info-title {
   font-size: 9px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.info-type {
+.info-type,
+.info-meta {
   font-size: 7px;
   color: #8c3b2a;
+  margin-bottom: 6px;
+  line-height: 1.6;
 }
 
-/* ===== GRID ===== */
+.info-text {
+  width: 100%;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 12px;
-  max-height: 500px;
+  max-height: 70vh;
   overflow-y: auto;
   padding-right: 5px;
 }
 
-/* ===== CARTRIDGE STYLE ===== */
 .album {
   background:#cfd8cf;
   border:3px solid #333;
@@ -177,11 +174,17 @@ body {
   margin-top:4px;
   text-align:center;
   color:#000;
+  line-height: 1.4;
 }
 
-/* ===== MOBILE LAYOUT ===== */
-@media (max-width: 768px) {
+.status {
+  font-size: 8px;
+  text-align: center;
+  color: #8c3b2a;
+  padding: 16px;
+}
 
+@media (max-width: 768px) {
   .wrapper {
     margin: 0;
     max-width: 100%;
@@ -191,7 +194,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  /* LANDSCAPE INFO PANEL */
   .info-panel {
     flex-direction: row;
     align-items: center;
@@ -208,16 +210,12 @@ body {
     flex-direction: column;
     justify-content: center;
   }
-
 }
 </style>
 </head>
-
 <body>
-
 <div class="wrapper">
   <div class="panel">
-
     <div class="title">CREDITS DATABASE</div>
 
     <div class="categories">
@@ -230,91 +228,116 @@ body {
     </div>
 
     <div class="content">
-
-      <!-- INFO PANEL -->
       <div class="info-panel" id="infoPanel">
         <div class="info-title">SELECT AN ALBUM</div>
       </div>
 
-      <!-- GRID -->
-      <div class="grid" id="grid"></div>
-
+      <div class="grid" id="grid">
+        <div class="status">LOADING CREDITS...</div>
+      </div>
     </div>
-
   </div>
 </div>
 
 <script>
-const credits = [
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album One", type: "ENGINEER", image: "assets/images/album1.jpg" },
-  { name: "Album Two", type: "MIX", image: "assets/images/album2.jpg" },
-  { name: "Album Three", type: "PRODUCTION", image: "assets/images/album3.jpg" },
-  { name: "Album Four", type: "PERFORMING", image: "assets/images/album4.jpg" },
-  { name: "Album Five", type: "ASST. ENG", image: "assets/images/album5.jpg" }
-];
+let credits = [];
+let currentFilter = "ALL";
+let selectedCredit = null;
 
 const grid = document.getElementById("grid");
 const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
+const clickSound = new Audio("assets/audio/click.mp3");
+clickSound.preload = "auto";
+
+function playClickSound() {
+  clickSound.currentTime = 0;
+  clickSound.play().catch(() => {});
+}
 
 function renderCredits(filter) {
+  currentFilter = filter;
   grid.innerHTML = "";
 
   const filtered = filter === "ALL"
     ? credits
     : credits.filter(c => c.type === filter);
 
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="status">NO CREDITS FOUND</div>';
+    if (selectedCredit && !credits.some(c => c.name === selectedCredit.name && c.type === selectedCredit.type)) {
+      selectedCredit = null;
+      resetInfoPanel();
+    }
+    return;
+  }
+
   filtered.forEach(credit => {
     const card = document.createElement("div");
     card.className = "album";
 
+    if (selectedCredit && credit.name === selectedCredit.name && credit.type === selectedCredit.type) {
+      card.classList.add("loaded");
+    }
+
     card.innerHTML = `
-      <img src="${credit.image}">
+      <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
       <p>${credit.name}</p>
     `;
 
     card.onclick = () => {
+      selectedCredit = credit;
       document.querySelectorAll(".album").forEach(a => a.classList.remove("loaded"));
       card.classList.add("loaded");
       showInfo(credit);
+      playClickSound();
     };
 
     grid.appendChild(card);
   });
+
+  if (selectedCredit) {
+    const selectedStillVisible = filtered.some(c => c.name === selectedCredit.name && c.type === selectedCredit.type);
+    if (selectedStillVisible) {
+      showInfo(selectedCredit);
+    }
+  }
 }
 
 function showInfo(credit) {
   infoPanel.innerHTML = `
-    <img src="${credit.image}">
+    <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
     <div class="info-text">
       <div class="info-title">${credit.name}</div>
-      <div class="info-type">${credit.type}</div>
+      <div class="info-type">${credit.role}</div>
+      <div class="info-meta">ARTIST: ${credit.artist}</div>
+      <div class="info-meta">YEAR: ${credit.year}</div>
+      <div class="info-meta">TYPE: ${credit.type}</div>
+      <div class="info-meta">LABEL: ${credit.label}</div>
+      <div class="info-meta">STUDIO: ${credit.studio}</div>
+      <div class="info-meta">GENRE: ${credit.genre}</div>
     </div>
   `;
+}
+
+function resetInfoPanel(message = "SELECT AN ALBUM") {
+  infoPanel.innerHTML = `<div class="info-title">${message}</div>`;
+}
+
+async function loadCredits() {
+  try {
+    const response = await fetch("assets/data/credits.json");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    credits = await response.json();
+    renderCredits(currentFilter);
+  } catch (error) {
+    console.error("Failed to load credits:", error);
+    grid.innerHTML = '<div class="status">FAILED TO LOAD CREDITS</div>';
+    resetInfoPanel("DATA ERROR");
+  }
 }
 
 buttons.forEach(btn => {
@@ -325,8 +348,7 @@ buttons.forEach(btn => {
   });
 });
 
-renderCredits("ALL");
+loadCredits();
 </script>
-
 </body>
 </html>
