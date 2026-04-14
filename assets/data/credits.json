@@ -1,32 +1,251 @@
 [
-  {"name":"the chapel","artist":"cadmium red","year":"2026","role":"Producer / Performing / Mixing / Engineering","types":["PRODUCTION","ENGINEERING","MIXING","PERFORMING"],"tracks":"1, 3, 5, 8","power":"96","image":"assets/images/dust.png"},
-  {"name":"Glass Harbour","artist":"The Lanterns","year":"2025","role":"Mix Engineer","types":["MIXING"],"tracks":"Full album","power":"82","image":"assets/images/album2.jpg"},
-  {"name":"Electric Meadow","artist":"June Static","year":"2025","role":"Producer","types":["PRODUCTION"],"tracks":"2, 4, 7","power":"93","image":"assets/images/album3.jpg"},
-  {"name":"Ivory Sleep","artist":"Silver Vale","year":"2024","role":"Recording Engineer / Assistant Engineer","types":["ENGINEERING","ASST. ENG"],"tracks":"1-6","power":"77","image":"assets/images/album4.jpg"},
-  {"name":"Soft Collision","artist":"Neon Harbour","year":"2024","role":"Performer / Producer","types":["PERFORMING","PRODUCTION"],"tracks":"Lead vocals on 2, 5","power":"94","image":"assets/images/album5.jpg"},
-  {"name":"Paper Satellites","artist":"North Relay","year":"2023","role":"Recording Engineer","types":["ENGINEERING"],"tracks":"Full album","power":"79","image":"assets/images/album1.jpg"},
-  {"name":"Signal Fires","artist":"Mira Lane","year":"2023","role":"Assistant Engineer","types":["ASST. ENG"],"tracks":"1, 2, 9","power":"68","image":"assets/images/album2.jpg"},
-  {"name":"Citrus Static","artist":"Low Season","year":"2022","role":"Producer / Mix Engineer","types":["PRODUCTION","MIXING"],"tracks":"3, 4, 6","power":"92","image":"assets/images/album3.jpg"},
-  {"name":"Summer Wire","artist":"Kite Parade","year":"2026","role":"Performer","types":["PERFORMING"],"tracks":"Bass on 1, 7, 10","power":"85","image":"assets/images/album4.jpg"},
-  {"name":"Red Rooms","artist":"Velvet Index","year":"2025","role":"Engineer / Mix Engineer","types":["MIXING","ENGINEERING"],"tracks":"Full album","power":"86","image":"assets/images/album5.jpg"},
-  {"name":"Parallel Hearts","artist":"Atlas Coast","year":"2024","role":"Producer / Performer / Engineer","types":["PRODUCTION","PERFORMING","ENGINEERING"],"tracks":"1, 4, 8","power":"99","image":"assets/images/album1.jpg"},
-  {"name":"Ocean Relay","artist":"Blue Hours","year":"2023","role":"Producer","types":["PRODUCTION"],"tracks":"2, 6","power":"91","image":"assets/images/album2.jpg"},
-  {"name":"Night Tape","artist":"Luna District","year":"2022","role":"Mix Engineer / Assistant Engineer","types":["MIXING","ASST. ENG"],"tracks":"5, 6, 7","power":"74","image":"assets/images/album3.jpg"},
-  {"name":"Gold Static","artist":"Amber City","year":"2026","role":"Recording Engineer","types":["ENGINEERING"],"tracks":"1-10","power":"81","image":"assets/images/album4.jpg"},
-  {"name":"Falling Maps","artist":"Quiet Arcade","year":"2024","role":"Performer / Mix Engineer","types":["PERFORMING","MIXING"],"tracks":"Vocals on 3, 4","power":"88","image":"assets/images/album5.jpg"},
-  {"name":"Monarch Drive","artist":"Golden Youth","year":"2025","role":"Producer / Engineer","types":["PRODUCTION","ENGINEERING"],"tracks":"Full album","power":"95","image":"assets/images/album1.jpg"},
-  {"name":"Bloom Circuit","artist":"Rose Signal","year":"2023","role":"Assistant Engineer / Engineer","types":["ENGINEERING","ASST. ENG"],"tracks":"2, 3, 8","power":"76","image":"assets/images/album2.jpg"},
-  {"name":"Neon Chapel","artist":"Dawn Parade","year":"2022","role":"Producer / Mix Engineer / Performer","types":["PRODUCTION","MIXING","PERFORMING"],"tracks":"1, 5, 9","power":"97","image":"assets/images/album3.jpg"},
-  {"name":"Afterglow Motel","artist":"City Flora","year":"2026","role":"Performer","types":["PERFORMING"],"tracks":"Keys on 2, 8","power":"84","image":"assets/images/album4.jpg"},
-  {"name":"Velour Engines","artist":"Chrome Season","year":"2025","role":"Mix Engineer","types":["MIXING"],"tracks":"Full album","power":"83","image":"assets/images/album5.jpg"},
-  {"name":"Mercury Bloom","artist":"The Daylight Club","year":"2024","role":"Producer / Performer","types":["PRODUCTION","PERFORMING"],"tracks":"1, 2, 3","power":"94","image":"assets/images/album1.jpg"},
-  {"name":"Foxglove FM","artist":"Paper Saints","year":"2023","role":"Recording Engineer","types":["ENGINEERING"],"tracks":"4, 5, 6","power":"80","image":"assets/images/album2.jpg"},
-  {"name":"Cloud Syntax","artist":"Ivory Echo","year":"2022","role":"Assistant Engineer","types":["ASST. ENG"],"tracks":"7, 8","power":"67","image":"assets/images/album3.jpg"},
-  {"name":"Copper Lake","artist":"Northbound","year":"2026","role":"Producer / Mix Engineer","types":["PRODUCTION","MIXING"],"tracks":"Full album","power":"93","image":"assets/images/album4.jpg"},
-  {"name":"Static Cinema","artist":"Ruby Signal","year":"2024","role":"Performer / Engineer","types":["PERFORMING","ENGINEERING"],"tracks":"Guitar on 1, 9","power":"87","image":"assets/images/album5.jpg"},
-  {"name":"Polar Gardens","artist":"Halo District","year":"2025","role":"Mix Engineer / Engineer","types":["MIXING","ENGINEERING"],"tracks":"2, 4, 10","power":"85","image":"assets/images/album1.jpg"},
-  {"name":"Velvet Transit","artist":"Metro Bloom","year":"2023","role":"Producer / Assistant Engineer","types":["PRODUCTION","ASST. ENG"],"tracks":"1, 6","power":"89","image":"assets/images/album2.jpg"},
-  {"name":"Wired Hearts","artist":"Signal Youth","year":"2026","role":"Performer / Producer / Mix Engineer","types":["PRODUCTION","PERFORMING","MIXING"],"tracks":"1, 2, 8, 9","power":"98","image":"assets/images/album3.jpg"},
-  {"name":"Moonroom","artist":"Celeste Vale","year":"2025","role":"Recording Engineer","types":["ENGINEERING"],"tracks":"Full album","power":"78","image":"assets/images/album4.jpg"},
-  {"name":"Bright Machines","artist":"The Coastline","year":"2024","role":"Producer","types":["PRODUCTION"],"tracks":"3, 5, 7","power":"90","image":"assets/images/album5.jpg"}
+  {
+    "name": "The Chapel",
+    "artist": "Cadmium Red",
+    "year": "2026",
+    "role": "Production / Mixing / Performing",
+    "types": [
+      "PRODUCTION",
+      "MIXING",
+      "ENGINEERING",
+      "PERFORMING"
+    ],
+    "tracks": "ALL",
+    "power": "91",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/cadmium.jpg?w=700"
+  },
+  {
+    "name": "A Dancer’s Mind",
+    "artist": "Birdy",
+    "year": "2025",
+    "role": "Mix / Record Engineer",
+    "types": [
+      "ENGINEERING",
+      "MIXING"
+    ],
+    "tracks": "1",
+    "power": "83",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/600x600bf-60.jpg?w=600"
+  },
+  {
+    "name": "Eyen Forever",
+    "artist": "Eli Carvajal",
+    "year": "2025",
+    "role": "Mix Engineer",
+    "types": [
+      "MIXING"
+    ],
+    "tracks": "ALL",
+    "power": "79",
+    "image": "https://domshaw.com/wp-content/uploads/2025/10/a1511736864_16.jpg"
+  },
+  {
+    "name": "i/o",
+    "artist": "Peter Gabriel",
+    "year": "2024",
+    "role": "Engineer / Choir Arrangement",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/pg-io-cover-3000pxl-scaled-1.jpg"
+  },
+  {
+    "name": "Secrets Of Six Figure Women",
+    "artist": "Bernardo",
+    "year": "2025",
+    "role": "Mix Engineer",
+    "types": [
+      "MIXING"
+    ],
+    "tracks": "ALL",
+    "power": "72",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/a2655217285_10.jpg?w=1024"
+  },
+  {
+    "name": "And So We Settle, Pt. 2",
+    "artist": "Waterlog",
+    "year": "",
+    "role": "Producer / Songwriter / Performer",
+    "types": [
+      "PRODUCTION",
+      "ENGINEERING",
+      "PERFORMING"
+    ],
+    "tracks": "ALL",
+    "power": "82",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/tchscrn-op-one-copy-2.jpg"
+  },
+  {
+    "name": "O Monolith",
+    "artist": "Squid",
+    "year": "2023",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "89",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/squid.webp"
+  },
+  {
+    "name": "SAYA",
+    "artist": "Saya Gray",
+    "year": "2025",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "10",
+    "power": "95",
+    "image": "https://domshaw.com/wp-content/uploads/2024/04/saya-gray-qwerty-ii.webp"
+  },
+  {
+    "name": "Being Funny In A Foreign Language",
+    "artist": "1975",
+    "year": "2022",
+    "role": "Assistant Engineer",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "85",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/1975.webp"
+  },
+  {
+    "name": "Unhealthy",
+    "artist": "Anne-Marie",
+    "year": "2023",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "3",
+    "power": "72",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/am-2.jpg"
+  },
+  {
+    "name": "WATER IN THE DESERT",
+    "artist": "ZADA",
+    "year": "2024",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "1-6,8",
+    "power": "77",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/zada.jpeg"
+  },
+  {
+    "name": "Mirror in the Bathroom (Live)",
+    "artist": "The Beat",
+    "year": "2022",
+    "role": "Mix Engineer",
+    "types": [
+      "MIXING"
+    ],
+    "tracks": "2",
+    "power": "68",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/womad.jpg"
+  },
+  {
+    "name": "Fisherman’s Friends: The Musical",
+    "artist": "Fisherman's Friends (2022 Cast)",
+    "year": "2022",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "71",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/fish-2.webp"
+  },
+  {
+    "name": "And So We Settle, Pt. 1",
+    "artist": "Waterlog",
+    "year": "2024",
+    "role": "Primary Artist / Songwriter / Producer",
+    "types": [
+      "PERFORMING",
+      "ENGINEERING",
+      "PRODUCTION"
+    ],
+    "tracks": "ALL",
+    "power": "88",
+    "image": "https://domshaw.com/wp-content/uploads/2024/11/maybe-the-kids-were-right-one-1-copy.png?w=1024"
+  },
+  {
+    "name": "THE NEW WORLD",
+    "artist": "Swindle",
+    "year": "2021",
+    "role": "Saxophone / Assistant Engineer",
+    "types": [
+      "PERFORMING",
+      "ASST. ENG"
+    ],
+    "tracks": "ALL(Asst.),3(Perf.)",
+    "power": "79",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/swindle-the-new-world-art.webp"
+  },
+  {
+    "name": "Plastic Man",
+    "artist": "Touki",
+    "year": "2024",
+    "role": "Engineer",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "71",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/touki-1.jpeg"
+  },
+  {
+    "name": "Is It?",
+    "artist": "Ben Howard",
+    "year": "2023",
+    "role": "Assistant Engineer",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "87",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/ben-new.webp"
+  },
+  {
+    "name": "Love & Money",
+    "artist": "Katie Melua",
+    "year": "2023",
+    "role": "Assistant Engineer",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "76",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/katie-melua.png"
+  },
+  {
+    "name": "Sympathy For Life",
+    "artist": "Parquet Courts",
+    "year": "2021",
+    "role": "Assistant Engineer",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "",
+    "power": "71",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/sympathyforlife_cover_web.webp"
+  },
+  {
+    "name": "Phosphorescent",
+    "artist": "Gabrielle Aplin",
+    "year": "2023",
+    "role": "Assistant Engineer",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "70",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/gab-aplin.jpg"
+  }
 ]
