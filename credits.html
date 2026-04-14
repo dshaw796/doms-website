@@ -171,24 +171,26 @@ body {
 
 .nameplate {
   background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
-  padding: 8px;
+  padding: 8px 10px;
   color: #414854;
-  min-height: 48px;
+  min-height: 52px;
   display: flex;
   align-items: center;
-  line-height: 1.45;
-  font-size: 8px;
+  line-height: 1.4;
+  font-size: 11px;
+  letter-spacing: 0.3px;
 }
 
 .power-box {
-  min-width: 118px;
-  background: linear-gradient(180deg, #fff5cd 0%, #f6dd83 100%);
-  color: #7a4118;
+  min-width: 92px;
+  width: 92px;
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  color: #414854;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 8px;
+  gap: 4px;
+  padding: 6px 6px;
   text-align: center;
 }
 
@@ -196,20 +198,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   flex-wrap: wrap;
-  max-width: 44px;
+  max-width: 52px;
 }
 
 .power-symbols img {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   image-rendering: pixelated;
   display: block;
 }
 
 .power-value {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -417,21 +419,23 @@ body {
 
   .content {
     grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .info-panel {
-    min-height: unset;
-    order: 2;
+    gap: 12px;
   }
 
   .grid {
     order: 1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
-    max-height: none;
-    overflow-y: visible;
-    padding-right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 4px;
+    align-content: start;
+  }
+
+  .info-panel {
+    min-height: unset;
+    order: 2;
   }
 
   .album {
@@ -454,35 +458,61 @@ body {
     min-height: unset;
   }
 
-  .info-header {
+  .info-card.detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42%;
+    grid-template-areas:
+      "info-header info-art"
+      "info-meta-wrap info-meta-wrap";
+    gap: 10px;
+    align-items: start;
+  }
+
+  .info-card.detail-layout .info-header {
+    grid-area: info-header;
     grid-template-columns: 1fr;
     gap: 8px;
+    align-content: start;
+    margin-bottom: 0;
   }
 
-  .nameplate {
-    min-height: 42px;
-    font-size: 7px;
-    padding: 7px;
+  .info-card.detail-layout .nameplate {
+    min-height: 62px;
+    font-size: 9px;
+    line-height: 1.35;
+    padding: 8px;
   }
 
-  .power-box {
-    min-width: 100%;
+  .info-card.detail-layout .power-box {
+    width: 100%;
+    min-width: 0;
     justify-content: space-between;
-    padding: 7px 9px;
+    padding: 8px;
   }
 
-  .power-value {
+  .info-card.detail-layout .power-symbols {
+    max-width: 60px;
+    gap: 4px;
+  }
+
+  .info-card.detail-layout .power-symbols img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .info-card.detail-layout .power-value {
     font-size: 11px;
   }
 
-  .power-symbols img {
-    width: 12px;
-    height: 12px;
+  .info-card.detail-layout .info-art {
+    grid-area: info-art;
+    padding: 8px;
+    margin-bottom: 0;
   }
 
-  .info-art {
-    padding: 8px;
-    margin-bottom: 10px;
+  .info-card.detail-layout .info-meta-wrap {
+    grid-area: info-meta-wrap;
+    gap: 7px;
   }
 
   .info-meta {
@@ -591,7 +621,7 @@ function showInfo(credit) {
 
   infoPanel.innerHTML = `
     <div class="card-shell">
-      <div class="info-card">
+      <div class="info-card detail-layout">
         <div class="info-header">
           <div class="nameplate">${credit.name}</div>
           <div class="power-box">
