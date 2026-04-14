@@ -148,8 +148,9 @@ h1 {font-size:15px;margin:0;display:inline-block;text-shadow:0 0 5px #0dce0d;}
 <div class="player">
 <div id="screen" class="cursor">> READY TO LOAD</div>
 <div class="controls">
-<div class="btn" onclick="play()">PLAY</div>
-<div class="btn" onclick="stop()">STOP</div>
+  <!-- Buttons start disabled; enabled when a non-Spotify cartridge is loaded -->
+  <div class="btn disabled" onclick="play()">PLAY</div>
+  <div class="btn disabled" onclick="stop()">STOP</div>
 </div>
 </div>
 
@@ -279,8 +280,10 @@ function selectAlbum(index,el){
   const buttons = document.querySelectorAll(".btn");
 
   if(current.spotify){
+    // Spotify cartridge: keep buttons disabled
     buttons.forEach(btn => btn.classList.add("disabled"));
   } else {
+    // Local audio cartridge: activate buttons
     buttons.forEach(btn => btn.classList.remove("disabled"));
   }
 
