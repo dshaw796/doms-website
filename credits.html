@@ -350,12 +350,28 @@ body {
 }
 
 .info-meta {
-  font-size: 7px;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: start;
+  font-size: 8.5px;
   line-height: 1.55;
-  color: #4b2222;
+  color: #000000;
   padding: 8px;
   border: 2px solid rgba(51,51,51,0.7);
   background: rgba(255,255,255,0.48);
+}
+
+.info-meta-label {
+  white-space: nowrap;
+  color: var(--meta-label-color, #4b2222);
+  text-shadow:
+    1px 0 rgba(0,0,0,0.72),
+    0 1px rgba(0,0,0,0.72);
+}
+
+.info-meta-value {
+  min-width: 0;
 }
 
 .grid {
@@ -659,7 +675,9 @@ body {
   }
 
   .info-meta {
-    font-size: 6px;
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: 8px;
+    font-size: 7.5px;
     line-height: 1.5;
     padding: 7px;
   }
@@ -784,10 +802,12 @@ function resetInfoPanel(message = "SELECT AN ALBUM") {
 }
 
 function showInfo(credit) {
-  const fullTypes = normalizeTypes(credit.types || []).join(" / ");
+  const orderedTypes = normalizeTypes(credit.types || []);
+  const primaryType = orderedTypes[0];
+  const primaryLabelColor = primaryType ? TYPE_COLORS[primaryType] : "#4b2222";
   const artBg = getCardBackground(credit);
-  const shinyClass = (credit.types || []).length >= 2 ? "shiny" : "";
-  const symbolMarkup = normalizeTypes(credit.types || [])
+  const shinyClass = orderedTypes.length >= 2 ? "shiny" : "";
+  const symbolMarkup = orderedTypes
     .map(type => `<img src="${TYPE_SYMBOLS[type]}" alt="${type} symbol" loading="lazy">`)
     .join("");
 
@@ -804,11 +824,11 @@ function showInfo(credit) {
         <div class="info-art ${shinyClass}" style="background:${artBg};">
           <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
         </div>
-        <div class="info-meta-wrap">
-          <div class="info-meta">ARTIST: ${credit.artist}</div>
-          <div class="info-meta">YEAR: ${credit.year}</div>
-          <div class="info-meta">ROLE: ${credit.role}</div>
-          <div class="info-meta">TRACK(s): ${credit.tracks}</div>
+        <div class="info-meta-wrap" style="--meta-label-color:${primaryLabelColor};">
+          <div class="info-meta"><span class="info-meta-label">ARTIST</span><span class="info-meta-value">${credit.artist}</span></div>
+          <div class="info-meta"><span class="info-meta-label">YEAR</span><span class="info-meta-value">${credit.year}</span></div>
+          <div class="info-meta"><span class="info-meta-label">ROLE</span><span class="info-meta-value">${credit.role}</span></div>
+          <div class="info-meta"><span class="info-meta-label">TRACK</span><span class="info-meta-value">${credit.tracks}</span></div>
         </div>
       </div>
     </div>
