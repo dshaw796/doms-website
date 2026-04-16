@@ -4,6 +4,841 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ABOUT</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+:root {
+  --ink: #1c1c1c;
+  --shadow: #194242;
+  --border: #333;
+  --panel-border: #8c3b2a;
+  --panel-deep: #5d2418;
+  --silver-1: #f3f4f7;
+  --silver-2: #d9dde4;
+  --silver-3: #b7bcc5;
+  --bubble-bg: rgba(255, 250, 229, 0.94);
+  --bubble-shadow: #3f1b13;
+  --accent: #ffe8a6;
+  --accent-2: #f0b43c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2P', cursive;
+}
+
+body {
+  background-image: url("assets/images/home3.png");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: #083c3c;
+}
+
+.wrapper {
+  max-width: 980px;
+  margin: 28px auto;
+  padding: 10px;
+}
+
+.panel {
+  backdrop-filter: blur(2px);
+  background: rgba(255,255,255,0.16);
+  border: 3px solid var(--panel-border);
+  padding: 14px;
+  box-shadow: 4px 4px var(--shadow);
+}
+
+.panel-top {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  color: #414854;
+  text-decoration: none;
+  font-size: 7px;
+  line-height: 1;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12), 2px 2px var(--bubble-shadow);
+  letter-spacing: 0.4px;
+}
+
+.home-btn:hover {
+  transform: translateY(-1px);
+}
+
+.home-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px rgba(255,255,255,0.45), inset 0 -2px rgba(0,0,0,0.16), 1px 1px var(--bubble-shadow);
+}
+
+.home-btn-icon {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.home-btn-icon::before,
+.home-btn-icon::after {
+  content: '';
+  position: absolute;
+  background: #414854;
+}
+
+.home-btn-icon::before {
+  left: 0;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.home-btn-icon::after {
+  left: 5px;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+}
+
+.story-board {
+  position: relative;
+  width: min(100%, 900px);
+  min-height: 72vh;
+  margin: 0 auto;
+  padding: 12px;
+  border: 3px solid var(--panel-deep);
+  background: linear-gradient(180deg, rgba(67, 34, 24, 0.18) 0%, rgba(255,255,255,0.16) 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 241, 188, 0.12), 4px 4px #3f1b13;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.story-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.story-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) 230px;
+  gap: 12px;
+  align-items: start;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.story-stage.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.story-stage.active .speech-bubble {
+  box-shadow: inset 0 3px rgba(255,255,255,0.55), inset 0 -4px rgba(0,0,0,0.14), 3px 3px #000, 0 0 0 3px rgba(255, 232, 166, 0.18);
+}
+
+.dialogue-side {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+}
+
+.wizard-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 154px;
+  padding-bottom: 6px;
+}
+
+.wizard-sprite {
+  width: 44px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+}
+
+.speech-bubble,
+.image-box {
+  position: relative;
+  border: 3px solid var(--border);
+  box-shadow: inset 0 -3px rgba(0,0,0,0.18), 3px 3px #000;
+}
+
+.speech-bubble::before,
+.image-box::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  right: 12px;
+  height: 6px;
+  background: #999;
+  border: 2px solid var(--border);
+  border-bottom: none;
+}
+
+.speech-bubble {
+  min-height: 154px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, var(--bubble-bg) 100%);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -16px;
+  bottom: 18px;
+  width: 16px;
+  height: 18px;
+  background: var(--bubble-bg);
+  border-left: 3px solid var(--border);
+  border-bottom: 3px solid var(--border);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.speech-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  gap: 10px;
+}
+
+.speech-text {
+  font-size: 9px;
+  line-height: 1.85;
+  color: #2a2317;
+  white-space: pre-wrap;
+}
+
+.speech-meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 7px;
+  color: #5f4b2a;
+}
+
+.speech-counter {
+  opacity: 0.88;
+}
+
+.prompt {
+  position: relative;
+  min-width: 96px;
+  text-align: right;
+  color: #8c3b2a;
+}
+
+.prompt.ready::after {
+  content: '▼';
+  display: inline-block;
+  margin-left: 8px;
+  animation: blink 0.7s step-start infinite;
+}
+
+.image-box {
+  min-height: 154px;
+  padding: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.image-box.idle::after {
+  content: 'IMAGE SLOT';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  font-size: 7px;
+  line-height: 1.8;
+  color: rgba(255, 244, 204, 0.76);
+  text-shadow: 1px 1px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.image-reveal {
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: #1c1f2b;
+}
+
+.image-box.revealed::after {
+  display: none;
+}
+
+.image-box.revealed .image-reveal {
+  display: block;
+  animation: imagePop 180ms steps(4, end) both;
+}
+
+.image-box.revealed .image-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,248,208,0.7) 0%, rgba(255,248,208,0) 100%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 4px, transparent 4px 8px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: pixelFlash 220ms steps(3, end) forwards;
+}
+
+.reveal-image,
+.fallback-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.fallback-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  font-size: 8px;
+  line-height: 1.8;
+  color: #fff7d6;
+  background:
+    linear-gradient(180deg, rgba(240,180,60,0.45) 0%, rgba(58,134,255,0.32) 100%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0 10px, rgba(0,0,0,0.08) 10px 20px);
+}
+
+.story-hint {
+  margin-top: 14px;
+  text-align: right;
+  font-size: 7px;
+  line-height: 1.7;
+  color: #fff0c8;
+  text-shadow: 1px 1px rgba(0,0,0,0.6);
+}
+
+.story-hint span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 2px solid rgba(255,255,255,0.22);
+  background: rgba(0,0,0,0.28);
+}
+
+.story-hint .diamond {
+  font-size: 9px;
+  color: var(--accent);
+  animation: blink 0.7s step-start infinite;
+}
+
+.loading-card,
+.error-card,
+.end-card {
+  border: 3px solid var(--border);
+  padding: 16px;
+  font-size: 9px;
+  line-height: 1.9;
+  color: #fff7d6;
+  background: rgba(0,0,0,0.35);
+  box-shadow: inset 0 -3px rgba(0,0,0,0.16), 3px 3px #000;
+}
+
+.error-card {
+  background: rgba(140,59,42,0.45);
+}
+
+.end-card {
+  margin-top: 14px;
+  color: #4b2c0b;
+  background: rgba(255, 244, 204, 0.88);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes imagePop {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+    filter: brightness(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes pixelFlash {
+  0% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 860px) {
+  .wrapper {
+    max-width: 760px;
+    margin: 18px auto;
+    padding: 8px;
+  }
+
+  .story-board {
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .story-stage {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .dialogue-side {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .wizard-wrap,
+  .speech-bubble,
+  .image-box {
+    min-height: 132px;
+  }
+
+  .wizard-sprite {
+    width: 34px;
+  }
+
+  .speech-bubble {
+    padding: 12px 12px 10px;
+  }
+
+  .speech-bubble::after {
+    left: -12px;
+    bottom: 16px;
+    width: 12px;
+    height: 16px;
+  }
+
+  .image-box {
+    margin-left: 52px;
+  }
+
+  .story-hint {
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    background-position: center top;
+  }
+
+  .wrapper {
+    margin: 0;
+    max-width: 100%;
+    padding: 6px;
+  }
+
+  .panel {
+    padding: 10px;
+  }
+
+  .panel-top {
+    margin-bottom: 10px;
+  }
+
+  .home-btn {
+    min-height: 30px;
+    padding: 6px 8px;
+    font-size: 6px;
+    gap: 4px;
+  }
+
+  .story-board {
+    padding: 8px;
+  }
+
+  .story-stack {
+    gap: 12px;
+  }
+
+  .dialogue-side {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 6px;
+    align-items: start;
+  }
+
+  .wizard-wrap {
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: 36px;
+    padding-bottom: 0;
+  }
+
+  .wizard-sprite {
+    width: 24px;
+  }
+
+  .speech-bubble,
+  .image-box {
+    min-height: 112px;
+  }
+
+  .speech-bubble {
+    padding: 10px 10px 8px;
+  }
+
+  .speech-bubble::after {
+    left: -10px;
+    bottom: 14px;
+    width: 10px;
+    height: 12px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+  }
+
+  .speech-text {
+    font-size: 6px;
+    line-height: 1.85;
+  }
+
+  .speech-meta,
+  .story-hint,
+  .image-box.idle::after,
+  .fallback-art,
+  .loading-card,
+  .error-card,
+  .end-card {
+    font-size: 6px;
+  }
+
+  .speech-meta {
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .prompt {
+    min-width: 74px;
+  }
+
+  .image-box {
+    margin-left: 36px;
+    padding: 6px;
+  }
+
+  .story-hint span {
+    width: 100%;
+    justify-content: center;
+    padding: 7px 8px;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="panel">
+      <div class="panel-top">
+        <a class="home-btn" href="index.html" aria-label="Back to home page">
+          <span class="home-btn-icon" aria-hidden="true"></span>
+          <span>HOME</span>
+        </a>
+      </div>
+
+      <main class="story-board" id="storyBoard" aria-live="polite">
+        <div class="story-stack" id="storyStack">
+          <div class="loading-card">LOADING THE WIZARD...</div>
+        </div>
+        <div class="story-hint"><span><span class="diamond">◆</span>TAP OR CLICK ANYWHERE IN THIS PANEL TO ADVANCE THE DIALOGUE</span></div>
+      </main>
+    </div>
+  </div>
+
+<script>
+const DATA_PATH = 'assets/data/about-dialogue.json';
+const WIZARD_PATH = 'assets/images/wizard.png';
+
+const storyBoard = document.getElementById('storyBoard');
+const storyStack = document.getElementById('storyStack');
+
+const state = {
+  speeches: [],
+  currentSpeechIndex: 0,
+  currentParagraphIndex: 0,
+  isTyping: false,
+  typingFrame: null,
+  typedText: '',
+  rows: [],
+  isReady: false,
+  hasEnded: false
+};
+
+function syncRowHeight(row) {
+  if (!row || !row.speechBubble || !row.imageBox) return;
+  requestAnimationFrame(() => {
+    const bubbleHeight = row.speechBubble.offsetHeight;
+    if (bubbleHeight > 0) {
+      row.imageBox.style.height = bubbleHeight + 'px';
+      row.imageBox.style.minHeight = bubbleHeight + 'px';
+    }
+  });
+}
+
+function createStage(speech, speechIndex) {
+  const stage = document.createElement('section');
+  stage.className = 'story-stage';
+  stage.dataset.speechIndex = String(speechIndex);
+
+  stage.innerHTML = `
+    <div class="dialogue-side">
+      <div class="wizard-wrap">
+        <img class="wizard-sprite" src="${WIZARD_PATH}" alt="Wizard sprite" loading="lazy">
+      </div>
+      <div class="speech-bubble">
+        <div class="speech-inner">
+          <div class="speech-text"></div>
+          <div class="speech-meta">
+            <div class="speech-counter">SPEECH ${speechIndex + 1} / ${state.speeches.length}</div>
+            <div class="prompt"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="image-box idle" aria-label="Reserved image reveal area">
+      <div class="image-reveal"></div>
+    </aside>
+  `;
+
+  storyStack.appendChild(stage);
+  requestAnimationFrame(() => {
+    stage.classList.add('visible');
+    syncRowHeight(refs);
+  });
+
+  const refs = {
+    stage,
+    text: stage.querySelector('.speech-text'),
+    prompt: stage.querySelector('.prompt'),
+    imageBox: stage.querySelector('.image-box'),
+    imageReveal: stage.querySelector('.image-reveal'),
+    speechBubble: stage.querySelector('.speech-bubble'),
+    speech,
+    imageShown: false
+  };
+
+  const wizardSprite = stage.querySelector('.wizard-sprite');
+  wizardSprite.addEventListener('error', () => {
+    wizardSprite.style.display = 'none';
+  }, { once: true });
+
+  state.rows[speechIndex] = refs;
+  syncRowHeight(refs);
+  return refs;
+}
+
+function setPrompt(row, text, ready) {
+  row.prompt.textContent = text;
+  row.prompt.classList.toggle('ready', Boolean(ready));
+}
+
+function setActiveStage(activeIndex) {
+  state.rows.forEach((row, index) => {
+    if (!row) return;
+    row.stage.classList.toggle('active', index === activeIndex);
+  });
+}
+
+function finishTyping() {
+  if (!state.isTyping) return;
+  const row = state.rows[state.currentSpeechIndex];
+  const paragraph = row.speech.paragraphs[state.currentParagraphIndex] || '';
+  if (state.typingFrame) {
+    clearTimeout(state.typingFrame);
+    state.typingFrame = null;
+  }
+  state.typedText = paragraph;
+  row.text.textContent = paragraph;
+  state.isTyping = false;
+  syncRowHeight(row);
+  setPrompt(row, 'CLICK TO CONTINUE', true);
+}
+
+function stepType(row, paragraph, position) {
+  row.text.textContent = paragraph.slice(0, position);
+  syncRowHeight(row);
+
+  if (position >= paragraph.length) {
+    state.isTyping = false;
+    state.typingFrame = null;
+    state.typedText = paragraph;
+    setPrompt(row, 'CLICK TO CONTINUE', true);
+    return;
+  }
+
+  const char = paragraph[position - 1] || '';
+  let delay = 18;
+  if (char === ' ' || char === '\n') delay = 0;
+  if (/[.,!?]/.test(char)) delay = 120;
+  if (/[-:;]/.test(char)) delay = 70;
+
+  state.typingFrame = setTimeout(() => stepType(row, paragraph, position + 1), delay);
+}
+
+function typeParagraph(speechIndex, paragraphIndex) {
+  const row = state.rows[speechIndex];
+  const paragraph = row.speech.paragraphs[paragraphIndex] || '';
+  setActiveStage(speechIndex);
+  row.text.textContent = '';
+  setPrompt(row, 'TYPING...', false);
+  state.isTyping = true;
+  state.typedText = '';
+  if (state.typingFrame) clearTimeout(state.typingFrame);
+  syncRowHeight(row);
+  stepType(row, paragraph, 1);
+}
+
+function revealImage(row) {
+  row.imageShown = true;
+  row.imageBox.classList.remove('idle');
+  row.imageBox.classList.add('revealed');
+
+  const image = new Image();
+  image.className = 'reveal-image';
+  image.alt = row.speech.imageAlt || 'About page image';
+  image.src = row.speech.image || '';
+
+  image.addEventListener('load', () => {
+    row.imageReveal.innerHTML = '';
+    row.imageReveal.appendChild(image);
+    syncRowHeight(row);
+  }, { once: true });
+
+  image.addEventListener('error', () => {
+    row.imageReveal.innerHTML = `<div class="fallback-art">PLACEHOLDER IMAGE\n${row.speech.imageLabel || 'UPDATE THIS SLOT'}</div>`;
+    syncRowHeight(row);
+  }, { once: true });
+
+  if (image.complete && image.naturalWidth > 0) {
+    row.imageReveal.innerHTML = '';
+    row.imageReveal.appendChild(image);
+  }
+
+  syncRowHeight(row);
+  setPrompt(row, state.currentSpeechIndex < state.speeches.length - 1 ? 'CLICK TO CONTINUE' : 'CLICK TO FINISH', true);
+}
+
+function addEndCard() {
+  const endCard = document.createElement('div');
+  endCard.className = 'end-card';
+  endCard.textContent = 'THE WIZARD HAS SAID ALL HE CAME TO SAY.';
+  storyStack.appendChild(endCard);
+}
+
+function advanceDialogue() {
+  if (!state.isReady || state.hasEnded) return;
+  if (state.isTyping) {
+    finishTyping();
+    return;
+  }
+
+  const row = state.rows[state.currentSpeechIndex];
+  const speech = row.speech;
+
+  if (state.currentParagraphIndex < speech.paragraphs.length - 1) {
+    state.currentParagraphIndex += 1;
+    typeParagraph(state.currentSpeechIndex, state.currentParagraphIndex);
+    return;
+  }
+
+  if (!row.imageShown) {
+    revealImage(row);
+    return;
+  }
+
+  if (state.currentSpeechIndex < state.speeches.length - 1) {
+    setPrompt(row, 'IMAGE LOCKED', false);
+    state.currentSpeechIndex += 1;
+    state.currentParagraphIndex = 0;
+    createStage(state.speeches[state.currentSpeechIndex], state.currentSpeechIndex);
+    typeParagraph(state.currentSpeechIndex, state.currentParagraphIndex);
+    return;
+  }
+
+  state.hasEnded = true;
+  setPrompt(row, 'THE END', false);
+  addEndCard();
+}
+
+async function loadStory() {
+  try {
+    const response = await fetch(DATA_PATH);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const payload = await response.json();
+    state.speeches = Array.isArray(payload.speeches) ? payload.speeches : [];
+    storyStack.innerHTML = '';
+
+    if (!state.speeches.length) {
+      storyStack.innerHTML = '<div class="error-card">NO WIZARD SPEECHES WERE FOUND.</div>';
+      return;
+    }
+
+    state.isReady = true;
+    createStage(state.speeches[0], 0);
+    typeParagraph(0, 0);
+  } catch (error) {
+    console.error('Failed to load about dialogue:', error);
+    storyStack.innerHTML = '<div class="error-card">FAILED TO LOAD THE WIZARD SCRIPT.</div>';
+  }
+}
+
+storyBoard.addEventListener('click', (event) => {
+  if (event.target.closest('.home-btn')) return;
+  advanceDialogue();
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    advanceDialogue();
+  }
+});
+
+window.addEventListener('resize', () => {
+  state.rows.forEach(syncRowHeight);
+});
+
+loadStory();
+</script>
+</body>
 </html>

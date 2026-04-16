@@ -1,0 +1,31 @@
+{
+  "speeches": [
+    {
+      "paragraphs": [
+        "WELCOME, TRAVELLER... I SEE YOU WISH TO KNOW MORE OF THE OUTLAW RESIDING IN THESE MOUNTAINS.",
+        ""
+      ],
+      "image": "assets/images/about-image-1.png",
+      "imageAlt": "Placeholder image one",
+      "imageLabel": "IMAGE ONE"
+    },
+    {
+      "paragraphs": [
+        "",
+        ""
+      ],
+      "image": "assets/images/about-image-2.png",
+      "imageAlt": "Placeholder image two",
+      "imageLabel": "IMAGE TWO"
+    },
+    {
+      "paragraphs": [
+        "",
+        ""
+      ],
+      "image": "assets/images/about-image-3.png",
+      "imageAlt": "Placeholder image three",
+      "imageLabel": "IMAGE THREE"
+    }
+  ]
+}
