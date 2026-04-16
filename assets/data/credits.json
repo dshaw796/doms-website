@@ -23,7 +23,7 @@
     ],
     "tracks": "ALL",
     "power": "89",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/squid.webp"
+    "image": "assets/images/squid.png"
   },
   {
     "name": "I/O",
@@ -35,7 +35,7 @@
     ],
     "tracks": "ALL (ENG.), 10 (ARR.)",
     "power": "89",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/pg-io-cover-3000pxl-scaled-1.jpg"
+    "image": "assets/images/io.png"
   },
   {
     "name": "SAYA",
@@ -47,7 +47,7 @@
     ],
     "tracks": "10",
     "power": "95",
-    "image": "https://domshaw.com/wp-content/uploads/2024/04/saya-gray-qwerty-ii.webp"
+    "image": "assets/images/saya.png"
   },
   {
     "name": "A DANCER’S MIND",
@@ -60,7 +60,7 @@
     ],
     "tracks": "1",
     "power": "83",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/600x600bf-60.jpg?w=600"
+    "image": "assets/images/birdy.png"
   },
   {
     "name": "THE CHAPEL",
@@ -87,7 +87,7 @@
     ],
     "tracks": "ALL",
     "power": "83",
-    "image": "assets/images/img.png"
+    "image": "assets/images/bleachers.png"
   },
   {
     "name": "SO HELP ME GOD",
@@ -99,7 +99,7 @@
     ],
     "tracks": "ALL",
     "power": "81",
-    "image": "assets/images/img.png"
+    "image": "assets/images/kelsey.png"
   },
   {
     "name": "SECRETS OF SIX FIGURE WOMEN",
@@ -135,7 +135,7 @@
     ],
     "tracks": "ALL",
     "power": "85",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/1975.webp"
+    "image": "assets/images/1975.png"
   },
   {
     "name": "UNHEALTHY",
@@ -147,7 +147,7 @@
     ],
     "tracks": "3",
     "power": "72",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/am-2.jpg"
+    "image": "assets/images/am.png"
   },
   {
     "name": "WATER IN THE DESERT",
@@ -159,7 +159,7 @@
     ],
     "tracks": "1-6,8",
     "power": "77",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/zada.jpeg"
+    "image": "assets/images/zada.png"
   },
   {
     "name": "MIRROR IN THE BATHROOM (LIVE)",
@@ -171,7 +171,7 @@
     ],
     "tracks": "2",
     "power": "68",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/womad.jpg"
+    "image": "assets/images/beat.png"
   },
   {
     "name": "SOLACE",
@@ -183,7 +183,7 @@
     ],
     "tracks": "ALL",
     "power": "73",
-    "image": "image1.png"
+    "image": "assets/images/hbt.png"
   },
   {
     "name": "FISHERMAN’S FRIENDS: THE MUSICAL",
@@ -195,7 +195,7 @@
     ],
     "tracks": "ALL",
     "power": "71",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/fish-2.webp"
+    "image": "assets/images/ff.png"
   },
   {
     "name": "ATMA - THE SOUL",
@@ -207,7 +207,7 @@
     ],
     "tracks": "ALL",
     "power": "72",
-    "image": "image1.png"
+    "image": "assets/images/rp.png"
   },
   {
     "name": "AND SO WE SETTLE, PT. 1",
@@ -221,7 +221,7 @@
     ],
     "tracks": "ALL",
     "power": "88",
-    "image": "https://domshaw.com/wp-content/uploads/2024/11/maybe-the-kids-were-right-one-1-copy.png?w=1024"
+    "image": "assets/images/asws1.png"
   },
   {
     "name": "THE NEW WORLD",
@@ -234,7 +234,7 @@
     ],
     "tracks": "ALL(Asst.),3(Perf.)",
     "power": "79",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/swindle-the-new-world-art.webp"
+    "image": "assets/images/swindle.png"
   },
   {
     "name": "PLASTIC MAN",
@@ -246,7 +246,7 @@
     ],
     "tracks": "ALL",
     "power": "71",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/touki-1.jpeg"
+    "image": "assets/images/touki.png"
   },
   {
     "name": "IS IT?",
@@ -258,7 +258,7 @@
     ],
     "tracks": "ALL",
     "power": "87",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/ben-new.webp"
+    "image": "assets/images/bh.png"
   },
   {
     "name": "A SOUND HEART",
@@ -270,7 +270,7 @@
     ],
     "tracks": "ALL",
     "power": "81",
-    "image": "image1.png"
+    "image": "assets/images/jaubi.png"
   },
   {
     "name": "LOVE & MONEY",
@@ -282,7 +282,7 @@
     ],
     "tracks": "ALL",
     "power": "76",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/katie-melua.png"
+    "image": "assets/images/km.png"
   },
   {
     "name": "SYMPATHY FOR LIFE",
@@ -294,7 +294,7 @@
     ],
     "tracks": "",
     "power": "71",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/sympathyforlife_cover_web.webp"
+    "image": "assets/images/pq.png"
   },
   {
     "name": "PHOSPHORESCENT",
@@ -306,6 +306,6 @@
     ],
     "tracks": "ALL",
     "power": "70",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/gab-aplin.jpg"
+    "image": "assets/images/ga.png"
   }
 ]
