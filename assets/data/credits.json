@@ -14,18 +14,6 @@
     "image": "assets/images/asco.png"
   },
   {
-    "name": "O MONOLITH",
-    "artist": "SQUID",
-    "year": "2023",
-    "role": "ENGINEER",
-    "types": [
-      "ENGINEERING"
-    ],
-    "tracks": "ALL",
-    "power": "89",
-    "image": "assets/images/squid.png"
-  },
-  {
     "name": "I/O",
     "artist": "PETER GABRIEL",
     "year": "2024",
@@ -36,18 +24,6 @@
     "tracks": "ALL (ENG.), 10 (ARR.)",
     "power": "89",
     "image": "assets/images/io.png"
-  },
-  {
-    "name": "SAYA",
-    "artist": "SAYA GRAY",
-    "year": "2025",
-    "role": "ENGINEER",
-    "types": [
-      "ENGINEERING"
-    ],
-    "tracks": "10",
-    "power": "95",
-    "image": "assets/images/saya.png"
   },
   {
     "name": "A DANCER’S MIND",
@@ -63,19 +39,28 @@
     "image": "assets/images/birdy.png"
   },
   {
-    "name": "THE CHAPEL",
-    "artist": "CADMIUM RED",
-    "year": "2026",
-    "role": "PRODUCTION / MIXING / PERFORMING",
+    "name": "SAYA",
+    "artist": "SAYA GRAY",
+    "year": "2025",
+    "role": "ENGINEER",
     "types": [
-      "PRODUCTION",
-      "MIXING",
-      "ENGINEERING",
-      "PERFORMING"
+      "ENGINEERING"
+    ],
+    "tracks": "10",
+    "power": "95",
+    "image": "assets/images/saya.png"
+  },
+  {
+    "name": "O MONOLITH",
+    "artist": "SQUID",
+    "year": "2023",
+    "role": "ENGINEER",
+    "types": [
+      "ENGINEERING"
     ],
     "tracks": "ALL",
-    "power": "91",
-    "image": "assets/images/dust.png"
+    "power": "89",
+    "image": "assets/images/squid.png"
   },
   {
     "name": "EVERYONE FOR TEN MINUTES",
@@ -102,6 +87,21 @@
     "image": "assets/images/kelsey.png"
   },
   {
+    "name": "THE CHAPEL",
+    "artist": "CADMIUM RED",
+    "year": "2026",
+    "role": "PRODUCTION / MIXING / PERFORMING",
+    "types": [
+      "PRODUCTION",
+      "MIXING",
+      "ENGINEERING",
+      "PERFORMING"
+    ],
+    "tracks": "ALL",
+    "power": "91",
+    "image": "assets/images/dust.png"
+  },
+  {
     "name": "SECRETS OF SIX FIGURE WOMEN",
     "artist": "BERNARDO",
     "year": "2025",
@@ -126,18 +126,6 @@
     "image": "assets/images/scar.png"
   },
   {
-    "name": "BEING FUNNY IN A FOREIGN LANGUAGE",
-    "artist": "THE 1975",
-    "year": "2022",
-    "role": "ASSISTANT ENGINEER",
-    "types": [
-      "ASST. ENG"
-    ],
-    "tracks": "ALL",
-    "power": "85",
-    "image": "assets/images/1975.png"
-  },
-  {
     "name": "UNHEALTHY",
     "artist": "ANNE-MARIE",
     "year": "2023",
@@ -148,6 +136,18 @@
     "tracks": "3",
     "power": "72",
     "image": "assets/images/am.png"
+  },
+  {
+    "name": "BEING FUNNY IN A FOREIGN LANGUAGE",
+    "artist": "THE 1975",
+    "year": "2022",
+    "role": "ASSISTANT ENGINEER",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "85",
+    "image": "assets/images/1975.png"
   },
   {
     "name": "WATER IN THE DESERT",
@@ -232,7 +232,7 @@
       "PERFORMING",
       "ASST. ENG"
     ],
-    "tracks": "ALL(Asst.),3(Perf.)",
+    "tracks": "3 (SAX), ALL (ASST)",
     "power": "79",
     "image": "assets/images/swindle.png"
   },
@@ -292,7 +292,7 @@
     "types": [
       "ASST. ENG"
     ],
-    "tracks": "",
+    "tracks": "1,2,5,8,10,11",
     "power": "71",
     "image": "assets/images/pq.png"
   },
