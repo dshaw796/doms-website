@@ -52,13 +52,18 @@ body {
   box-shadow: 4px 4px var(--shadow);
 }
 
+.title-wrap {
+  position: relative;
+  margin-bottom: 22px;
+}
+
 .title {
   text-align: center;
   font-size: 13px;
   line-height: 1.4;
-  margin-bottom: 22px;
+  margin-bottom: 0;
   color: #fff7d6;
-  padding: 14px 18px;
+  padding: 14px 132px;
   border: 3px solid #5d2418;
   background: linear-gradient(180deg, #b45a3c 0%, #8c3b2a 52%, #6e2a1e 100%);
   box-shadow: inset 0 3px rgba(255,255,255,0.25), inset 0 -4px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,241,188,0.15), 4px 4px #3f1b13;
@@ -73,6 +78,66 @@ body {
   margin-top: 7px;
 }
 
+.home-btn {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  color: #414854;
+  text-decoration: none;
+  font-size: 7px;
+  line-height: 1;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12), 2px 2px #3f1b13;
+  letter-spacing: 0.4px;
+  z-index: 2;
+}
+
+.home-btn:hover {
+  transform: translateY(calc(-50% - 1px));
+}
+
+.home-btn:active {
+  transform: translateY(calc(-50% + 1px));
+  box-shadow: inset 0 2px rgba(255,255,255,0.45), inset 0 -2px rgba(0,0,0,0.16), 1px 1px #3f1b13;
+}
+
+.home-btn-icon {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.home-btn-icon::before,
+.home-btn-icon::after {
+  content: '';
+  position: absolute;
+  background: #414854;
+}
+
+.home-btn-icon::before {
+  left: 0;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.home-btn-icon::after {
+  left: 5px;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+}
+
 .categories {
   display: flex;
   flex-wrap: wrap;
@@ -82,6 +147,10 @@ body {
 }
 
 .category-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-size: 8px;
   padding: 9px 10px;
   border: 2px solid var(--border);
@@ -92,7 +161,7 @@ body {
 }
 
 .category-btn[data-type="ALL"] {
-  background: linear-gradient(135deg, var(--production) 0%, var(--production) 20%, var(--performing) 20%, var(--performing) 40%, var(--mixing) 40%, var(--mixing) 60%, var(--engineering) 60%, var(--engineering) 80%, var(--asst-eng) 80%, var(--asst-eng) 100%);
+  background: linear-gradient(135deg, var(--production) 0%, var(--production) 20%, var(--mixing) 20%, var(--mixing) 40%, var(--engineering) 40%, var(--engineering) 60%, var(--performing) 60%, var(--performing) 80%, var(--asst-eng) 80%, var(--asst-eng) 100%);
 }
 .category-btn[data-type="PRODUCTION"] { background: var(--production); }
 .category-btn[data-type="PERFORMING"] { background: var(--performing); }
@@ -104,6 +173,18 @@ body {
   transform: translateY(1px);
   box-shadow: inset 0 -2px rgba(255,255,255,0.22), 1px 1px #000, 0 0 0 3px rgba(255,255,255,0.36);
 }
+.category-btn img {
+  width: 14px;
+  height: 14px;
+  image-rendering: pixelated;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.category-btn .label-short {
+  display: none;
+}
+
 
 .content {
   display: grid;
@@ -246,6 +327,7 @@ body {
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 40%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.22) 60%, rgba(255,255,255,0) 100%);
   animation: shineSweep 6.8s linear infinite;
   pointer-events: none;
+  z-index: 2;
 }
 
 @keyframes shineSweep {
@@ -271,7 +353,7 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   max-height: 70vh;
   overflow-y: auto;
@@ -325,7 +407,7 @@ body {
   position: relative;
   z-index: 1;
   padding: 7px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   min-height: 86px;
   border: 2px solid rgba(0,0,0,0.18);
   overflow: hidden;
@@ -343,14 +425,21 @@ body {
   z-index: 1;
 }
 
-.album p {
+.album-label {
   position: relative;
-  z-index: 2;
-  font-size: 6px;
-  margin-top: 4px;
+  z-index: 4;
+  display: block;
+  margin: 0 0 6px;
+  font-size: 8px;
+  padding: 6px 7px;
   text-align: center;
-  color: #000;
+  color: #fffdf2;
   line-height: 1.45;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.8);
+  -webkit-text-stroke: 0.45px rgba(0,0,0,0.95);
+  background: linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 100%);
+  border: 2px solid rgba(255,255,255,0.22);
+  box-shadow: inset 0 1px rgba(255,255,255,0.16);
 }
 
 .status {
@@ -377,16 +466,49 @@ body {
     padding: 12px;
   }
 
+  .title-wrap {
+    margin-bottom: 12px;
+  }
+
   .title {
     font-size: 10px;
     line-height: 1.45;
-    margin-bottom: 12px;
-    padding: 10px 12px;
+    margin-bottom: 0;
+    padding: 10px 56px;
   }
 
   .title span {
     font-size: 7px;
     margin-top: 6px;
+  }
+
+  .home-btn {
+    left: 10px;
+    right: auto;
+    top: 50%;
+    min-height: 28px;
+    padding: 6px 7px;
+    font-size: 6px;
+    gap: 4px;
+    box-shadow: inset 0 2px rgba(255,255,255,0.5), inset 0 -2px rgba(0,0,0,0.14), 1px 1px #3f1b13;
+  }
+
+  .home-btn-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .home-btn-icon::before {
+    top: 3px;
+    width: 6px;
+    height: 3px;
+  }
+
+  .home-btn-icon::after {
+    left: 4px;
+    top: 3px;
+    width: 6px;
+    height: 3px;
   }
 
   .categories {
@@ -411,10 +533,24 @@ body {
 
   .category-btn {
     flex: 0 0 auto;
+    gap: 5px;
     font-size: 7px;
     padding: 10px 10px;
     min-height: 40px;
     white-space: nowrap;
+  }
+
+  .category-btn img {
+    width: 12px;
+    height: 12px;
+  }
+
+  .category-btn .label-full {
+    display: none;
+  }
+
+  .category-btn .label-short {
+    display: inline;
   }
 
   .content {
@@ -448,10 +584,11 @@ body {
     margin-bottom: 3px;
   }
 
-  .album p {
-    font-size: 5px;
+  .album-label {
+    margin: 0 0 5px;
+    font-size: 6px;
     line-height: 1.4;
-    margin-top: 3px;
+    padding: 5px 6px;
   }
 
   .info-card {
@@ -526,15 +663,44 @@ body {
 <body>
 <div class="wrapper">
   <div class="panel">
-    <div class="title">CREDITS DATABASE<span>INDEX OF CREDITS ATTRIBUTED TO DOM SHAW</span></div>
+    <div class="title-wrap">
+      <a class="home-btn" href="index.html" aria-label="Back to home page">
+        <span class="home-btn-icon" aria-hidden="true"></span>
+        <span>HOME</span>
+      </a>
+      <div class="title">CREDITS DATABASE<span>INDEX OF CREDITS ATTRIBUTED TO DOM SHAW</span></div>
+    </div>
 
     <div class="categories">
-      <button class="category-btn active" data-type="ALL">ALL</button>
-      <button class="category-btn" data-type="PRODUCTION">PRODUCTION</button>
-      <button class="category-btn" data-type="PERFORMING">PERFORMING</button>
-      <button class="category-btn" data-type="MIXING">MIXING</button>
-      <button class="category-btn" data-type="ENGINEERING">ENGINEERING</button>
-      <button class="category-btn" data-type="ASST. ENG">ASST. ENG</button>
+      <button class="category-btn active" data-type="ALL">
+        <span class="label-full">ALL</span>
+        <span class="label-short">ALL</span>
+      </button>
+      <button class="category-btn" data-type="PRODUCTION">
+        <img src="assets/images/lightning.png" alt="Production symbol" loading="lazy">
+        <span class="label-full">PRODUCTION</span>
+        <span class="label-short">PROD</span>
+      </button>
+      <button class="category-btn" data-type="MIXING">
+        <img src="assets/images/water.png" alt="Mixing symbol" loading="lazy">
+        <span class="label-full">MIXING</span>
+        <span class="label-short">MIX</span>
+      </button>
+      <button class="category-btn" data-type="ENGINEERING">
+        <img src="assets/images/nature.png" alt="Engineering symbol" loading="lazy">
+        <span class="label-full">ENGINEERING</span>
+        <span class="label-short">ENG</span>
+      </button>
+      <button class="category-btn" data-type="PERFORMING">
+        <img src="assets/images/fire.png" alt="Performing symbol" loading="lazy">
+        <span class="label-full">PERFORMING</span>
+        <span class="label-short">PERF</span>
+      </button>
+      <button class="category-btn" data-type="ASST. ENG">
+        <img src="assets/images/dragon.png" alt="Assistant engineering symbol" loading="lazy">
+        <span class="label-full">ASST. ENG</span>
+        <span class="label-short">ASST</span>
+      </button>
     </div>
 
     <div class="content">
@@ -545,7 +711,7 @@ body {
 </div>
 
 <script>
-const TYPE_PRIORITY = ["PRODUCTION", "PERFORMING", "MIXING", "ENGINEERING", "ASST. ENG"];
+const TYPE_PRIORITY = ["PRODUCTION", "MIXING", "ENGINEERING", "PERFORMING", "ASST. ENG"];
 const TYPE_COLORS = {
   "PRODUCTION": "var(--production)",
   "PERFORMING": "var(--performing)",
@@ -567,7 +733,7 @@ let selectedCredit = null;
 const grid = document.getElementById("grid");
 const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
-const clickSound = new Audio("assets/audio/slide.wav");
+const clickSound = new Audio("assets/audio/slide.mp3");
 clickSound.preload = "auto";
 
 function normalizeTypes(types = []) {
@@ -614,7 +780,7 @@ function resetInfoPanel(message = "SELECT AN ALBUM") {
 function showInfo(credit) {
   const fullTypes = normalizeTypes(credit.types || []).join(" / ");
   const artBg = getCardBackground(credit);
-  const shinyClass = (credit.types || []).includes("PRODUCTION") ? "shiny" : "";
+  const shinyClass = (credit.types || []).length >= 2 ? "shiny" : "";
   const symbolMarkup = normalizeTypes(credit.types || [])
     .map(type => `<img src="${TYPE_SYMBOLS[type]}" alt="${type} symbol" loading="lazy">`)
     .join("");
@@ -636,7 +802,6 @@ function showInfo(credit) {
           <div class="info-meta">ARTIST: ${credit.artist}</div>
           <div class="info-meta">YEAR: ${credit.year}</div>
           <div class="info-meta">ROLE: ${credit.role}</div>
-          <div class="info-meta">TYPE: ${fullTypes}</div>
           <div class="info-meta">TRACK(s): ${credit.tracks}</div>
         </div>
       </div>
@@ -669,7 +834,7 @@ function renderCredits(filter = "ALL") {
     }
 
     const art = document.createElement("div");
-    art.className = `album-art ${(credit.types || []).includes("PRODUCTION") ? "shiny" : ""}`;
+    art.className = `album-art ${(credit.types || []).length >= 2 ? "shiny" : ""}`;
     art.style.background = getCardBackground(credit);
 
     const img = document.createElement("img");
@@ -677,12 +842,13 @@ function renderCredits(filter = "ALL") {
     img.alt = `${credit.name} cover`;
     img.loading = "lazy";
 
-    const label = document.createElement("p");
+    const label = document.createElement("div");
+    label.className = "album-label";
     label.textContent = credit.artist;
 
     art.appendChild(img);
-    card.appendChild(art);
     card.appendChild(label);
+    card.appendChild(art);
 
     card.addEventListener("click", () => {
       selectedCredit = credit;

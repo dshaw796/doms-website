@@ -1,24 +1,59 @@
 [
   {
-    "name": "The Chapel",
-    "artist": "Cadmium Red",
-    "year": "2026",
-    "role": "Production / Mixing / Performing",
+    "name": "AND SO WE SETTLE, PT. 2",
+    "artist": "WATERLOG",
+    "year": "2025",
+    "role": "PRODUCER / SONGWRITER / PERFORMER",
     "types": [
       "PRODUCTION",
-      "MIXING",
       "ENGINEERING",
       "PERFORMING"
     ],
     "tracks": "ALL",
-    "power": "91",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/cadmium.jpg?w=700"
+    "power": "82",
+    "image": "assets/images/asco.png"
   },
   {
-    "name": "A Dancer’s Mind",
-    "artist": "Birdy",
+    "name": "O MONOLITH",
+    "artist": "SQUID",
+    "year": "2023",
+    "role": "ENGINEER",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "89",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/squid.webp"
+  },
+  {
+    "name": "I/O",
+    "artist": "PETER GABRIEL",
+    "year": "2024",
+    "role": "ENGINEER / CHOIR ARRANGEMENT",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL (ENG.), 10 (ARR.)",
+    "power": "89",
+    "image": "https://domshaw.com/wp-content/uploads/2024/03/pg-io-cover-3000pxl-scaled-1.jpg"
+  },
+  {
+    "name": "SAYA",
+    "artist": "SAYA GRAY",
     "year": "2025",
-    "role": "Mix / Record Engineer",
+    "role": "ENGINEER",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "10",
+    "power": "95",
+    "image": "https://domshaw.com/wp-content/uploads/2024/04/saya-gray-qwerty-ii.webp"
+  },
+  {
+    "name": "A DANCER’S MIND",
+    "artist": "BIRDY",
+    "year": "2025",
+    "role": "MIX / RECORD ENGINEER",
     "types": [
       "ENGINEERING",
       "MIXING"
@@ -28,84 +63,73 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/600x600bf-60.jpg?w=600"
   },
   {
-    "name": "Eyen Forever",
-    "artist": "Eli Carvajal",
-    "year": "2025",
-    "role": "Mix Engineer",
+    "name": "THE CHAPEL",
+    "artist": "CADMIUM RED",
+    "year": "2026",
+    "role": "PRODUCTION / MIXING / PERFORMING",
     "types": [
-      "MIXING"
+      "PRODUCTION",
+      "MIXING",
+      "ENGINEERING",
+      "PERFORMING"
     ],
     "tracks": "ALL",
-    "power": "79",
-    "image": "https://domshaw.com/wp-content/uploads/2025/10/a1511736864_16.jpg"
+    "power": "91",
+    "image": "assets/images/dust.png"
   },
   {
-    "name": "i/o",
-    "artist": "Peter Gabriel",
-    "year": "2024",
-    "role": "Engineer / Choir Arrangement",
+    "name": "EVERYONE FOR TEN MINUTES",
+    "artist": "BLEACHERS",
+    "year": "2026",
+    "role": "ASSISTANT ENGINEER",
     "types": [
-      "ENGINEERING"
+      "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/pg-io-cover-3000pxl-scaled-1.jpg"
+    "power": "83",
+    "image": "assets/images/img.png"
   },
   {
-    "name": "Secrets Of Six Figure Women",
-    "artist": "Bernardo",
+    "name": "SO HELP ME GOD",
+    "artist": "KELSEY LU",
+    "year": "2026",
+    "role": "ASSISTANT ENGINEER",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "81",
+    "image": "assets/images/img.png"
+  },
+  {
+    "name": "SECRETS OF SIX FIGURE WOMEN",
+    "artist": "BERNARDO",
     "year": "2025",
-    "role": "Mix Engineer",
+    "role": "MIX ENGINEER",
     "types": [
       "MIXING"
     ],
     "tracks": "ALL",
     "power": "72",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/a2655217285_10.jpg?w=1024"
+    "image": "assets/images/nada.png"
   },
   {
-    "name": "And So We Settle, Pt. 2",
-    "artist": "Waterlog",
-    "year": "",
-    "role": "Producer / Songwriter / Performer",
-    "types": [
-      "PRODUCTION",
-      "ENGINEERING",
-      "PERFORMING"
-    ],
-    "tracks": "ALL",
-    "power": "82",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/tchscrn-op-one-copy-2.jpg"
-  },
-  {
-    "name": "O Monolith",
-    "artist": "Squid",
-    "year": "2023",
-    "role": "Engineer",
-    "types": [
-      "ENGINEERING"
-    ],
-    "tracks": "ALL",
-    "power": "89",
-    "image": "https://domshaw.com/wp-content/uploads/2024/03/squid.webp"
-  },
-  {
-    "name": "SAYA",
-    "artist": "Saya Gray",
+    "name": "EYEN FOREVER",
+    "artist": "ELI CARVAJAL",
     "year": "2025",
-    "role": "Engineer",
+    "role": "MIX ENGINEER",
     "types": [
-      "ENGINEERING"
+      "MIXING"
     ],
-    "tracks": "10",
-    "power": "95",
-    "image": "https://domshaw.com/wp-content/uploads/2024/04/saya-gray-qwerty-ii.webp"
+    "tracks": "ALL",
+    "power": "79",
+    "image": "assets/images/scar.png"
   },
   {
-    "name": "Being Funny In A Foreign Language",
-    "artist": "The 1975",
+    "name": "BEING FUNNY IN A FOREIGN LANGUAGE",
+    "artist": "THE 1975",
     "year": "2022",
-    "role": "Assistant Engineer",
+    "role": "ASSISTANT ENGINEER",
     "types": [
       "ASST. ENG"
     ],
@@ -114,10 +138,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/1975.webp"
   },
   {
-    "name": "Unhealthy",
-    "artist": "Anne-Marie",
+    "name": "UNHEALTHY",
+    "artist": "ANNE-MARIE",
     "year": "2023",
-    "role": "Engineer",
+    "role": "ENGINEER",
     "types": [
       "ENGINEERING"
     ],
@@ -129,7 +153,7 @@
     "name": "WATER IN THE DESERT",
     "artist": "ZADA",
     "year": "2024",
-    "role": "Engineer",
+    "role": "ENGINEER",
     "types": [
       "ENGINEERING"
     ],
@@ -138,10 +162,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/zada.jpeg"
   },
   {
-    "name": "Mirror in the Bathroom (Live)",
-    "artist": "The Beat",
+    "name": "MIRROR IN THE BATHROOM (LIVE)",
+    "artist": "THE BEAT",
     "year": "2022",
-    "role": "Mix Engineer",
+    "role": "MIX ENGINEER",
     "types": [
       "MIXING"
     ],
@@ -150,10 +174,22 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/womad.jpg"
   },
   {
-    "name": "Fisherman’s Friends: The Musical",
-    "artist": "Fisherman's Friends (2022 Cast)",
+    "name": "SOLACE",
+    "artist": "HELD BY TREES",
+    "year": "2023",
+    "role": "ENGINEER",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "73",
+    "image": "image1.png"
+  },
+  {
+    "name": "FISHERMAN’S FRIENDS: THE MUSICAL",
+    "artist": "FISHERMAN'S FRIENDS",
     "year": "2022",
-    "role": "Engineer",
+    "role": "ENGINEER",
     "types": [
       "ENGINEERING"
     ],
@@ -162,10 +198,22 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/fish-2.webp"
   },
   {
-    "name": "And So We Settle, Pt. 1",
-    "artist": "Waterlog",
+    "name": "ATMA - THE SOUL",
+    "artist": "ROOPA PANESAR",
+    "year": "2023",
+    "role": "ENGINEER",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL",
+    "power": "72",
+    "image": "image1.png"
+  },
+  {
+    "name": "AND SO WE SETTLE, PT. 1",
+    "artist": "WATERLOG",
     "year": "2024",
-    "role": "Primary Artist / Songwriter / Producer",
+    "role": "PRIMARY ARTIST / SONGWRITER / PRODUCER",
     "types": [
       "PERFORMING",
       "ENGINEERING",
@@ -177,9 +225,9 @@
   },
   {
     "name": "THE NEW WORLD",
-    "artist": "Swindle",
+    "artist": "SWINDLE",
     "year": "2021",
-    "role": "Saxophone / Assistant Engineer",
+    "role": "SAXOPHONE / ASSISTANT ENGINEER",
     "types": [
       "PERFORMING",
       "ASST. ENG"
@@ -189,10 +237,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/swindle-the-new-world-art.webp"
   },
   {
-    "name": "Plastic Man",
-    "artist": "Touki",
+    "name": "PLASTIC MAN",
+    "artist": "TOUKI",
     "year": "2024",
-    "role": "Engineer",
+    "role": "ENGINEER",
     "types": [
       "ENGINEERING"
     ],
@@ -201,10 +249,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/touki-1.jpeg"
   },
   {
-    "name": "Is It?",
-    "artist": "Ben Howard",
+    "name": "IS IT?",
+    "artist": "BEN HOWARD",
     "year": "2023",
-    "role": "Assistant Engineer",
+    "role": "ASSISTANT ENGINEER",
     "types": [
       "ASST. ENG"
     ],
@@ -213,10 +261,22 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/ben-new.webp"
   },
   {
-    "name": "Love & Money",
-    "artist": "Katie Melua",
+    "name": "A SOUND HEART",
+    "artist": "JAUBI",
+    "year": "2024",
+    "role": "ASSISTANT ENGINEER",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "ALL",
+    "power": "81",
+    "image": "image1.png"
+  },
+  {
+    "name": "LOVE & MONEY",
+    "artist": "KATIE MELUA",
     "year": "2023",
-    "role": "Assistant Engineer",
+    "role": "ASSISTANT ENGINEER",
     "types": [
       "ASST. ENG"
     ],
@@ -225,10 +285,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/katie-melua.png"
   },
   {
-    "name": "Sympathy For Life",
-    "artist": "Parquet Courts",
+    "name": "SYMPATHY FOR LIFE",
+    "artist": "PARQUET COURTS",
     "year": "2021",
-    "role": "Assistant Engineer",
+    "role": "ASSISTANT ENGINEER",
     "types": [
       "ASST. ENG"
     ],
@@ -237,10 +297,10 @@
     "image": "https://domshaw.com/wp-content/uploads/2024/03/sympathyforlife_cover_web.webp"
   },
   {
-    "name": "Phosphorescent",
-    "artist": "Gabrielle Aplin",
+    "name": "PHOSPHORESCENT",
+    "artist": "GABRIELLE APLIN",
     "year": "2023",
-    "role": "Assistant Engineer",
+    "role": "ASSISTANT ENGINEER",
     "types": [
       "ASST. ENG"
     ],
