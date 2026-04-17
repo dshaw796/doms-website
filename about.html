@@ -26,6 +26,11 @@
   --bubble-shadow: #3f1b13;
   --accent: #ffe8a6;
   --accent-2: #f0b43c;
+  --beam-duration: 680ms;
+  --tornado-reveal-duration: 980ms;
+  --wizard-cast-flash-duration: 750ms;
+  --image-aspect-ratio: 4 / 3;
+  --mobile-image-aspect-ratio: 16 / 10;
 }
 
 * {
@@ -157,6 +162,20 @@ body {
   box-shadow: inset 0 3px rgba(255,255,255,0.55), inset 0 -4px rgba(0,0,0,0.14), 3px 3px #000, 0 0 0 3px rgba(255, 232, 166, 0.18);
 }
 
+.story-stage.active.mobile-image-beat .image-box {
+  box-shadow: inset 0 3px rgba(255,255,255,0.4), inset 0 -4px rgba(0,0,0,0.14), 3px 3px #000, 0 0 0 3px rgba(255, 232, 166, 0.18);
+}
+
+.story-stage .wizard-wrap {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.story-stage.active .wizard-wrap {
+  opacity: 1;
+  visibility: visible;
+}
+
 .dialogue-side {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
@@ -165,11 +184,13 @@ body {
 }
 
 .wizard-wrap {
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   min-height: 154px;
   padding-bottom: 6px;
+  overflow: visible;
 }
 
 .wizard-sprite {
@@ -177,6 +198,77 @@ body {
   image-rendering: pixelated;
   object-fit: contain;
   filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+}
+
+.beam-spell {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 68px;
+  height: 68px;
+  background-image: url("assets/images/beam-spell.png");
+  background-repeat: no-repeat;
+  background-size: 408px 68px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 6px rgba(214, 255, 143, 0.55));
+  z-index: 2;
+}
+
+.wizard-wrap.beaming-out .beam-spell,
+.wizard-wrap.beaming-in .beam-spell {
+  opacity: 1;
+}
+
+.wizard-wrap.beaming-out .beam-spell {
+  animation: beamFrames var(--beam-duration) steps(6, end) 1 reverse forwards;
+}
+
+.wizard-wrap.beaming-in .beam-spell {
+  animation: beamFrames var(--beam-duration) steps(6, end) 1 forwards;
+}
+
+.wizard-wrap.beaming-out .wizard-sprite {
+  animation: wizardFadeOut var(--beam-duration) linear forwards;
+}
+
+.wizard-wrap.beaming-in .wizard-sprite {
+  animation: wizardFadeIn var(--beam-duration) linear forwards;
+}
+
+.wizard-wrap.casting .wizard-sprite {
+  animation: wizardCastFlash var(--wizard-cast-flash-duration) ease-out 1;
+}
+
+.tornado-spell {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  height: 64px;
+  background-image: url("assets/images/tornado-spell.png");
+  background-repeat: no-repeat;
+  background-size: 256px 64px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--tornado-start-scale, 0.45));
+  transform-origin: center center;
+  opacity: 1;
+  z-index: 2;
+}
+
+.image-reveal.spell-revealing .tornado-spell {
+  animation:
+    tornadoFrames 220ms steps(4, end) infinite,
+    tornadoGrow var(--tornado-reveal-duration) linear forwards;
+}
+
+.image-reveal.spell-revealing .reveal-image,
+.image-reveal.spell-revealing .fallback-art {
+  animation: imageUnderSpell var(--tornado-reveal-duration) ease-out forwards;
 }
 
 .speech-bubble,
@@ -209,7 +301,8 @@ body {
   content: '';
   position: absolute;
   left: -16px;
-  bottom: 18px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 16px;
   height: 18px;
   background: var(--bubble-bg);
@@ -226,11 +319,37 @@ body {
   gap: 10px;
 }
 
+
+.speaker-tag {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 2px;
+  margin-bottom: 4px;
+  border: 1px solid rgba(55, 87, 145, 0.4);
+  background: rgba(121, 162, 232, 0.12);
+  box-shadow: none;
+  font-size: 7.75px;
+  line-height: 1.3;
+  letter-spacing: 0.25px;
+  color: #4d6291;
+  text-shadow: none;
+  opacity: 0.92;
+}
+
+
 .speech-text {
   font-size: 9px;
   line-height: 1.85;
   color: #2a2317;
   white-space: pre-wrap;
+}
+
+.speech-emphasis {
+  color: #224f99;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+  padding: 0 1px;
 }
 
 .speech-meta {
@@ -262,9 +381,11 @@ body {
 }
 
 .image-box {
-  min-height: 154px;
+  width: 100%;
+  aspect-ratio: var(--image-aspect-ratio);
   padding: 8px;
   overflow: hidden;
+  align-self: start;
   background: linear-gradient(180deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.1) 100%);
 }
 
@@ -289,7 +410,6 @@ body {
   display: none;
   width: 100%;
   height: 100%;
-  min-height: 100%;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,0.2);
   background: #1c1f2b;
@@ -338,30 +458,6 @@ body {
     repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0 10px, rgba(0,0,0,0.08) 10px 20px);
 }
 
-.story-hint {
-  margin-top: 14px;
-  text-align: right;
-  font-size: 7px;
-  line-height: 1.7;
-  color: #fff0c8;
-  text-shadow: 1px 1px rgba(0,0,0,0.6);
-}
-
-.story-hint span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border: 2px solid rgba(255,255,255,0.22);
-  background: rgba(0,0,0,0.28);
-}
-
-.story-hint .diamond {
-  font-size: 9px;
-  color: var(--accent);
-  animation: blink 0.7s step-start infinite;
-}
-
 .loading-card,
 .error-card,
 .end-card {
@@ -407,6 +503,81 @@ body {
   100% { opacity: 0; }
 }
 
+@keyframes beamFrames {
+  from { background-position: 0 0; }
+  to { background-position: -192px 0; }
+}
+
+@keyframes tornadoFrames {
+  from { background-position: 0 0; }
+  to { background-position: -256px 0; }
+}
+
+@keyframes tornadoGrow {
+  0% {
+    transform: translate(-50%, -50%) scale(var(--tornado-start-scale, 0.45));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(var(--tornado-end-scale, 3.2));
+    opacity: 0;
+  }
+}
+
+@keyframes imageUnderSpell {
+  0% { opacity: 0; }
+  72% { opacity: 0; }
+  88% { opacity: 0.42; }
+  100% { opacity: 1; }
+}
+
+@keyframes wizardFadeOut {
+  0% { opacity: 1; }
+  35% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes wizardFadeIn {
+  0% { opacity: 0; }
+  55% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+@keyframes wizardCastFlash {
+  0% {
+    filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+    transform: scale(1);
+  }
+  10% {
+    filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+    transform: scale(1);
+  }
+  22% {
+    filter: brightness(0) saturate(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+    transform: scale(1.04);
+  }
+  76% {
+    filter: brightness(0) saturate(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.98));
+    transform: scale(1.06);
+  }
+  100% {
+    filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+    transform: scale(1);
+  }
+}
+
+@keyframes wizardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 860px) {
   .wrapper {
     max-width: 760px;
@@ -430,8 +601,7 @@ body {
   }
 
   .wizard-wrap,
-  .speech-bubble,
-  .image-box {
+  .speech-bubble {
     min-height: 132px;
   }
 
@@ -445,7 +615,8 @@ body {
 
   .speech-bubble::after {
     left: -12px;
-    bottom: 16px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 12px;
     height: 16px;
   }
@@ -453,13 +624,9 @@ body {
   .image-box {
     margin-left: 52px;
   }
-
-  .story-hint {
-    text-align: center;
-  }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 768px) {
   body {
     background-position: center top;
   }
@@ -493,15 +660,21 @@ body {
     gap: 12px;
   }
 
-  .dialogue-side {
+  .story-stage {
     grid-template-columns: 30px minmax(0, 1fr);
     gap: 6px;
     align-items: start;
   }
 
+  .dialogue-side {
+    display: contents;
+  }
+
   .wizard-wrap {
+    grid-column: 1;
     min-height: 0;
     align-items: flex-start;
+    justify-content: center;
     padding-top: 36px;
     padding-bottom: 0;
   }
@@ -510,18 +683,28 @@ body {
     width: 24px;
   }
 
+  .beam-spell {
+    bottom: 2px;
+    width: 56px;
+    height: 56px;
+    background-size: 336px 56px;
+  }
+
   .speech-bubble,
   .image-box {
-    min-height: 112px;
+    grid-column: 2;
+    width: 100%;
   }
 
   .speech-bubble {
+    min-height: 124px;
     padding: 10px 10px 8px;
   }
 
   .speech-bubble::after {
     left: -10px;
-    bottom: 14px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 10px;
     height: 12px;
     border-left-width: 2px;
@@ -529,12 +712,19 @@ body {
   }
 
   .speech-text {
-    font-size: 6px;
-    line-height: 1.85;
+    font-size: 7px;
+    line-height: 1.9;
+  }
+
+  .speaker-tag {
+    gap: 3px;
+    padding: 2px 5px 2px;
+    margin-bottom: 3px;
+    font-size: 5.5px;
+    letter-spacing: 0.18px;
   }
 
   .speech-meta,
-  .story-hint,
   .image-box.idle::after,
   .fallback-art,
   .loading-card,
@@ -553,14 +743,18 @@ body {
   }
 
   .image-box {
-    margin-left: 36px;
+    display: none;
+    aspect-ratio: var(--mobile-image-aspect-ratio);
+    margin: 0;
     padding: 6px;
   }
 
-  .story-hint span {
-    width: 100%;
-    justify-content: center;
-    padding: 7px 8px;
+  .story-stage.mobile-image-beat .speech-bubble {
+    display: none;
+  }
+
+  .story-stage.mobile-image-beat .image-box {
+    display: block;
   }
 }
 </style>
@@ -579,7 +773,6 @@ body {
         <div class="story-stack" id="storyStack">
           <div class="loading-card">LOADING THE WIZARD...</div>
         </div>
-        <div class="story-hint"><span><span class="diamond">◆</span>TAP OR CLICK ANYWHERE IN THIS PANEL TO ADVANCE THE DIALOGUE</span></div>
       </main>
     </div>
   </div>
@@ -590,6 +783,7 @@ const WIZARD_PATH = 'assets/images/wizard.png';
 
 const storyBoard = document.getElementById('storyBoard');
 const storyStack = document.getElementById('storyStack');
+const mobileLayoutQuery = window.matchMedia('(max-width: 768px)');
 
 const state = {
   speeches: [],
@@ -600,17 +794,15 @@ const state = {
   typedText: '',
   rows: [],
   isReady: false,
-  hasEnded: false
+  hasEnded: false,
+  isTransitioning: false
 };
 
 function syncRowHeight(row) {
-  if (!row || !row.speechBubble || !row.imageBox) return;
+  if (!row || !row.imageBox) return;
   requestAnimationFrame(() => {
-    const bubbleHeight = row.speechBubble.offsetHeight;
-    if (bubbleHeight > 0) {
-      row.imageBox.style.height = bubbleHeight + 'px';
-      row.imageBox.style.minHeight = bubbleHeight + 'px';
-    }
+    row.imageBox.style.height = '';
+    row.imageBox.style.minHeight = '';
   });
 }
 
@@ -622,10 +814,12 @@ function createStage(speech, speechIndex) {
   stage.innerHTML = `
     <div class="dialogue-side">
       <div class="wizard-wrap">
+        <div class="beam-spell" aria-hidden="true"></div>
         <img class="wizard-sprite" src="${WIZARD_PATH}" alt="Wizard sprite" loading="lazy">
       </div>
       <div class="speech-bubble">
         <div class="speech-inner">
+          <div class="speaker-tag" aria-label="Speaker name">THE WIZARD OF ABOUTNESS</div>
           <div class="speech-text"></div>
           <div class="speech-meta">
             <div class="speech-counter">SPEECH ${speechIndex + 1} / ${state.speeches.length}</div>
@@ -652,6 +846,7 @@ function createStage(speech, speechIndex) {
     imageBox: stage.querySelector('.image-box'),
     imageReveal: stage.querySelector('.image-reveal'),
     speechBubble: stage.querySelector('.speech-bubble'),
+    wizardWrap: stage.querySelector('.wizard-wrap'),
     speech,
     imageShown: false
   };
@@ -678,34 +873,217 @@ function setActiveStage(activeIndex) {
   });
 }
 
+const BEAM_DURATION = 680;
+const TORNADO_REVEAL_DURATION = 980;
+const WIZARD_CAST_FLASH_DURATION = 750;
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isMobileLayout() {
+  return mobileLayoutQuery.matches;
+}
+
+function setMobileBeatState(row, showImageBeat) {
+  if (!row) return;
+  row.stage.classList.toggle('mobile-image-beat', Boolean(showImageBeat) && isMobileLayout());
+}
+
+function triggerWizardCastFlash(row) {
+  if (!row || !row.wizardWrap) return;
+  row.wizardWrap.classList.remove('casting');
+  void row.wizardWrap.offsetWidth;
+  row.wizardWrap.classList.add('casting');
+  window.setTimeout(() => {
+    row.wizardWrap.classList.remove('casting');
+  }, WIZARD_CAST_FLASH_DURATION);
+}
+
+async function playBeam(row, direction) {
+  if (!row || !row.wizardWrap) return;
+  const beamClass = direction === 'out' ? 'beaming-out' : 'beaming-in';
+  row.wizardWrap.classList.remove('beaming-out', 'beaming-in');
+  void row.wizardWrap.offsetWidth;
+  row.wizardWrap.classList.add(beamClass);
+  await wait(BEAM_DURATION);
+  row.wizardWrap.classList.remove(beamClass);
+}
+
+function getTornadoEndScale(row) {
+  const widthScale = row.imageBox.clientWidth / 64;
+  const heightScale = row.imageBox.clientHeight / 64;
+  return Math.max(widthScale, heightScale, 2.4).toFixed(2);
+}
+
+function createFallbackArt(row) {
+  const fallback = document.createElement('div');
+  fallback.className = 'fallback-art';
+  fallback.textContent = `PLACEHOLDER IMAGE\n${row.speech.imageLabel || 'UPDATE THIS SLOT'}`;
+  return fallback;
+}
+
+function loadRevealContent(row) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.className = 'reveal-image';
+    image.alt = row.speech.imageAlt || 'About page image';
+
+    let resolved = false;
+    const finish = (node) => {
+      if (resolved) return;
+      resolved = true;
+      resolve(node);
+    };
+
+    image.addEventListener('load', () => finish(image), { once: true });
+    image.addEventListener('error', () => finish(createFallbackArt(row)), { once: true });
+
+    image.src = row.speech.image || '';
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        finish(image);
+      } else if (!image.src) {
+        finish(createFallbackArt(row));
+      }
+    }
+  });
+}
+
+async function runTornadoReveal(row, contentNode) {
+  const tornadoSpell = document.createElement('div');
+  tornadoSpell.className = 'tornado-spell';
+  triggerWizardCastFlash(row);
+  row.imageReveal.innerHTML = '';
+  row.imageReveal.style.setProperty('--tornado-start-scale', '0.45');
+  row.imageReveal.style.setProperty('--tornado-end-scale', getTornadoEndScale(row));
+  row.imageReveal.appendChild(contentNode);
+  row.imageReveal.appendChild(tornadoSpell);
+  row.imageReveal.classList.add('spell-revealing');
+  syncRowHeight(row);
+  await wait(TORNADO_REVEAL_DURATION);
+  row.imageReveal.classList.remove('spell-revealing');
+  tornadoSpell.remove();
+  syncRowHeight(row);
+}
+
+async function transitionToSpeech(nextIndex) {
+  const currentRow = state.rows[state.currentSpeechIndex];
+  if (!state.rows[nextIndex]) {
+    createStage(state.speeches[nextIndex], nextIndex);
+  }
+  const nextRow = state.rows[nextIndex];
+
+  await playBeam(currentRow, 'out');
+  setPrompt(currentRow, 'IMAGE LOCKED', false);
+  setMobileBeatState(currentRow, false);
+
+  state.currentSpeechIndex = nextIndex;
+  state.currentParagraphIndex = 0;
+  setActiveStage(nextIndex);
+  setMobileBeatState(nextRow, false);
+
+  await playBeam(nextRow, 'in');
+  typeParagraph(nextIndex, 0);
+}
+
+function getParagraphSource(paragraph) {
+  if (typeof paragraph === 'string') return paragraph;
+  if (paragraph && typeof paragraph.text === 'string') return paragraph.text;
+  return '';
+}
+
+function parseParagraphMarkup(paragraph) {
+  const source = getParagraphSource(paragraph);
+  const segments = [];
+  const emphasisPattern = /\*\*(.+?)\*\*/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = emphasisPattern.exec(source)) !== null) {
+    if (match.index > lastIndex) {
+      segments.push({ text: source.slice(lastIndex, match.index), emphasis: false });
+    }
+    segments.push({ text: match[1], emphasis: true });
+    lastIndex = emphasisPattern.lastIndex;
+  }
+
+  if (lastIndex < source.length) {
+    segments.push({ text: source.slice(lastIndex), emphasis: false });
+  }
+
+  if (!segments.length) {
+    segments.push({ text: source, emphasis: false });
+  }
+
+  return {
+    raw: source,
+    plainText: segments.map((segment) => segment.text).join(''),
+    segments
+  };
+}
+
+function normalizeSpeech(speech) {
+  const paragraphs = Array.isArray(speech?.paragraphs) ? speech.paragraphs.map(parseParagraphMarkup) : [];
+  return {
+    ...speech,
+    paragraphs
+  };
+}
+
+function renderParagraph(container, paragraph, visibleCharacters = paragraph.plainText.length) {
+  container.innerHTML = '';
+  let remaining = visibleCharacters;
+
+  paragraph.segments.forEach((segment) => {
+    if (remaining <= 0 || !segment.text) return;
+
+    const piece = segment.text.slice(0, remaining);
+    remaining -= piece.length;
+
+    if (!piece) return;
+
+    if (segment.emphasis) {
+      const emphasisNode = document.createElement('span');
+      emphasisNode.className = 'speech-emphasis';
+      emphasisNode.textContent = piece;
+      container.appendChild(emphasisNode);
+      return;
+    }
+
+    container.appendChild(document.createTextNode(piece));
+  });
+}
+
 function finishTyping() {
   if (!state.isTyping) return;
   const row = state.rows[state.currentSpeechIndex];
-  const paragraph = row.speech.paragraphs[state.currentParagraphIndex] || '';
+  const paragraph = row.speech.paragraphs[state.currentParagraphIndex] || parseParagraphMarkup('');
   if (state.typingFrame) {
     clearTimeout(state.typingFrame);
     state.typingFrame = null;
   }
-  state.typedText = paragraph;
-  row.text.textContent = paragraph;
+  state.typedText = paragraph.plainText;
+  renderParagraph(row.text, paragraph);
   state.isTyping = false;
   syncRowHeight(row);
   setPrompt(row, 'CLICK TO CONTINUE', true);
 }
 
 function stepType(row, paragraph, position) {
-  row.text.textContent = paragraph.slice(0, position);
+  renderParagraph(row.text, paragraph, position);
   syncRowHeight(row);
 
-  if (position >= paragraph.length) {
+  if (position >= paragraph.plainText.length) {
     state.isTyping = false;
     state.typingFrame = null;
-    state.typedText = paragraph;
+    state.typedText = paragraph.plainText;
     setPrompt(row, 'CLICK TO CONTINUE', true);
     return;
   }
 
-  const char = paragraph[position - 1] || '';
+  const char = paragraph.plainText[position - 1] || '';
   let delay = 18;
   if (char === ' ' || char === '\n') delay = 0;
   if (/[.,!?]/.test(char)) delay = 120;
@@ -716,8 +1094,9 @@ function stepType(row, paragraph, position) {
 
 function typeParagraph(speechIndex, paragraphIndex) {
   const row = state.rows[speechIndex];
-  const paragraph = row.speech.paragraphs[paragraphIndex] || '';
+  const paragraph = row.speech.paragraphs[paragraphIndex] || parseParagraphMarkup('');
   setActiveStage(speechIndex);
+  setMobileBeatState(row, false);
   row.text.textContent = '';
   setPrompt(row, 'TYPING...', false);
   state.isTyping = true;
@@ -727,31 +1106,18 @@ function typeParagraph(speechIndex, paragraphIndex) {
   stepType(row, paragraph, 1);
 }
 
-function revealImage(row) {
+async function revealImage(row) {
   row.imageShown = true;
   row.imageBox.classList.remove('idle');
   row.imageBox.classList.add('revealed');
+  setPrompt(row, 'CASTING...', false);
 
-  const image = new Image();
-  image.className = 'reveal-image';
-  image.alt = row.speech.imageAlt || 'About page image';
-  image.src = row.speech.image || '';
-
-  image.addEventListener('load', () => {
-    row.imageReveal.innerHTML = '';
-    row.imageReveal.appendChild(image);
-    syncRowHeight(row);
-  }, { once: true });
-
-  image.addEventListener('error', () => {
-    row.imageReveal.innerHTML = `<div class="fallback-art">PLACEHOLDER IMAGE\n${row.speech.imageLabel || 'UPDATE THIS SLOT'}</div>`;
-    syncRowHeight(row);
-  }, { once: true });
-
-  if (image.complete && image.naturalWidth > 0) {
-    row.imageReveal.innerHTML = '';
-    row.imageReveal.appendChild(image);
+  if (isMobileLayout()) {
+    setMobileBeatState(row, true);
   }
+
+  const contentNode = await loadRevealContent(row);
+  await runTornadoReveal(row, contentNode);
 
   syncRowHeight(row);
   setPrompt(row, state.currentSpeechIndex < state.speeches.length - 1 ? 'CLICK TO CONTINUE' : 'CLICK TO FINISH', true);
@@ -764,8 +1130,8 @@ function addEndCard() {
   storyStack.appendChild(endCard);
 }
 
-function advanceDialogue() {
-  if (!state.isReady || state.hasEnded) return;
+async function advanceDialogue() {
+  if (!state.isReady || state.hasEnded || state.isTransitioning) return;
   if (state.isTyping) {
     finishTyping();
     return;
@@ -781,16 +1147,22 @@ function advanceDialogue() {
   }
 
   if (!row.imageShown) {
-    revealImage(row);
+    state.isTransitioning = true;
+    try {
+      await revealImage(row);
+    } finally {
+      state.isTransitioning = false;
+    }
     return;
   }
 
   if (state.currentSpeechIndex < state.speeches.length - 1) {
-    setPrompt(row, 'IMAGE LOCKED', false);
-    state.currentSpeechIndex += 1;
-    state.currentParagraphIndex = 0;
-    createStage(state.speeches[state.currentSpeechIndex], state.currentSpeechIndex);
-    typeParagraph(state.currentSpeechIndex, state.currentParagraphIndex);
+    state.isTransitioning = true;
+    try {
+      await transitionToSpeech(state.currentSpeechIndex + 1);
+    } finally {
+      state.isTransitioning = false;
+    }
     return;
   }
 
@@ -805,7 +1177,7 @@ async function loadStory() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const payload = await response.json();
-    state.speeches = Array.isArray(payload.speeches) ? payload.speeches : [];
+    state.speeches = Array.isArray(payload.speeches) ? payload.speeches.map(normalizeSpeech) : [];
     storyStack.innerHTML = '';
 
     if (!state.speeches.length) {
@@ -836,6 +1208,10 @@ window.addEventListener('keydown', (event) => {
 
 window.addEventListener('resize', () => {
   state.rows.forEach(syncRowHeight);
+  state.rows.forEach((row) => {
+    if (!row) return;
+    setMobileBeatState(row, row.imageShown && row === state.rows[state.currentSpeechIndex] && !state.hasEnded);
+  });
 });
 
 loadStory();

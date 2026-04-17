@@ -1,18 +1,29 @@
 {
+  "formatting": {
+    "emphasisSyntax": "Wrap any word or phrase in **double asterisks** inside a paragraph text string to emphasize it."
+  },
   "speeches": [
     {
       "paragraphs": [
-        "WELCOME, TRAVELLER... I SEE YOU WISH TO KNOW MORE OF THE OUTLAW RESIDING IN THESE MOUNTAINS.",
-        ""
+        {
+          "text": "WELCOME, TRAVELLER... I SEE YOU WISH TO KNOW MORE OF THE OUTLAW RESIDING IN THESE MOUNTAINS... FOR NOW THEY CALL HIM AN **ARTIFICER OF SOUND**, BUT I REMEMBER HIS IDLE DAYS AS A WANDERING MINSTREL. A SCOUNDREL HE WAS, TOOTING ON HIS SAXOPHONE WITH NO THOUGHT TO THE CONSEQUENCES..."
+        },
+        {
+          "text": "THAT WAS UNTIL, OF COURSE, HIS APPRENTICESHIP AT **REAL WORLD STUDIOS**. HE LEARNED HIS CRAFT THERE FOR A NUMBER OF YEARS, WORKING UNDER SUCH SAGES AS JACK ANTONOFF, DAN CAREY AND JOHN PARISH, AND EVENTUALLY EARNING A **GRAMMY AWARD** FOR HIS WORK ON PETER GABRIEL'S I/O..."
+        }
       ],
-      "image": "assets/images/about-image-1.png",
-      "imageAlt": "Placeholder image one",
+      "image": "assets/images/about-rw.png",
+      "imageAlt": "Real World Image",
       "imageLabel": "IMAGE ONE"
     },
     {
       "paragraphs": [
-        "",
-        ""
+        {
+          "text": "...AND WHILST SUCH WISE COUNCIL WAS BESTOWED UPON THIS REPROBATE, "
+        },
+        {
+          "text": "HUMNAH ADFSOUIS ASOFIASOIF"
+        }
       ],
       "image": "assets/images/about-image-2.png",
       "imageAlt": "Placeholder image two",
@@ -20,8 +31,12 @@
     },
     {
       "paragraphs": [
-        "",
-        ""
+        {
+          "text": "SCOOBY DOOBY DOO"
+        },
+        {
+          "text": "WHERE ARE YOU"
+        }
       ],
       "image": "assets/images/about-image-3.png",
       "imageAlt": "Placeholder image three",
