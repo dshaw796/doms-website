@@ -146,8 +146,8 @@ body {
 
 .story-stage {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) 230px;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
   align-items: start;
   opacity: 0;
   transform: translateY(-10px);
@@ -307,7 +307,7 @@ body {
   content: '';
   position: absolute;
   left: -16px;
-  top: 50%;
+  top: var(--bubble-tail-top, 50%);
   transform: translateY(-50%);
   width: 16px;
   height: 18px;
@@ -346,15 +346,16 @@ body {
 
 
 .speech-text {
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.85;
   color: #2a2317;
   white-space: pre-wrap;
 }
 
 .speech-emphasis {
-  color: #224f99;
-  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+  color: #008d8d;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.9);
+  font-size: 120%;
   padding: 0 1px;
 }
 
@@ -764,7 +765,7 @@ body {
     display: none;
     aspect-ratio: var(--mobile-image-aspect-ratio);
     margin: 0;
-    padding: 8px;
+    padding: 8px 8px 14px;
     align-self: start;
   }
 
@@ -790,12 +791,14 @@ body {
   }
 
   .end-card {
-    min-height: calc(var(--mobile-stage-height) - 16px);
-    font-size: 8px;
-    line-height: 1.9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: auto;
+    width: fit-content;
+    max-width: min(100%, 480px);
+    margin: 18px auto 0;
+    padding: 16px 18px;
+    font-size: 10px;
+    line-height: 1.5;
+    display: block;
     text-align: center;
   }
 }
@@ -840,11 +843,30 @@ const state = {
   isTransitioning: false
 };
 
+function syncSpeechBubbleTail(row) {
+  if (!row || !row.speechBubble || !row.wizardSprite) return;
+
+  if (isMobileLayout()) {
+    row.speechBubble.style.removeProperty('--bubble-tail-top');
+    return;
+  }
+
+  const bubbleRect = row.speechBubble.getBoundingClientRect();
+  const spriteRect = row.wizardSprite.getBoundingClientRect();
+  const rawTop = spriteRect.top - bubbleRect.top;
+  const minTop = 16;
+  const maxTop = Math.max(minTop, bubbleRect.height - 24);
+  const clampedTop = Math.min(Math.max(rawTop, minTop), maxTop);
+
+  row.speechBubble.style.setProperty('--bubble-tail-top', `${clampedTop}px`);
+}
+
 function syncRowHeight(row) {
   if (!row || !row.imageBox) return;
   requestAnimationFrame(() => {
     row.imageBox.style.height = '';
     row.imageBox.style.minHeight = '';
+    syncSpeechBubbleTail(row);
   });
 }
 
@@ -889,13 +911,19 @@ function createStage(speech, speechIndex) {
     imageReveal: stage.querySelector('.image-reveal'),
     speechBubble: stage.querySelector('.speech-bubble'),
     wizardWrap: stage.querySelector('.wizard-wrap'),
+    wizardSprite: stage.querySelector('.wizard-sprite'),
     speech,
     imageShown: false
   };
 
-  const wizardSprite = stage.querySelector('.wizard-sprite');
+  const wizardSprite = refs.wizardSprite;
   wizardSprite.addEventListener('error', () => {
     wizardSprite.style.display = 'none';
+    syncRowHeight(refs);
+  }, { once: true });
+
+  wizardSprite.addEventListener('load', () => {
+    syncRowHeight(refs);
   }, { once: true });
 
   state.rows[speechIndex] = refs;
@@ -1140,9 +1168,9 @@ function stepType(row, paragraph, position) {
   }
 
   const char = paragraph.plainText[position - 1] || '';
-  let delay = 26;
+  let delay = 44;
   if (char === ' ' || char === '\n') delay = 0;
-  if (char === '.') delay = 400;
+  if (char === '.') delay = 300;
   else if (/[!?]/.test(char)) delay = 150;
   else if (char === ',') delay = 110;
   else if (/[-:;]/.test(char)) delay = 80;
