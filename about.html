@@ -30,7 +30,8 @@
   --tornado-reveal-duration: 980ms;
   --wizard-cast-flash-duration: 750ms;
   --image-aspect-ratio: 4 / 3;
-  --mobile-image-aspect-ratio: 16 / 10;
+  --mobile-image-aspect-ratio: 1 / 1;
+  --mobile-stage-height: clamp(430px, 74svh, 760px);
 }
 
 * {
@@ -174,6 +175,11 @@ body {
 .story-stage.active .wizard-wrap {
   opacity: 1;
   visibility: visible;
+}
+
+.wizard-wrap.is-gone {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 .dialogue-side {
@@ -622,6 +628,8 @@ body {
   }
 
   .image-box {
+    width: calc(100% - 52px);
+    max-width: calc(100% - 52px);
     margin-left: 52px;
   }
 }
@@ -654,16 +662,25 @@ body {
 
   .story-board {
     padding: 8px;
+    min-height: var(--mobile-stage-height);
   }
 
   .story-stack {
-    gap: 12px;
+    gap: 0;
+    min-height: calc(var(--mobile-stage-height) - 16px);
   }
 
   .story-stage {
-    grid-template-columns: 30px minmax(0, 1fr);
-    gap: 6px;
+    display: none;
+    min-height: calc(var(--mobile-stage-height) - 16px);
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 8px;
     align-items: start;
+    align-content: start;
+  }
+
+  .story-stage.active {
+    display: grid;
   }
 
   .dialogue-side {
@@ -675,36 +692,37 @@ body {
     min-height: 0;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 36px;
+    padding-top: 28px;
     padding-bottom: 0;
   }
 
   .wizard-sprite {
-    width: 24px;
+    width: 28px;
   }
 
   .beam-spell {
     bottom: 2px;
-    width: 56px;
-    height: 56px;
-    background-size: 336px 56px;
+    width: 68px;
+    height: 68px;
+    background-size: 408px 68px;
   }
 
   .speech-bubble,
   .image-box {
     grid-column: 2;
     width: 100%;
+    max-width: 100%;
   }
 
   .speech-bubble {
-    min-height: 124px;
-    padding: 10px 10px 8px;
+    min-height: 176px;
+    padding: 14px 13px 12px;
   }
 
   .speech-bubble::after {
     left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 24px;
+    transform: none;
     width: 10px;
     height: 12px;
     border-left-width: 2px;
@@ -712,15 +730,15 @@ body {
   }
 
   .speech-text {
-    font-size: 7px;
+    font-size: 12px;
     line-height: 1.9;
   }
 
   .speaker-tag {
     gap: 3px;
-    padding: 2px 5px 2px;
-    margin-bottom: 3px;
-    font-size: 5.5px;
+    padding: 3px 6px 3px;
+    margin-bottom: 6px;
+    font-size: 6px;
     letter-spacing: 0.18px;
   }
 
@@ -739,14 +757,25 @@ body {
   }
 
   .prompt {
-    min-width: 74px;
+    min-width: 82px;
   }
 
   .image-box {
     display: none;
     aspect-ratio: var(--mobile-image-aspect-ratio);
     margin: 0;
-    padding: 6px;
+    padding: 8px;
+    align-self: start;
+  }
+
+  .story-stage.mobile-image-beat {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .story-stage.mobile-image-beat .wizard-wrap {
+    display: flex;
+    grid-column: 1;
   }
 
   .story-stage.mobile-image-beat .speech-bubble {
@@ -755,6 +784,19 @@ body {
 
   .story-stage.mobile-image-beat .image-box {
     display: block;
+    grid-column: 2;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .end-card {
+    min-height: calc(var(--mobile-stage-height) - 16px);
+    font-size: 8px;
+    line-height: 1.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 }
 </style>
@@ -869,7 +911,9 @@ function setPrompt(row, text, ready) {
 function setActiveStage(activeIndex) {
   state.rows.forEach((row, index) => {
     if (!row) return;
-    row.stage.classList.toggle('active', index === activeIndex);
+    const isActive = index === activeIndex && !state.hasEnded;
+    row.stage.classList.toggle('active', isActive);
+    setWizardVisible(row, isActive);
   });
 }
 
@@ -883,6 +927,15 @@ function wait(ms) {
 
 function isMobileLayout() {
   return mobileLayoutQuery.matches;
+}
+
+function setWizardVisible(row, visible) {
+  if (!row || !row.wizardWrap) return;
+  row.wizardWrap.classList.toggle('is-gone', !visible);
+}
+
+function hideAllWizards() {
+  state.rows.forEach((row) => setWizardVisible(row, false));
 }
 
 function setMobileBeatState(row, showImageBeat) {
@@ -975,7 +1028,9 @@ async function transitionToSpeech(nextIndex) {
   }
   const nextRow = state.rows[nextIndex];
 
+  setWizardVisible(currentRow, true);
   await playBeam(currentRow, 'out');
+  setWizardVisible(currentRow, false);
   setPrompt(currentRow, 'IMAGE LOCKED', false);
   setMobileBeatState(currentRow, false);
 
@@ -983,6 +1038,7 @@ async function transitionToSpeech(nextIndex) {
   state.currentParagraphIndex = 0;
   setActiveStage(nextIndex);
   setMobileBeatState(nextRow, false);
+  setWizardVisible(nextRow, true);
 
   await playBeam(nextRow, 'in');
   typeParagraph(nextIndex, 0);
@@ -1084,10 +1140,12 @@ function stepType(row, paragraph, position) {
   }
 
   const char = paragraph.plainText[position - 1] || '';
-  let delay = 18;
+  let delay = 26;
   if (char === ' ' || char === '\n') delay = 0;
-  if (/[.,!?]/.test(char)) delay = 120;
-  if (/[-:;]/.test(char)) delay = 70;
+  if (char === '.') delay = 400;
+  else if (/[!?]/.test(char)) delay = 150;
+  else if (char === ',') delay = 110;
+  else if (/[-:;]/.test(char)) delay = 80;
 
   state.typingFrame = setTimeout(() => stepType(row, paragraph, position + 1), delay);
 }
@@ -1124,6 +1182,15 @@ async function revealImage(row) {
 }
 
 function addEndCard() {
+  hideAllWizards();
+
+  if (isMobileLayout()) {
+    const activeRow = state.rows[state.currentSpeechIndex];
+    if (activeRow) {
+      activeRow.stage.classList.remove('active', 'mobile-image-beat');
+    }
+  }
+
   const endCard = document.createElement('div');
   endCard.className = 'end-card';
   endCard.textContent = 'THE WIZARD HAS SAID ALL HE CAME TO SAY.';
