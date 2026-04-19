@@ -768,6 +768,8 @@ const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
 const clickSound = new Audio("assets/audio/slide.mp3");
 clickSound.preload = "auto";
+const knockSound = new Audio("assets/audio/knock.mp3");
+knockSound.preload = "auto";
 
 function normalizeTypes(types = []) {
   return [...types].sort((a, b) => TYPE_PRIORITY.indexOf(a) - TYPE_PRIORITY.indexOf(b));
@@ -794,6 +796,13 @@ function playClickSound() {
   try {
     clickSound.currentTime = 0;
     clickSound.play().catch(() => {});
+  } catch (_) {}
+}
+
+function playKnockSound() {
+  try {
+    knockSound.currentTime = 0;
+    knockSound.play().catch(() => {});
   } catch (_) {}
 }
 
@@ -922,6 +931,7 @@ buttons.forEach(btn => {
     buttons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     renderCredits(btn.dataset.type);
+    playKnockSound();
   });
 });
 
