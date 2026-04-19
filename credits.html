@@ -597,16 +597,23 @@ body {
   }
 
   .album {
+    display: flex;
+    flex-direction: column;
     padding: 5px;
   }
 
   .album-art {
     min-height: unset;
     padding: 5px;
+    margin-top: auto;
     margin-bottom: 3px;
   }
 
   .album-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
     margin: 0 0 5px;
     font-size: 7px;
     line-height: 1.4;
