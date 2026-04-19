@@ -493,44 +493,46 @@ body {
   }
 
   .title {
-    font-size: 12.5px;
+    font-size: 11px;
     line-height: 1.45;
     margin-bottom: 0;
-    padding: 10px 56px;
+    padding: 10px 52px;
   }
 
   .title span {
-    font-size: 8px;
+    font-size: 7px;
     margin-top: 6px;
+    line-height: 1.4;
   }
 
   .home-btn {
     left: 10px;
     right: auto;
     top: 50%;
+    width: 28px;
+    min-width: 28px;
     min-height: 28px;
-    padding: 6px 7px;
-    font-size: 6px;
-    gap: 4px;
+    padding: 0;
+    font-size: 0;
+    gap: 0;
     box-shadow: inset 0 2px rgba(255,255,255,0.5), inset 0 -2px rgba(0,0,0,0.14), 1px 1px #3f1b13;
   }
 
+  .home-btn > span:last-child {
+    display: none;
+  }
+
   .home-btn-icon {
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
+    margin-top: 0;
+    background: url("assets/images/home.png") center / contain no-repeat;
+    image-rendering: pixelated;
   }
 
-  .home-btn-icon::before {
-    top: 3px;
-    width: 6px;
-    height: 3px;
-  }
-
+  .home-btn-icon::before,
   .home-btn-icon::after {
-    left: 4px;
-    top: 3px;
-    width: 6px;
-    height: 3px;
+    content: none;
   }
 
   .categories {
@@ -613,7 +615,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
+    min-height: 33px;
     margin: 0 0 5px;
     font-size: 7px;
     line-height: 1.4;
