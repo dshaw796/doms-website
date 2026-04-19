@@ -224,6 +224,18 @@
     "image": "assets/images/asws1.png"
   },
   {
+    "name": "SAUL",
+    "artist": "CHESTER CAINE",
+    "year": "2024",
+    "role": "SAXOPHONE",
+    "types": [
+      "PERFORMING"
+    ],
+    "tracks": "6",
+    "power": "79",
+    "image": "assets/images/saul.png"
+  },
+  {
     "name": "THE NEW WORLD",
     "artist": "SWINDLE",
     "year": "2021",
