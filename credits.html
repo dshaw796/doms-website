@@ -810,9 +810,13 @@ const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
 const homeBtn = document.querySelector(".home-btn");
 const clickSound = new Audio("assets/audio/slide.mp3");
-clickSound.preload = "auto";
 const knockSound = new Audio("assets/audio/knock.mp3");
+
+clickSound.preload = "auto";
 knockSound.preload = "auto";
+
+let audioReady = false;
+let audioUnlockPromise = null;
 
 function normalizeTypes(types = []) {
   return [...types].sort((a, b) => TYPE_PRIORITY.indexOf(a) - TYPE_PRIORITY.indexOf(b));
@@ -835,18 +839,57 @@ function isSameCredit(a, b) {
   return a.name === b.name && a.artist === b.artist && a.year === b.year;
 }
 
-function playClickSound() {
+function unlockAudio() {
+  if (audioReady) return Promise.resolve();
+  if (audioUnlockPromise) return audioUnlockPromise;
+
+  audioUnlockPromise = (async () => {
+    for (const sound of [clickSound, knockSound]) {
+      try {
+        sound.muted = true;
+        await sound.play();
+        sound.pause();
+        sound.currentTime = 0;
+        sound.muted = false;
+      } catch (_) {
+        sound.muted = false;
+      }
+    }
+
+    audioReady = true;
+  })();
+
+  return audioUnlockPromise;
+}
+
+function startPlayback(sound) {
   try {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
+    sound.pause();
+    sound.currentTime = 0;
+    const playPromise = sound.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {});
+    }
   } catch (_) {}
 }
 
+function playSound(sound) {
+  if (!audioReady) {
+    unlockAudio().then(() => {
+      startPlayback(sound);
+    }).catch(() => {});
+    return;
+  }
+
+  startPlayback(sound);
+}
+
+function playClickSound() {
+  playSound(clickSound);
+}
+
 function playKnockSound() {
-  try {
-    knockSound.currentTime = 0;
-    knockSound.play().catch(() => {});
-  } catch (_) {}
+  playSound(knockSound);
 }
 
 function resetInfoPanel(message = "SELECT AN ALBUM") {
@@ -937,12 +980,15 @@ function renderCredits(filter = "ALL") {
     card.appendChild(label);
     card.appendChild(art);
 
+    card.addEventListener("pointerdown", () => {
+      playClickSound();
+    });
+
     card.addEventListener("click", () => {
       selectedCredit = credit;
       document.querySelectorAll(".album").forEach(a => a.classList.remove("loaded"));
       card.classList.add("loaded");
       showInfo(credit);
-      playClickSound();
     });
 
     grid.appendChild(card);
@@ -969,19 +1015,29 @@ async function loadCredits() {
   }
 }
 
+document.addEventListener("pointerdown", () => {
+  unlockAudio().catch(() => {});
+}, { once: true, capture: true });
+
 buttons.forEach(btn => {
+  btn.addEventListener("pointerdown", () => {
+    playKnockSound();
+  });
+
   btn.addEventListener("click", () => {
     buttons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     renderCredits(btn.dataset.type);
-    playKnockSound();
   });
 });
 
 if (homeBtn) {
+  homeBtn.addEventListener("pointerdown", () => {
+    playKnockSound();
+  });
+
   homeBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    playKnockSound();
 
     setTimeout(() => {
       window.location.href = homeBtn.href;
