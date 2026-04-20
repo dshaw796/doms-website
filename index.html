@@ -40,7 +40,8 @@
   }
 
   html, body {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     overflow-x: hidden;
     background: #1a1a2e;
   }
@@ -56,7 +57,8 @@
 
   #bg {
     position: fixed;
-    top: 0; left: 50%;
+    top: 0;
+    left: 50%;
     transform: translateX(-50%);
     width: 100%;
     height: 100%;
@@ -64,21 +66,32 @@
     object-position: center top;
     image-rendering: pixelated;
     z-index: 0;
+    transition: filter 0.2s ease;
   }
 
   #cloud-layer {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 60%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
     pointer-events: none;
     overflow: visible;
     z-index: 1;
   }
 
-  .cloud {
+  .cloud,
+  .bird {
     position: absolute;
     image-rendering: pixelated;
+  }
+
+  .cloud {
     opacity: 0.88;
+  }
+
+  .bird {
+    opacity: 0.95;
   }
 
   #content {
@@ -107,16 +120,18 @@
   #menu {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     gap: clamp(14px, 3vh, 26px);
     padding-right: 10px;
     padding-bottom: 60px;
     width: 100%;
+    transition: filter 0.2s ease;
   }
 
   .menu-item {
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(10px, 3vw, 15px);
@@ -128,6 +143,11 @@
     transition: color 0.05s;
     user-select: none;
     white-space: nowrap;
+  }
+
+  button.menu-item {
+    background: none;
+    border: 0;
   }
 
   .menu-item:hover,
@@ -150,30 +170,136 @@
     animation: blink 0.7s step-start infinite;
   }
 
+  #settings-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #settings-panel {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 22px);
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: max-content;
+    z-index: 5;
+  }
+
+  #settings-shell.open #settings-panel {
+    display: flex;
+  }
+
+  .settings-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(7px, 1.9vw, 10px);
+    color: #f0e6c8;
+    text-shadow: 2px 2px 0px #000, 3px 3px 0px rgba(0,0,0,0.4);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .settings-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tick-box {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    border: 2px solid #f0e6c8;
+    background: rgba(20, 16, 10, 0.9);
+    box-shadow: 2px 2px 0 #000, inset -2px -2px 0 rgba(0, 0, 0, 0.45), inset 2px 2px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .tick-box::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    line-height: 1;
+    color: #201600;
+    background: transparent;
+  }
+
+  .settings-option input:checked + .tick-box {
+    border-color: #ffe066;
+    background: #ffe066;
+    box-shadow: 2px 2px 0 #000, inset -2px -2px 0 rgba(130, 95, 0, 0.45), inset 2px 2px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .settings-option input:checked + .tick-box::after {
+    content: 'X';
+  }
+
+  .settings-option:hover .tick-box,
+  .settings-option input:focus + .tick-box {
+    border-color: #ffe066;
+    box-shadow: 2px 2px 0 #000, 0 0 0 2px rgba(255, 224, 102, 0.18), inset -2px -2px 0 rgba(0, 0, 0, 0.45), inset 2px 2px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .settings-option-text {
+    display: inline-block;
+  }
+
+  body.night-mode #bg {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  body.night-mode #menu {
+    filter: invert(1);
+  }
+
   @media (max-width: 500px) {
+    #main-title {
+      max-width: 100vw;
+      margin-bottom: 5px;
+    }
 
-  #main-title {
-    max-width: 100vw;
-    margin-bottom: 5px;
-  }
+    .menu-item {
+      font-size: clamp(14px, 3.2vw, 20px);
+      padding: 8px 0;
+    }
 
-  .menu-item {
-    font-size: clamp(14px, 3.2vw, 20px);
-    padding: 8px 0;
-  }
+    #menu {
+      gap: 16px;
+    }
 
-  #menu {
-    gap: 16px;
-  }
+    #title-spacer {
+      height: 1.5em;
+    }
 
-  #title-spacer {
-    height: 1.5em;
+    #settings-panel {
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .settings-option {
+      font-size: clamp(7px, 2.2vw, 9px);
+    }
   }
-}
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
+    50% { opacity: 0; }
   }
 </style>
 </head>
@@ -204,15 +330,48 @@
     <a class="menu-item" href="about.html">
       <span class="arrow-slot">▶</span>ABOUT
     </a>
-    <a class="menu-item" href="settings.html">
-      <span class="arrow-slot">▶</span>SETTINGS
-    </a>
+    <div id="settings-shell">
+      <button id="settings-toggle" class="menu-item" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="settings-panel">
+        <span class="arrow-slot">▶</span>SETTINGS
+      </button>
+      <div id="settings-panel" role="menu" aria-label="Settings options">
+        <label class="settings-option" role="menuitemcheckbox" aria-checked="false">
+          <input id="toggle-birds" type="checkbox">
+          <span class="tick-box" aria-hidden="true"></span>
+          <span class="settings-option-text">CHANGE CLOUDS TO BIRDS</span>
+        </label>
+        <label class="settings-option" role="menuitemcheckbox" aria-checked="false">
+          <input id="toggle-night" type="checkbox">
+          <span class="tick-box" aria-hidden="true"></span>
+          <span class="settings-option-text">CHANGE TO NIGHT MODE</span>
+        </label>
+      </div>
+    </div>
   </nav>
 </div>
 
 <script>
-  const items = document.querySelectorAll('.menu-item');
+  const items = Array.from(document.querySelectorAll('.menu-item'));
+  const settingsShell = document.getElementById('settings-shell');
+  const settingsToggle = document.getElementById('settings-toggle');
+  const settingsPanel = document.getElementById('settings-panel');
+  const birdsToggle = document.getElementById('toggle-birds');
+  const nightToggle = document.getElementById('toggle-night');
+  const settingsOptions = document.querySelectorAll('.settings-option');
+  const cloudLayer = document.getElementById('cloud-layer');
+
   let currentIndex = 0;
+  let skyMode = 'clouds';
+  const pendingTimeouts = new Set();
+
+  const cloudImages = ['assets/images/nube1.png', 'assets/images/nube2.png'];
+  const birdImages = {
+    ltr: 'assets/images/bird1.png',
+    rtl: 'assets/images/bird2.png'
+  };
+
+  const BIRD_WIDTH = 72;
+  const BIRD_HEIGHT_ESTIMATE = 42;
 
   function setActive(index) {
     items.forEach((item, i) => {
@@ -228,16 +387,64 @@
     currentIndex = index;
   }
 
-  items.forEach((item, i) => {
-    item.addEventListener('mouseenter', () => setActive(i));
-  });
+  function updateMenuCheckboxA11y() {
+    settingsOptions.forEach((option) => {
+      const input = option.querySelector('input');
+      option.setAttribute('aria-checked', input.checked ? 'true' : 'false');
+    });
+  }
 
-  setActive(0);
+  function openSettingsPanel() {
+    settingsShell.classList.add('open');
+    settingsToggle.setAttribute('aria-expanded', 'true');
+  }
 
-  const cloudLayer = document.getElementById('cloud-layer');
-  const cloudImages = ['assets/images/nube1.png', 'assets/images/nube2.png'];
+  function closeSettingsPanel() {
+    settingsShell.classList.remove('open');
+    settingsToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleSettingsPanel() {
+    const shouldOpen = !settingsShell.classList.contains('open');
+    if (shouldOpen) {
+      openSettingsPanel();
+      setActive(items.indexOf(settingsToggle));
+    } else {
+      closeSettingsPanel();
+    }
+  }
+
+  function scheduleTimeout(fn, delay) {
+    const timeoutId = window.setTimeout(() => {
+      pendingTimeouts.delete(timeoutId);
+      fn();
+    }, delay);
+    pendingTimeouts.add(timeoutId);
+  }
+
+  function clearScheduledTimeouts() {
+    pendingTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    pendingTimeouts.clear();
+  }
+
+  function clearSky() {
+    cloudLayer.querySelectorAll('.cloud, .bird').forEach((el) => {
+      el.getAnimations().forEach((animation) => animation.cancel());
+      el.remove();
+    });
+  }
+
+  function getSkyTop(spriteHeight) {
+    const maxTop = window.innerHeight * 0.5 - spriteHeight;
+    const biasedRandom = Math.random() ** 2;
+    return Math.max(0, biasedRandom * maxTop);
+  }
 
   function spawnCloud(startX, rtl) {
+    if (skyMode !== 'clouds') {
+      return;
+    }
+
     const cloud = document.createElement('img');
     cloud.className = 'cloud';
     cloud.src = cloudImages[Math.floor(Math.random() * cloudImages.length)];
@@ -249,16 +456,15 @@
     cloud.style.height = 'auto';
 
     const cloudH = scaleW * 0.5;
-    const maxTop = window.innerHeight * 0.5 - cloudH;
-    const r = Math.random();
-    const biasedR = r * r;
-    const topPx = Math.max(0, biasedR * maxTop);
-    cloud.style.top = topPx + 'px';
+    cloud.style.top = getSkyTop(cloudH) + 'px';
 
-    const duration = 55000 + Math.random() * 25000;
+    const baseDuration = 55000 + Math.random() * 25000;
     cloudLayer.appendChild(cloud);
 
-    let fromX, endX, fullDist;
+    let fromX;
+    let endX;
+    let fullDist;
+
     if (rtl) {
       fromX = (startX !== undefined) ? startX : window.innerWidth + scaleW + 10;
       endX = -scaleW - 10;
@@ -270,30 +476,139 @@
     }
 
     cloud.style.left = fromX + 'px';
-    const thisDist = Math.abs(endX - fromX);
-    const adjustedDuration = duration * (thisDist / fullDist);
+    const travelDistance = Math.abs(endX - fromX);
+    const duration = baseDuration * (travelDistance / fullDist);
 
-    cloud.animate(
+    const animation = cloud.animate(
       [{ left: fromX + 'px' }, { left: endX + 'px' }],
-      { duration: adjustedDuration, easing: 'linear', fill: 'forwards' }
-    ).onfinish = () => {
+      { duration, easing: 'linear', fill: 'forwards' }
+    );
+
+    animation.onfinish = () => {
       cloud.remove();
-      spawnCloud(undefined, rtl);
+      if (skyMode === 'clouds') {
+        spawnCloud(undefined, rtl);
+      }
     };
   }
 
-  const ltrCount = 3;
-  const rtlCount = 1;
-  const ltrGap = Math.floor(window.innerWidth / ltrCount);
-  for (let i = 0; i < ltrCount; i++) {
-    const startX = i * ltrGap + Math.random() * (ltrGap * 0.4);
-    setTimeout(() => spawnCloud(startX, false), i * 600);
+  function spawnBird(direction) {
+    if (skyMode !== 'birds') {
+      return;
+    }
+
+    const bird = document.createElement('img');
+    bird.className = 'bird';
+    bird.src = birdImages[direction];
+    bird.style.width = BIRD_WIDTH + 'px';
+    bird.style.height = 'auto';
+    bird.style.top = getSkyTop(BIRD_HEIGHT_ESTIMATE) + 'px';
+    cloudLayer.appendChild(bird);
+
+    const startFromLeft = direction === 'ltr';
+    const fromX = startFromLeft ? -BIRD_WIDTH - 12 : window.innerWidth + BIRD_WIDTH + 12;
+    const endX = startFromLeft ? window.innerWidth + BIRD_WIDTH + 12 : -BIRD_WIDTH - 12;
+    const baseDuration = 17000 + Math.random() * 7000;
+    const speedFactor = 0.7 + Math.random() * 0.3;
+    const duration = baseDuration / speedFactor;
+
+    bird.style.left = fromX + 'px';
+
+    const animation = bird.animate(
+      [{ left: fromX + 'px' }, { left: endX + 'px' }],
+      { duration, easing: 'linear', fill: 'forwards' }
+    );
+
+    animation.onfinish = () => {
+      bird.remove();
+      if (skyMode === 'birds') {
+        scheduleTimeout(() => spawnBird(direction), Math.random() * 3500);
+      }
+    };
   }
-  const rtlGap = Math.floor(window.innerWidth / rtlCount);
-  for (let i = 0; i < rtlCount; i++) {
-    const startX = window.innerWidth - (i * rtlGap + Math.random() * (rtlGap * 0.4));
-    setTimeout(() => spawnCloud(startX, true), 3000 + i * 800);
+
+  function startCloudMode() {
+    skyMode = 'clouds';
+    clearScheduledTimeouts();
+    clearSky();
+
+    const ltrCount = 3;
+    const rtlCount = 1;
+    const ltrGap = Math.floor(window.innerWidth / ltrCount);
+    const rtlGap = Math.floor(window.innerWidth / rtlCount);
+
+    for (let i = 0; i < ltrCount; i += 1) {
+      const startX = i * ltrGap + Math.random() * (ltrGap * 0.4);
+      scheduleTimeout(() => spawnCloud(startX, false), i * 600);
+    }
+
+    for (let i = 0; i < rtlCount; i += 1) {
+      const startX = window.innerWidth - (i * rtlGap + Math.random() * (rtlGap * 0.4));
+      scheduleTimeout(() => spawnCloud(startX, true), 3000 + i * 800);
+    }
   }
+
+  function startBirdMode() {
+    skyMode = 'birds';
+    clearScheduledTimeouts();
+    clearSky();
+    spawnBird('ltr');
+    spawnBird('rtl');
+  }
+
+  function applySkyMode() {
+    if (birdsToggle.checked) {
+      startBirdMode();
+    } else {
+      startCloudMode();
+    }
+  }
+
+  items.forEach((item, index) => {
+    item.addEventListener('mouseenter', () => setActive(index));
+  });
+
+  settingsToggle.addEventListener('click', (event) => {
+    event.preventDefault();
+    toggleSettingsPanel();
+  });
+
+  settingsToggle.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleSettingsPanel();
+    }
+  });
+
+  settingsPanel.addEventListener('mouseenter', () => {
+    setActive(items.indexOf(settingsToggle));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!settingsShell.contains(event.target)) {
+      closeSettingsPanel();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeSettingsPanel();
+    }
+  });
+
+  birdsToggle.addEventListener('change', () => {
+    updateMenuCheckboxA11y();
+    applySkyMode();
+  });
+
+  nightToggle.addEventListener('change', () => {
+    document.body.classList.toggle('night-mode', nightToggle.checked);
+    updateMenuCheckboxA11y();
+  });
+
+  updateMenuCheckboxA11y();
+  setActive(0);
+  startCloudMode();
 </script>
 </body>
 </html>
