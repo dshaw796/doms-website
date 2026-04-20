@@ -10,7 +10,7 @@
       "PERFORMING"
     ],
     "tracks": "ALL",
-    "power": "82",
+    "power": "98",
     "image": "assets/images/asco.png"
   },
   {
@@ -22,7 +22,7 @@
       "ENGINEERING"
     ],
     "tracks": "ALL (ENG.), 10 (ARR.)",
-    "power": "89",
+    "power": "90",
     "image": "assets/images/io.png"
   },
   {
@@ -35,7 +35,7 @@
       "MIXING"
     ],
     "tracks": "1",
-    "power": "83",
+    "power": "88",
     "image": "assets/images/birdy.png"
   },
   {
@@ -47,7 +47,7 @@
       "ENGINEERING"
     ],
     "tracks": "10",
-    "power": "95",
+    "power": "82",
     "image": "assets/images/saya.png"
   },
   {
@@ -71,7 +71,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "83",
+    "power": "80",
     "image": "assets/images/bleachers.png"
   },
   {
@@ -83,7 +83,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "81",
+    "power": "79",
     "image": "assets/images/kelsey.png"
   },
   {
@@ -98,7 +98,7 @@
       "PERFORMING"
     ],
     "tracks": "ALL",
-    "power": "91",
+    "power": "97",
     "image": "assets/images/dust.png"
   },
   {
@@ -110,7 +110,7 @@
       "MIXING"
     ],
     "tracks": "ALL",
-    "power": "72",
+    "power": "93",
     "image": "assets/images/nada.png"
   },
   {
@@ -122,7 +122,7 @@
       "MIXING"
     ],
     "tracks": "ALL",
-    "power": "79",
+    "power": "92",
     "image": "assets/images/scar.png"
   },
   {
@@ -134,7 +134,7 @@
       "ENGINEERING"
     ],
     "tracks": "3",
-    "power": "72",
+    "power": "82",
     "image": "assets/images/am.png"
   },
   {
@@ -146,7 +146,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "85",
+    "power": "80",
     "image": "assets/images/1975.png"
   },
   {
@@ -158,7 +158,7 @@
       "ENGINEERING"
     ],
     "tracks": "1-6,8",
-    "power": "77",
+    "power": "87",
     "image": "assets/images/zada.png"
   },
   {
@@ -170,7 +170,7 @@
       "MIXING"
     ],
     "tracks": "2",
-    "power": "68",
+    "power": "86",
     "image": "assets/images/beat.png"
   },
   {
@@ -182,7 +182,7 @@
       "ENGINEERING"
     ],
     "tracks": "ALL",
-    "power": "73",
+    "power": "88",
     "image": "assets/images/hbt.png"
   },
   {
@@ -194,7 +194,7 @@
       "ENGINEERING"
     ],
     "tracks": "ALL",
-    "power": "71",
+    "power": "87",
     "image": "assets/images/ff.png"
   },
   {
@@ -206,7 +206,7 @@
       "ENGINEERING"
     ],
     "tracks": "ALL",
-    "power": "72",
+    "power": "87",
     "image": "assets/images/rp.png"
   },
   {
@@ -220,7 +220,7 @@
       "PRODUCTION"
     ],
     "tracks": "ALL",
-    "power": "88",
+    "power": "97",
     "image": "assets/images/asws1.png"
   },
   {
@@ -232,7 +232,7 @@
       "PERFORMING"
     ],
     "tracks": "6",
-    "power": "79",
+    "power": "78",
     "image": "assets/images/saul.png"
   },
   {
@@ -245,7 +245,7 @@
       "ASST. ENG"
     ],
     "tracks": "3 (SAX), ALL (ASST)",
-    "power": "79",
+    "power": "83",
     "image": "assets/images/swindle.png"
   },
   {
@@ -257,7 +257,7 @@
       "ENGINEERING"
     ],
     "tracks": "ALL",
-    "power": "71",
+    "power": "87",
     "image": "assets/images/touki.png"
   },
   {
@@ -269,7 +269,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "87",
+    "power": "80",
     "image": "assets/images/bh.png"
   },
   {
@@ -281,7 +281,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "81",
+    "power": "79",
     "image": "assets/images/jaubi.png"
   },
   {
@@ -293,7 +293,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "76",
+    "power": "77",
     "image": "assets/images/km.png"
   },
   {
@@ -305,7 +305,7 @@
       "ASST. ENG"
     ],
     "tracks": "1,2,5,8,10,11",
-    "power": "71",
+    "power": "77",
     "image": "assets/images/pq.png"
   },
   {
@@ -317,7 +317,7 @@
       "ASST. ENG"
     ],
     "tracks": "ALL",
-    "power": "70",
+    "power": "78",
     "image": "assets/images/ga.png"
   }
 ]
