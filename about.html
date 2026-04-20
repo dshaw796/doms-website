@@ -806,22 +806,29 @@ body {
   .story-stage.mobile-image-beat {
     grid-template-columns: 34px minmax(0, 1fr);
     gap: 8px;
+    align-items: start;
+    align-content: start;
   }
 
   .story-stage.mobile-image-beat .wizard-wrap {
     display: flex;
     grid-column: 1;
+    grid-row: 1;
   }
 
   .story-stage.mobile-image-beat .speech-bubble {
-    display: none;
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .story-stage.mobile-image-beat .image-box {
     display: block;
     grid-column: 2;
+    grid-row: 2;
     width: 100%;
     max-width: 100%;
+    margin-top: 8px;
   }
 
   .end-card {
