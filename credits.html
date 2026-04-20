@@ -3,7 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Credits Catalogue</title>
+<title>Credits - Dom Shaw</title>
+<meta name="description" content="Music Credits for Dom Shaw - production, mixing, engineering, recordings & songwriting.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/credits.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Credits - Dom Shaw">
+<meta property="og:description" content="A searchable music credits catalogue for Dom Shaw covering production, mixing, engineering and performance work.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Dom Shaw Credits",
+  "description": "A music credits catalogue for Dom Shaw covering production, mixing, engineering, performance and assistant engineering work.",
+  "about": {
+    "@type": "Person",
+    "name": "Dom Shaw",
+    "jobTitle": "Music Producer, Recording Engineer, Mixing Engineer, Songwriter",
+    "memberOf": {
+      "@type": "MusicGroup",
+      "name": "Waterlog"
+    }
+  }
+}
+</script>
 <style>
 @font-face {
   font-family: 'Press Start 2P';
@@ -34,6 +57,18 @@
   margin: 0;
   padding: 0;
   font-family: 'Press Start 2P', cursive;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 body {
@@ -694,6 +729,10 @@ body {
 </style>
 </head>
 <body>
+<section class="sr-only" aria-label="Credits page description">
+  <h1>Credits - Dom Shaw</h1>
+  <p>Production, mixing, engineering, performing and assistant engineering credits attributed to Dom Shaw, including work connected to Waterlog.</p>
+</section>
 <div class="wrapper">
   <div class="panel">
     <div class="title-wrap">
@@ -710,27 +749,27 @@ body {
         <span class="label-short">ALL</span>
       </button>
       <button class="category-btn" data-type="PRODUCTION">
-        <img src="assets/symbols/lightning.png" alt="Production symbol" loading="lazy">
+        <img src="assets/symbols/lightning.png" alt="" loading="lazy">
         <span class="label-full">PRODUCTION</span>
         <span class="label-short">PROD</span>
       </button>
       <button class="category-btn" data-type="MIXING">
-        <img src="assets/symbols/water.png" alt="Mixing symbol" loading="lazy">
+        <img src="assets/symbols/water.png" alt="" loading="lazy">
         <span class="label-full">MIXING</span>
         <span class="label-short">MIX</span>
       </button>
       <button class="category-btn" data-type="ENGINEERING">
-        <img src="assets/symbols/nature.png" alt="Engineering symbol" loading="lazy">
+        <img src="assets/symbols/nature.png" alt="" loading="lazy">
         <span class="label-full">ENGINEERING</span>
         <span class="label-short">ENG</span>
       </button>
       <button class="category-btn" data-type="PERFORMING">
-        <img src="assets/symbols/fire.png" alt="Performing symbol" loading="lazy">
+        <img src="assets/symbols/fire.png" alt="" loading="lazy">
         <span class="label-full">PERFORMING</span>
         <span class="label-short">PERF</span>
       </button>
       <button class="category-btn" data-type="ASST. ENG">
-        <img src="assets/symbols/dragon.png" alt="Assistant engineering symbol" loading="lazy">
+        <img src="assets/symbols/dragon.png" alt="" loading="lazy">
         <span class="label-full">ASST. ENG</span>
         <span class="label-short">ASST</span>
       </button>
@@ -840,7 +879,7 @@ function showInfo(credit) {
           </div>
         </div>
         <div class="info-art ${shinyClass}" style="background:${artBg};">
-          <img src="${credit.image}" alt="${credit.name} cover" loading="lazy">
+          <img src="${credit.image}" alt="${credit.name} by ${credit.artist}. Dom Shaw credit: ${credit.role}" loading="lazy">
         </div>
         <div class="info-meta-wrap" style="--meta-label-color:${primaryLabelColor};">
           <div class="info-meta"><span class="info-meta-label">ARTIST</span><span class="info-meta-value">${credit.artist}</span></div>
