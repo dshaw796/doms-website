@@ -808,6 +808,7 @@ let selectedCredit = null;
 const grid = document.getElementById("grid");
 const infoPanel = document.getElementById("infoPanel");
 const buttons = document.querySelectorAll(".category-btn");
+const homeBtn = document.querySelector(".home-btn");
 const clickSound = new Audio("assets/audio/slide.mp3");
 clickSound.preload = "auto";
 const knockSound = new Audio("assets/audio/knock.mp3");
@@ -976,6 +977,17 @@ buttons.forEach(btn => {
     playKnockSound();
   });
 });
+
+if (homeBtn) {
+  homeBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    playKnockSound();
+
+    setTimeout(() => {
+      window.location.href = homeBtn.href;
+    }, 120);
+  });
+}
 
 resetInfoPanel();
 loadCredits();
