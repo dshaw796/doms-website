@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WATERLINKS - Dom Shaw</title>
+<meta name="description" content="WATERLINKS: a retro-styled hub for socials, streaming links, mailing list signup, YouTube video, and Spotify playback.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/waterlinks.html">
+<style>
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #1c1c1c;
+  --shadow: #194242;
+  --border: #333;
+  --panel-border: #8c3b2a;
+  --panel-deep: #5d2418;
+  --silver-1: #f3f4f7;
+  --silver-2: #d9dde4;
+  --silver-3: #b7bcc5;
+  --gold-1: #fff7d6;
+  --gold-2: #ffe8a6;
+  --gold-3: #f0b43c;
+  --glass: rgba(255,255,255,0.16);
+  --panel-bg: linear-gradient(180deg, rgba(67, 34, 24, 0.18) 0%, rgba(255,255,255,0.16) 100%);
+  --card-bg: linear-gradient(180deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.18) 100%);
+  --monitor-bg: linear-gradient(180deg, rgba(14, 29, 38, 0.98) 0%, rgba(13, 19, 27, 0.96) 100%);
+  --screen-glow: rgba(138, 255, 231, 0.22);
+  --mailing: #ff8e43;
+  --bandcamp: #3f8fe6;
+  --spotify: #1db954;
+  --tidal: #8e9399;
+  --apple: #ff4476;
+  --youtube: #f53d33;
+  --instagram: #a63ef6;
+  --tiktok: #39f3ec;
+  --soundcloud: #ff7a00;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body {
+  background-image: url("assets/images/home3.png");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: #083c3c;
+  text-transform: uppercase;
+}
+
+code,
+iframe,
+.sr-only {
+  text-transform: none;
+}
+
+.wrapper {
+  max-width: 1120px;
+  margin: 30px auto;
+  padding: 10px;
+}
+
+.panel {
+  backdrop-filter: blur(2px);
+  background: var(--glass);
+  border: 3px solid var(--panel-border);
+  padding: 18px;
+  box-shadow: 4px 4px var(--shadow);
+}
+
+.title-wrap {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.title {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--gold-1);
+  padding: 14px 140px;
+  border: 3px solid var(--panel-deep);
+  background: linear-gradient(180deg, #b45a3c 0%, #8c3b2a 52%, #6e2a1e 100%);
+  box-shadow: inset 0 3px rgba(255,255,255,0.25), inset 0 -4px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,241,188,0.15), 4px 4px #3f1b13;
+  text-shadow: 2px 2px rgba(0,0,0,0.45);
+  letter-spacing: 1px;
+}
+
+.title span {
+  display: block;
+  font-size: 8px;
+  color: var(--gold-2);
+  margin-top: 8px;
+}
+
+.home-btn {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  color: #414854;
+  text-decoration: none;
+  font-size: 7px;
+  line-height: 1;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12), 2px 2px #3f1b13;
+  letter-spacing: 0.4px;
+  z-index: 2;
+}
+
+.home-btn:hover {
+  transform: translateY(calc(-50% - 1px));
+}
+
+.home-btn:active {
+  transform: translateY(calc(-50% + 1px));
+  box-shadow: inset 0 2px rgba(255,255,255,0.45), inset 0 -2px rgba(0,0,0,0.16), 1px 1px #3f1b13;
+}
+
+.home-btn-icon {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.home-btn-icon::before,
+.home-btn-icon::after {
+  content: '';
+  position: absolute;
+  background: #414854;
+}
+
+.home-btn-icon::before {
+  left: 0;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.home-btn-icon::after {
+  left: 5px;
+  top: 4px;
+  width: 7px;
+  height: 4px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.card-shell,
+.monitor-shell,
+.link-card {
+  position: relative;
+  border: 3px solid var(--border);
+  box-shadow: inset 0 -3px rgba(0,0,0,0.22), 4px 4px #000;
+}
+
+.card-shell::before,
+.monitor-shell::before,
+.link-card::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  right: 12px;
+  height: 6px;
+  background: #999;
+  border: 2px solid var(--border);
+  border-bottom: none;
+}
+
+.links-panel {
+  background: var(--panel-bg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-badge {
+  display: inline-block;
+  align-self: center;
+  margin: 0 auto 14px;
+  padding: 8px 12px;
+  border: 2px solid var(--panel-deep);
+  background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(245,232,196,0.92) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.75), inset 0 -2px rgba(0,0,0,0.08), 2px 2px #3f1b13;
+  color: #5d2418;
+  font-size: 8px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.section-badge strong {
+  color: #083c3c;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 180px;
+  padding: 12px 10px 12px;
+  background: var(--card-bg);
+  text-decoration: none;
+  color: #fffdf2;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.link-card::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: rgba(0,0,0,0.28);
+}
+
+.link-card:hover,
+.link-card:focus-visible {
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: inset 0 -3px rgba(0,0,0,0.22), 4px 4px #000, 0 0 0 3px rgba(255, 232, 166, 0.34);
+}
+
+.link-card:active {
+  transform: translateY(1px);
+}
+
+.card-topline {
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 10px;
+  padding: 8px 7px;
+  font-size: 9px;
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 0.35px;
+  color: rgba(255,255,255,0.92);
+  background: linear-gradient(180deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.58) 100%);
+  border: 2px solid rgba(255,255,255,0.22);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-icon {
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(0,0,0,0.48);
+  box-shadow: inset 0 3px rgba(255,255,255,0.28), inset 0 -4px rgba(0,0,0,0.18);
+  display: grid;
+  place-items: center;
+  margin: 4px 0 10px;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.portal-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 3px, transparent 3px 6px);
+  opacity: 0.55;
+}
+
+.portal-symbol {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.35));
+}
+
+.link-tip {
+  margin-top: auto;
+  width: 100%;
+  padding-top: 4px;
+  font-size: 7px;
+  line-height: 1.7;
+  text-align: center;
+  color: #5d2418;
+  text-shadow: 1px 1px 0 rgb(10, 163, 166);
+  opacity: 0.95;
+}
+
+.link-card[data-service="mailing"] .portal-icon { background: linear-gradient(180deg, #463867 0%, #8d59d9 45%, var(--mailing) 100%); }
+.link-card[data-service="bandcamp"] .portal-icon { background: linear-gradient(180deg, #bfe6ff 0%, var(--bandcamp) 100%); }
+.link-card[data-service="spotify"] .portal-icon { background: linear-gradient(180deg, #7dffad 0%, var(--spotify) 100%); }
+.link-card[data-service="tidal"] .portal-icon { background: linear-gradient(180deg, #f1f2f4 0%, var(--tidal) 100%); }
+.link-card[data-service="apple"] .portal-icon { background: linear-gradient(180deg, #ffadc3 0%, var(--apple) 100%); }
+.link-card[data-service="youtube"] .portal-icon { background: linear-gradient(180deg, #ffbcab 0%, var(--youtube) 100%); }
+.link-card[data-service="instagram"] .portal-icon { background: linear-gradient(180deg, #ffcc67 0%, #ff5f81 44%, #8a39ff 100%); }
+.link-card[data-service="tiktok"] .portal-icon { background: linear-gradient(180deg, #cffefa 0%, #18242e 100%); }
+.link-card[data-service="soundcloud"] .portal-icon { background: linear-gradient(180deg, #ffd0a2 0%, var(--soundcloud) 100%); }
+
+.media-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.monitor-shell {
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.12) 100%);
+}
+
+.monitor-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  color: #414854;
+  font-size: 8px;
+  line-height: 1.5;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12);
+}
+
+.monitor-label span:last-child {
+  color: #5d2418;
+  text-align: right;
+}
+
+.screen-wrap {
+  position: relative;
+  background: var(--monitor-bg);
+  border: 3px solid #111;
+  padding: 10px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.08), inset 0 0 22px var(--screen-glow);
+}
+
+.screen-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 30%, transparent 68%, rgba(255,255,255,0.04) 100%), repeating-linear-gradient(0deg, rgba(255,255,255,0.055) 0 2px, transparent 2px 5px);
+  mix-blend-mode: screen;
+}
+
+.video-shell {
+  aspect-ratio: 16 / 9;
+}
+
+.spotify-shell {
+  height: 200px;
+}
+
+.embed-frame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 11px solid rgba(255,255,255,0.14);
+  background: #000;
+}
+
+.embed-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.spotify-shell .embed-frame,
+.spotify-shell iframe {
+  height: 100%;
+  overflow: hidden;
+}
+
+.footer-note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 2px dashed #8c3b2a;
+  background: rgba(255,255,255,0.34);
+  font-size: 7px;
+  line-height: 1.8;
+  color: #4b2c0b;
+}
+
+.footer-note code {
+  font-size: 7px;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-position: center top;
+  }
+
+  .wrapper {
+    margin: 0;
+    max-width: 100%;
+    padding: 8px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .title-wrap {
+    margin-bottom: 12px;
+  }
+
+  .title {
+    font-size: 11px;
+    line-height: 1.45;
+    padding: 10px 52px;
+  }
+
+  .title span {
+    font-size: 7px;
+    margin-top: 6px;
+  }
+
+  .home-btn {
+    left: 10px;
+    width: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0;
+    font-size: 0;
+    gap: 0;
+    box-shadow: inset 0 2px rgba(255,255,255,0.5), inset 0 -2px rgba(0,0,0,0.14), 1px 1px #3f1b13;
+  }
+
+  .home-btn > span:last-child {
+    display: none;
+  }
+
+  .home-btn-icon {
+    width: 16px;
+    height: 16px;
+    background: url("assets/symbols/home.png") center / contain no-repeat;
+    image-rendering: pixelated;
+  }
+
+  .home-btn-icon::before,
+  .home-btn-icon::after {
+    content: none;
+  }
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .media-stack {
+    display: contents;
+  }
+
+  .video-monitor {
+    order: 1;
+  }
+
+  .links-panel {
+    order: 2;
+  }
+
+  .spotify-monitor {
+    order: 3;
+  }
+
+  .layout > *,
+  .layout .links-panel,
+  .layout .monitor-shell {
+    width: 100%;
+    max-width: none;
+  }
+
+  .links-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .link-card {
+    min-height: 166px;
+    padding: 10px 8px 10px;
+  }
+
+  .card-topline {
+    min-height: 42px;
+    font-size: 9.5px;
+    margin-bottom: 8px;
+  }
+
+  .portal-icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .link-tip {
+    font-size: 7px;
+  }
+
+  .monitor-label,
+  .section-badge,
+  .footer-note {
+    font-size: 7px;
+  }
+
+  .spotify-shell {
+    height: 200px;
+  }
+}
+</style>
+</head>
+<body>
+<section class="sr-only" aria-label="Waterlinks page description">
+  <h1>WATERLINKS</h1>
+  <p>A retro game style link hub with outbound portals to socials and streaming services, plus embedded YouTube and Spotify playlist players.</p>
+</section>
+
+<div class="wrapper">
+  <div class="panel">
+    <div class="title-wrap">
+      <a class="home-btn" href="index.html" aria-label="Back to home page">
+        <span class="home-btn-icon" aria-hidden="true"></span>
+        <span>HOME</span>
+      </a>
+      <div class="title">WATERLINKS<span>THIS HERE WINDOW IS WHERE WE PUT STUFF FOR OTHER PEOPLE TO SEE</span></div>
+    </div>
+
+    <main class="layout">
+      <section class="links-panel card-shell" aria-labelledby="portalHeading">
+        <div class="section-badge" id="portalHeading"><strong>PORTAL GRID</strong> — TREMBLE BEFORE OUR MIGHTY LINKS</div>
+        <div class="links-grid" id="linksGrid"></div>
+      </section>
+
+      <section class="media-stack" aria-label="Embedded players">
+        <div class="monitor-shell video-monitor">
+          <div class="monitor-label">
+            <span>VIDEO MODULE</span>
+            <span>YOUTUBE CHANNEL FEED</span>
+          </div>
+          <div class="screen-wrap video-shell">
+            <div class="embed-frame">
+              <iframe id="youtubePlayer" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="monitor-shell spotify-monitor">
+          <div class="monitor-label">
+            <span>SPOTIFY MODULE</span>
+            <span>LOADING...</span>
+          </div>
+          <div class="screen-wrap spotify-shell">
+            <div class="embed-frame">
+              <iframe id="spotifyPlayer" src="" title="Spotify player" style="border-radius:12px" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+</div>
+
+<script>
+const WATERLINKS_CONFIG = {
+  youtubeEmbed: 'https://www.youtube.com/embed/5mnIT-A-2ak?si=guegpDNngpoISJqn',
+  spotifyEmbed: 'https://open.spotify.com/embed/playlist/5854yv48rcrsVBZ1WLZj4t?utm_source=generator&theme=0',
+  links: [
+    {
+      key: 'mailing',
+      symbol: 'assets/symbols/apps/mailing.png',
+      label: 'Mailing List',
+      url: 'https://85d0045a92b811ef85b4615c104f7625.eo.page/waterlog?fbclid=PAZXh0bgNhZW0CMTEAAaZhbCG0HkiuOXKSgTVOQy_VhEm8D8c7YYKowwfkB2NOn21DngD-eOoKBxI_aem__iADSmVb9Lzl0V8a3LNW5w',
+      tip: 'join the list!'
+    },
+    {
+      key: 'bandcamp',
+      symbol: 'assets/symbols/apps/bandcamp.png',
+      label: 'Bandcamp',
+      url: 'https://waterl0g.bandcamp.com/album/and-so-we-settle-pt-1-ep',
+      tip: 'support the band!'
+    },
+    {
+      key: 'spotify',
+      symbol: 'assets/symbols/apps/Spotify.png',
+      label: 'Spotify',
+      url: 'https://open.spotify.com/artist/7nhy3rg9wkEvcsfN182Qxb?si=fMsi2ALdRM2BKecVQsexgA',
+      tip: 'Listen on spotify!'
+    },
+    {
+      key: 'tidal',
+      symbol: 'assets/symbols/apps/tidal.png',
+      label: 'Tidal',
+      url: 'https://tidal.com/artist/49880489/u',
+      tip: 'listen on tidal!'
+    },
+    {
+      key: 'apple',
+      symbol: 'assets/symbols/apps/apple.png',
+      label: 'Apple Music',
+      url: 'https://music.apple.com/gb/artist/waterlog/1763663634',
+      tip: 'listen on Apple!'
+    },
+    {
+      key: 'youtube',
+      symbol: 'assets/symbols/apps/Youtube.png',
+      label: 'YouTube',
+      url: 'https://www.youtube.com/watch?v=5mnIT-A-2ak',
+      tip: 'music videos!'
+    },
+    {
+      key: 'instagram',
+      symbol: 'assets/symbols/apps/Instagram.png',
+      label: 'Instagram',
+      url: 'https://www.instagram.com/waterlog_dom/',
+      tip: 'gaze upon our grid'
+    },
+    {
+      key: 'tiktok',
+      symbol: 'assets/symbols/apps/TikTok.png',
+      label: 'TikTok',
+      url: 'https://www.tiktok.com/@waterlog_dom',
+      tip: 'lil vids and stuff'
+    },
+    {
+      key: 'soundcloud',
+      symbol: 'assets/symbols/apps/SoundCloud.png',
+      label: 'SoundCloud',
+      url: 'https://soundcloud.com/waterlog-609187131',
+      tip: 'this still exists'
+    }
+  ]
+};
+
+const linksGrid = document.getElementById('linksGrid');
+const youtubePlayer = document.getElementById('youtubePlayer');
+const spotifyPlayer = document.getElementById('spotifyPlayer');
+
+function normalizeUrl(url, fallback = '#') {
+  return typeof url === 'string' && url.trim() ? url.trim() : fallback;
+}
+
+function renderLinks() {
+  linksGrid.innerHTML = '';
+
+  WATERLINKS_CONFIG.links.forEach((item) => {
+    const card = document.createElement('a');
+    const href = normalizeUrl(item.url);
+    const isPlaceholder = href === '#';
+
+    card.className = 'link-card';
+    card.dataset.service = item.key;
+    card.href = href;
+    card.setAttribute('aria-label', item.label + (isPlaceholder ? ' placeholder link' : ''));
+
+    if (!isPlaceholder) {
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+    }
+
+    card.innerHTML = `
+      <div class="card-topline">${item.label}</div>
+      <div class="portal-icon" aria-hidden="true">
+        <img class="portal-symbol" src="${item.symbol}" alt="" loading="lazy">
+      </div>
+      <div class="link-tip">${item.tip}</div>
+    `;
+
+    linksGrid.appendChild(card);
+  });
+}
+
+function loadEmbeds() {
+  youtubePlayer.src = normalizeUrl(WATERLINKS_CONFIG.youtubeEmbed, 'about:blank');
+  spotifyPlayer.src = normalizeUrl(WATERLINKS_CONFIG.spotifyEmbed, 'about:blank');
+}
+
+renderLinks();
+loadEmbeds();
+</script>
+</body>
+</html>
