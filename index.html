@@ -340,7 +340,7 @@
         <label class="settings-option" role="menuitemcheckbox" aria-checked="false">
           <input id="toggle-birds" type="checkbox">
           <span class="tick-box" aria-hidden="true"></span>
-          <span class="settings-option-text">CHANGE CLOUDS TO BIRDS</span>
+          <span class="settings-option-text">CHANGE CLOUDS TO "BIRDS"</span>
         </label>
         <label class="settings-option" role="menuitemcheckbox" aria-checked="false">
           <input id="toggle-night" type="checkbox">
@@ -368,12 +368,22 @@
 
   const cloudImages = ['assets/images/nube1.png', 'assets/images/nube2.png'];
   const birdImages = {
-    ltr: 'assets/images/bird1.png',
-    rtl: 'assets/images/bird2.png'
+    ltr: {
+      normal: 'assets/images/bird1.png',
+      temp: 'assets/images/bird1temp.png'
+    },
+    rtl: {
+      normal: 'assets/images/bird2.png',
+      temp: 'assets/images/bird2temp.png'
+    }
   };
 
   const BIRD_WIDTH = 72;
   const BIRD_HEIGHT_ESTIMATE = 42;
+  const FLAP_MIN_DELAY = 1000;
+  const FLAP_MAX_DELAY = 8000;
+  const FLAP_FRAME_DURATION = 300;
+  const DOUBLE_FLAP_CHANCE = 0.4;
 
   function setActive(index) {
     items.forEach((item, i) => {
@@ -501,7 +511,7 @@
 
     const bird = document.createElement('img');
     bird.className = 'bird';
-    bird.src = birdImages[direction];
+    bird.src = birdImages[direction].normal;
     bird.style.width = BIRD_WIDTH + 'px';
     bird.style.height = 'auto';
     bird.style.top = getSkyTop(BIRD_HEIGHT_ESTIMATE) + 'px';
@@ -516,16 +526,89 @@
 
     bird.style.left = fromX + 'px';
 
+    const stopFlapping = startBirdFlapping(bird, direction);
+
     const animation = bird.animate(
       [{ left: fromX + 'px' }, { left: endX + 'px' }],
       { duration, easing: 'linear', fill: 'forwards' }
     );
 
     animation.onfinish = () => {
+      if (typeof stopFlapping === 'function') {
+        stopFlapping();
+      }
       bird.remove();
       if (skyMode === 'birds') {
         scheduleTimeout(() => spawnBird(direction), Math.random() * 3500);
       }
+    };
+  }
+
+  function randomFlapDelay() {
+    return FLAP_MIN_DELAY + Math.random() * (FLAP_MAX_DELAY - FLAP_MIN_DELAY);
+  }
+
+  function startBirdFlapping(bird, direction) {
+    let flapTimeoutId = null;
+    let isRemoved = false;
+
+    const clearFlapTimer = () => {
+      if (flapTimeoutId !== null) {
+        window.clearTimeout(flapTimeoutId);
+        flapTimeoutId = null;
+      }
+    };
+
+    const restoreNormalSprite = () => {
+      if (!isRemoved && bird.isConnected) {
+        bird.src = birdImages[direction].normal;
+      }
+    };
+
+    const scheduleNextFlap = () => {
+      clearFlapTimer();
+
+      if (isRemoved || skyMode !== 'birds' || !bird.isConnected) {
+        return;
+      }
+
+      flapTimeoutId = window.setTimeout(runFlapCycle, randomFlapDelay());
+    };
+
+    const runFlapCycle = () => {
+      if (isRemoved || skyMode !== 'birds' || !bird.isConnected) {
+        return;
+      }
+
+      bird.src = birdImages[direction].temp;
+
+      window.setTimeout(() => {
+        restoreNormalSprite();
+
+        if (Math.random() < DOUBLE_FLAP_CHANCE) {
+          window.setTimeout(() => {
+            if (isRemoved || skyMode !== 'birds' || !bird.isConnected) {
+              return;
+            }
+
+            bird.src = birdImages[direction].temp;
+
+            window.setTimeout(() => {
+              restoreNormalSprite();
+              scheduleNextFlap();
+            }, FLAP_FRAME_DURATION);
+          }, 80);
+        } else {
+          scheduleNextFlap();
+        }
+      }, FLAP_FRAME_DURATION);
+    };
+
+    scheduleNextFlap();
+
+    return () => {
+      isRemoved = true;
+      clearFlapTimer();
     };
   }
 
