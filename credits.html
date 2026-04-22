@@ -817,6 +817,11 @@ knockSound.preload = "auto";
 
 let audioReady = false;
 let audioUnlockPromise = null;
+const isTouchLike = window.matchMedia("(pointer: coarse)").matches;
+const clickSoundPool = isTouchLike ? [clickSound, clickSound.cloneNode(), clickSound.cloneNode()] : [clickSound];
+const knockSoundPool = isTouchLike ? [knockSound, knockSound.cloneNode(), knockSound.cloneNode()] : [knockSound];
+let clickSoundPoolIndex = 0;
+let knockSoundPoolIndex = 0;
 
 function normalizeTypes(types = []) {
   return [...types].sort((a, b) => TYPE_PRIORITY.indexOf(a) - TYPE_PRIORITY.indexOf(b));
@@ -844,7 +849,7 @@ function unlockAudio() {
   if (audioUnlockPromise) return audioUnlockPromise;
 
   audioUnlockPromise = (async () => {
-    for (const sound of [clickSound, knockSound]) {
+    for (const sound of [...clickSoundPool, ...knockSoundPool]) {
       try {
         sound.muted = true;
         await sound.play();
@@ -873,11 +878,22 @@ function startPlayback(sound) {
   } catch (_) {}
 }
 
-function playSound(sound) {
+function getNextSoundInstance(kind) {
+  if (kind === "click") {
+    const sound = clickSoundPool[clickSoundPoolIndex % clickSoundPool.length];
+    clickSoundPoolIndex += 1;
+    return sound;
+  }
+
+  const sound = knockSoundPool[knockSoundPoolIndex % knockSoundPool.length];
+  knockSoundPoolIndex += 1;
+  return sound;
+}
+
+function playSound(kind) {
+  const sound = getNextSoundInstance(kind);
+
   if (!audioReady) {
-    unlockAudio().then(() => {
-      startPlayback(sound);
-    }).catch(() => {});
     return;
   }
 
@@ -885,11 +901,21 @@ function playSound(sound) {
 }
 
 function playClickSound() {
-  playSound(clickSound);
+  playSound("click");
 }
 
 function playKnockSound() {
-  playSound(knockSound);
+  playSound("knock");
+}
+
+function bindPressSound(element, handler) {
+  if (!element) return;
+
+  if (isTouchLike) {
+    element.addEventListener("click", handler);
+  } else {
+    element.addEventListener("pointerdown", handler);
+  }
 }
 
 function resetInfoPanel(message = "SELECT AN ALBUM") {
@@ -980,7 +1006,7 @@ function renderCredits(filter = "ALL") {
     card.appendChild(label);
     card.appendChild(art);
 
-    card.addEventListener("pointerdown", () => {
+    bindPressSound(card, () => {
       playClickSound();
     });
 
@@ -1015,12 +1041,12 @@ async function loadCredits() {
   }
 }
 
-document.addEventListener("pointerdown", () => {
+document.addEventListener(isTouchLike ? "touchstart" : "pointerdown", () => {
   unlockAudio().catch(() => {});
-}, { once: true, capture: true });
+}, { once: true, capture: true, passive: true });
 
 buttons.forEach(btn => {
-  btn.addEventListener("pointerdown", () => {
+  bindPressSound(btn, () => {
     playKnockSound();
   });
 
@@ -1032,7 +1058,7 @@ buttons.forEach(btn => {
 });
 
 if (homeBtn) {
-  homeBtn.addEventListener("pointerdown", () => {
+  bindPressSound(homeBtn, () => {
     playKnockSound();
   });
 
