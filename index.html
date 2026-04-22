@@ -25,8 +25,14 @@
   }
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+  font-family: 'Press Start 2P';
+  src: url('assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   .sr-only {
@@ -361,10 +367,28 @@
   const nightToggle = document.getElementById('toggle-night');
   const settingsOptions = document.querySelectorAll('.settings-option');
   const cloudLayer = document.getElementById('cloud-layer');
+  const knockSound = new Audio('assets/audio/knock.mp3');
 
   let currentIndex = 0;
   let skyMode = 'clouds';
   const pendingTimeouts = new Set();
+  const MENU_KNOCK_DELAY = 150;
+
+  knockSound.preload = 'auto';
+
+  function playKnockSound() {
+    knockSound.pause();
+    knockSound.currentTime = 0;
+
+    const playPromise = knockSound.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  }
+
+  function delayAction(callback, delay = MENU_KNOCK_DELAY) {
+    window.setTimeout(callback, delay);
+  }
 
   const cloudImages = ['assets/images/nube1.png', 'assets/images/nube2.png'];
   const birdImages = {
@@ -651,16 +675,36 @@
 
   items.forEach((item, index) => {
     item.addEventListener('mouseenter', () => setActive(index));
+
+    if (item.tagName === 'A') {
+      item.addEventListener('click', (event) => {
+        event.preventDefault();
+        playKnockSound();
+
+        const destination = item.href;
+        delayAction(() => {
+          window.location.href = destination;
+        });
+      });
+    }
+  });
+
+  settingsOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      playKnockSound();
+    });
   });
 
   settingsToggle.addEventListener('click', (event) => {
     event.preventDefault();
+    playKnockSound();
     toggleSettingsPanel();
   });
 
   settingsToggle.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
+      playKnockSound();
       toggleSettingsPanel();
     }
   });
