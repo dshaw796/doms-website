@@ -170,7 +170,7 @@ h1 {font-size:15px;margin:0;display:inline-block;padding-left:40px;text-shadow:0
   </div>
 </div>
 <div class="external-body">
-<iframe id="spotifyFrame"></iframe>
+<iframe id="spotifyFrame" src="about:blank" title="Spotify player"></iframe>
 </div>
 </div>
 
@@ -221,8 +221,31 @@ try {
 
 const discographyEl=document.getElementById("discography");
 const cursorEl=document.getElementById("cursor");
+const external=document.getElementById("external");
+const spotifyFrame=document.getElementById("spotifyFrame");
+const externalHeader=document.getElementById("externalHeader");
 let current=null;let currentEl=null;
 let audio=new Audio();
+
+function replaceFrameLocation(url){
+  try {
+    if (spotifyFrame.contentWindow && spotifyFrame.contentWindow.location) {
+      spotifyFrame.contentWindow.location.replace(url);
+      return;
+    }
+  } catch (e) {}
+  spotifyFrame.src = url;
+}
+
+function hideExternalModule(){
+  external.style.display = "none";
+  replaceFrameLocation("about:blank");
+}
+
+function showExternalModule(url){
+  replaceFrameLocation(url);
+  external.style.display = "block";
+}
 
 // Throttle: block repeated clicks within 500ms
 let lastClick = 0;
@@ -308,30 +331,23 @@ function selectAlbum(index,el){
   document.getElementById("screen").textContent="> LOADING...";
 
   setTimeout(()=>{
-    const external=document.getElementById("external");
-    const frame=document.getElementById("spotifyFrame");
-    const header=document.getElementById("externalHeader");
-
     if(current.audio){
       // Swap in the pre-loaded Audio object from cache
       audio = audioCache[current.audio];
       audio.pause();
       audio.currentTime = 0;
-      external.style.display="none";
-      frame.src="";
+      hideExternalModule();
       document.getElementById("screen").textContent="> LOADED "+current.title;
     } else if(current.spotify){
-      external.style.display="none";
-      frame.src="";
+      hideExternalModule();
       document.getElementById("screen").textContent="> NO LOCAL FILE";
 
       setTimeout(()=>{
         document.getElementById("screen").textContent="> CONNECTING...";
 
         setTimeout(()=>{
-          header.textContent="::EXTERNAL STREAM CONNECTED";
-          frame.src=current.spotify;
-          external.style.display="block";
+          externalHeader.textContent="::EXTERNAL STREAM CONNECTED";
+          showExternalModule(current.spotify);
         },400);
       },500);
     }
