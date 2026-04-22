@@ -530,7 +530,6 @@ iframe,
   }
 
   .links-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
@@ -692,6 +691,9 @@ const WATERLINKS_CONFIG = {
 const linksGrid = document.getElementById('linksGrid');
 const youtubePlayer = document.getElementById('youtubePlayer');
 const spotifyPlayer = document.getElementById('spotifyPlayer');
+const knockSound = new Audio('assets/audio/knock.mp3');
+knockSound.preload = 'auto';
+
 
 function normalizeUrl(url, fallback = '#') {
   return typeof url === 'string' && url.trim() ? url.trim() : fallback;
@@ -732,8 +734,48 @@ function loadEmbeds() {
   spotifyPlayer.src = normalizeUrl(WATERLINKS_CONFIG.spotifyEmbed, 'about:blank');
 }
 
+function playKnockAndNavigate(card, event) {
+  const href = card.getAttribute('href');
+
+  if (!href || href === '#') {
+    return;
+  }
+
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  event.preventDefault();
+
+  knockSound.currentTime = 0;
+  const playPromise = knockSound.play();
+
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {});
+  }
+
+  const newWindow = window.open(href, '_blank');
+
+  if (newWindow) {
+    newWindow.opener = null;
+  }
+}
+
+function bindKnockNavigation() {
+  linksGrid.addEventListener('click', (event) => {
+    const card = event.target.closest('.link-card');
+
+    if (!card || !linksGrid.contains(card)) {
+      return;
+    }
+
+    playKnockAndNavigate(card, event);
+  });
+}
+
 renderLinks();
 loadEmbeds();
+bindKnockNavigation();
 </script>
 </body>
 </html>
