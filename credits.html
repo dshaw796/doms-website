@@ -811,17 +811,18 @@ const buttons = document.querySelectorAll(".category-btn");
 const homeBtn = document.querySelector(".home-btn");
 const clickSound = new Audio("assets/audio/slide.mp3");
 const knockSound = new Audio("assets/audio/knock.mp3");
+const isTouchLike = window.matchMedia("(hover: none) and (pointer: coarse)").matches || navigator.maxTouchPoints > 0;
 
 clickSound.preload = "auto";
 knockSound.preload = "auto";
 
 let audioReady = false;
 let audioUnlockPromise = null;
-const isTouchLike = window.matchMedia("(pointer: coarse)").matches;
-const clickSoundPool = isTouchLike ? [clickSound, clickSound.cloneNode(), clickSound.cloneNode()] : [clickSound];
-const knockSoundPool = isTouchLike ? [knockSound, knockSound.cloneNode(), knockSound.cloneNode()] : [knockSound];
-let clickSoundPoolIndex = 0;
-let knockSoundPoolIndex = 0;
+let mobileAudioContext = null;
+let mobileAudioBuffers = { click: null, knock: null };
+let mobileAudioLoadPromise = null;
+let mobileAudioUnlockPromise = null;
+let mobileAudioReady = false;
 
 function normalizeTypes(types = []) {
   return [...types].sort((a, b) => TYPE_PRIORITY.indexOf(a) - TYPE_PRIORITY.indexOf(b));
@@ -844,12 +845,79 @@ function isSameCredit(a, b) {
   return a.name === b.name && a.artist === b.artist && a.year === b.year;
 }
 
-function unlockAudio() {
+function createMobileAudioContext() {
+  if (mobileAudioContext) return mobileAudioContext;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return null;
+  try {
+    mobileAudioContext = new AudioContextClass();
+  } catch (_) {
+    mobileAudioContext = null;
+  }
+  return mobileAudioContext;
+}
+
+function getSoundCandidates(src) {
+  return src.toLowerCase().endsWith(".mp3")
+    ? [src.replace(/\.mp3$/i, ".wav"), src]
+    : [src];
+}
+
+async function fetchFirstAvailable(candidates) {
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate, { cache: "force-cache" });
+      if (!response.ok) continue;
+      return await response.arrayBuffer();
+    } catch (_) {}
+  }
+  throw new Error("No playable sound file found");
+}
+
+function decodeAudioDataCompat(context, arrayBuffer) {
+  return new Promise((resolve, reject) => {
+    const inputBuffer = arrayBuffer.slice(0);
+    const maybePromise = context.decodeAudioData(inputBuffer, resolve, reject);
+    if (maybePromise && typeof maybePromise.then === "function") {
+      maybePromise.then(resolve).catch(reject);
+    }
+  });
+}
+
+async function loadMobileAudioBuffers() {
+  if (!isTouchLike) return;
+  if (mobileAudioLoadPromise) return mobileAudioLoadPromise;
+
+  mobileAudioLoadPromise = (async () => {
+    const context = createMobileAudioContext();
+    if (!context) return;
+
+    const assets = [
+      ["click", "assets/audio/slide.mp3"],
+      ["knock", "assets/audio/knock.mp3"]
+    ];
+
+    await Promise.all(
+      assets.map(async ([key, src]) => {
+        const data = await fetchFirstAvailable(getSoundCandidates(src));
+        mobileAudioBuffers[key] = await decodeAudioDataCompat(context, data);
+      })
+    );
+
+    mobileAudioReady = !!(mobileAudioBuffers.click && mobileAudioBuffers.knock);
+  })().catch(() => {
+    mobileAudioReady = false;
+  });
+
+  return mobileAudioLoadPromise;
+}
+
+async function unlockAudio() {
   if (audioReady) return Promise.resolve();
   if (audioUnlockPromise) return audioUnlockPromise;
 
   audioUnlockPromise = (async () => {
-    for (const sound of [...clickSoundPool, ...knockSoundPool]) {
+    for (const sound of [clickSound, knockSound]) {
       try {
         sound.muted = true;
         await sound.play();
@@ -867,6 +935,30 @@ function unlockAudio() {
   return audioUnlockPromise;
 }
 
+async function unlockMobileAudio() {
+  if (!isTouchLike) return;
+  if (mobileAudioReady && mobileAudioContext && mobileAudioContext.state === "running") return;
+  if (mobileAudioUnlockPromise) return mobileAudioUnlockPromise;
+
+  mobileAudioUnlockPromise = (async () => {
+    const context = createMobileAudioContext();
+    if (!context) return;
+
+    await loadMobileAudioBuffers().catch(() => {});
+    if (context.state !== "running") {
+      await context.resume().catch(() => {});
+    }
+
+    mobileAudioReady = !!(
+      mobileAudioBuffers.click &&
+      mobileAudioBuffers.knock &&
+      context.state === "running"
+    );
+  })();
+
+  return mobileAudioUnlockPromise;
+}
+
 function startPlayback(sound) {
   try {
     sound.pause();
@@ -878,22 +970,38 @@ function startPlayback(sound) {
   } catch (_) {}
 }
 
-function getNextSoundInstance(kind) {
-  if (kind === "click") {
-    const sound = clickSoundPool[clickSoundPoolIndex % clickSoundPool.length];
-    clickSoundPoolIndex += 1;
-    return sound;
+function playMobileSound(kind) {
+  const context = createMobileAudioContext();
+  const buffer = mobileAudioBuffers[kind];
+  if (!context || !buffer || context.state !== "running") {
+    return false;
   }
 
-  const sound = knockSoundPool[knockSoundPoolIndex % knockSoundPool.length];
-  knockSoundPoolIndex += 1;
-  return sound;
+  try {
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
-function playSound(kind) {
-  const sound = getNextSoundInstance(kind);
+function playSound(sound, kind) {
+  if (isTouchLike) {
+    if (playMobileSound(kind)) {
+      return;
+    }
+
+    unlockMobileAudio().catch(() => {});
+    return;
+  }
 
   if (!audioReady) {
+    unlockAudio().then(() => {
+      startPlayback(sound);
+    }).catch(() => {});
     return;
   }
 
@@ -901,21 +1009,22 @@ function playSound(kind) {
 }
 
 function playClickSound() {
-  playSound("click");
+  playSound(clickSound, "click");
 }
 
 function playKnockSound() {
-  playSound("knock");
+  playSound(knockSound, "knock");
 }
 
-function bindPressSound(element, handler) {
+function bindSoundTrigger(element, handler) {
   if (!element) return;
 
   if (isTouchLike) {
     element.addEventListener("click", handler);
-  } else {
-    element.addEventListener("pointerdown", handler);
+    return;
   }
+
+  element.addEventListener("pointerdown", handler);
 }
 
 function resetInfoPanel(message = "SELECT AN ALBUM") {
@@ -1006,7 +1115,7 @@ function renderCredits(filter = "ALL") {
     card.appendChild(label);
     card.appendChild(art);
 
-    bindPressSound(card, () => {
+    bindSoundTrigger(card, () => {
       playClickSound();
     });
 
@@ -1041,12 +1150,21 @@ async function loadCredits() {
   }
 }
 
+if (isTouchLike) {
+  loadMobileAudioBuffers().catch(() => {});
+}
+
 document.addEventListener(isTouchLike ? "touchstart" : "pointerdown", () => {
+  if (isTouchLike) {
+    unlockMobileAudio().catch(() => {});
+    return;
+  }
+
   unlockAudio().catch(() => {});
-}, { once: true, capture: true, passive: true });
+}, { once: true, capture: true, passive: isTouchLike });
 
 buttons.forEach(btn => {
-  bindPressSound(btn, () => {
+  bindSoundTrigger(btn, () => {
     playKnockSound();
   });
 
@@ -1058,7 +1176,7 @@ buttons.forEach(btn => {
 });
 
 if (homeBtn) {
-  bindPressSound(homeBtn, () => {
+  bindSoundTrigger(homeBtn, () => {
     playKnockSound();
   });
 
