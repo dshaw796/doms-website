@@ -281,7 +281,7 @@ body {
 
 .info-header {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) 92px;
   gap: 10px;
   align-items: stretch;
   margin-bottom: 10px;
@@ -303,10 +303,12 @@ body {
   line-height: 1.4;
   font-size: 11px;
   letter-spacing: 0.3px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .power-box {
-  min-width: 92px;
+  min-width: 0;
   width: 92px;
   background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
   color: #414854;
