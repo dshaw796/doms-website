@@ -335,7 +335,7 @@ body {
 }
 
 .power-value {
-  font-size: 12px;
+  font-size: 10.5px;
   line-height: 1;
 }
 
@@ -708,7 +708,7 @@ body {
   }
 
   .info-card.detail-layout .power-value {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .info-card.detail-layout .info-art {
@@ -844,6 +844,17 @@ function getCardBackground(credit) {
 function isSameCredit(a, b) {
   if (!a || !b) return false;
   return a.name === b.name && a.artist === b.artist && a.year === b.year;
+}
+
+function getVisibleCredits(filter = currentFilter) {
+  return filter === "ALL"
+    ? credits
+    : credits.filter(c => (c.types || []).includes(filter));
+}
+
+function getCreditIndexLabel(credit, visibleCredits = getVisibleCredits()) {
+  const index = visibleCredits.findIndex(c => isSameCredit(c, credit));
+  return index >= 0 ? String(index + 1).padStart(3, "0") : "000";
 }
 
 function createMobileAudioContext() {
@@ -1058,7 +1069,7 @@ function showInfo(credit) {
           <div class="nameplate">${credit.name}</div>
           <div class="power-box">
             <div class="power-symbols">${symbolMarkup}</div>
-            <div class="power-value">${credit.power || "88"}</div>
+            <div class="power-value">${getCreditIndexLabel(credit)}</div>
           </div>
         </div>
         <div class="info-art ${shinyClass}" style="background:${artBg};">
@@ -1079,9 +1090,7 @@ function renderCredits(filter = "ALL") {
   currentFilter = filter;
   grid.innerHTML = "";
 
-  const filtered = filter === "ALL"
-    ? credits
-    : credits.filter(c => (c.types || []).includes(filter));
+  const filtered = getVisibleCredits(filter);
 
   if (!filtered.length) {
     grid.innerHTML = '<div class="status">NO CREDITS FOUND</div>';
