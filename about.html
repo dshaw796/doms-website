@@ -1144,10 +1144,39 @@ body {
 <script>
 const DATA_PATH = 'assets/data/about-dialogue.json';
 const WIZARD_PATH = 'assets/images/wizard.png';
+const KNOCK_SOUND_PATH = 'assets/audio/knock.mp3';
 
 const storyBoard = document.getElementById('storyBoard');
 const storyStack = document.getElementById('storyStack');
 const mobileLayoutQuery = window.matchMedia('(max-width: 768px)');
+const knockSound = new Audio(KNOCK_SOUND_PATH);
+knockSound.preload = 'auto';
+
+function playKnockSound() {
+  const sound = knockSound.cloneNode();
+  sound.currentTime = 0;
+  sound.volume = 0.85;
+
+  const playPromise = sound.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {});
+  }
+
+  return playPromise;
+}
+
+function followLinkAfterKnock(event, link) {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  event.preventDefault();
+  playKnockSound();
+
+  window.setTimeout(() => {
+    window.location.href = link.href;
+  }, 140);
+}
 
 const state = {
   speeches: [],
@@ -1639,6 +1668,9 @@ function createSummaryCard(speech, speechIndex) {
     link.className = 'summary-card-link';
     link.href = speechIndex === 0 ? 'credits.html' : 'waterlinks.html';
     link.textContent = speechIndex === 0 ? 'CREDITS >' : 'WATERLOG >';
+    link.addEventListener('click', (event) => {
+      followLinkAfterKnock(event, link);
+    });
     body.appendChild(link);
   }
 
@@ -1746,9 +1778,19 @@ async function loadStory() {
   }
 }
 
+document.addEventListener('click', (event) => {
+  if (event.target.closest('.summary-card-link')) return;
+
+  const pressedControl = event.target.closest('button, a, [role="button"]');
+  if (!pressedControl) return;
+
+  playKnockSound();
+}, true);
+
 storyBoard.addEventListener('click', (event) => {
   if (state.view !== 'story') return;
   if (event.target.closest('.home-btn, button, a')) return;
+  playKnockSound();
   advanceDialogue();
 });
 
@@ -1756,6 +1798,7 @@ window.addEventListener('keydown', (event) => {
   if (state.view !== 'story') return;
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
+    playKnockSound();
     advanceDialogue();
   }
 });
