@@ -182,6 +182,188 @@ body {
   gap: 14px;
 }
 
+.story-board.summary-mode {
+  cursor: default;
+}
+
+.story-board.story-mode {
+  cursor: pointer;
+}
+
+.summary-view {
+  display: grid;
+  gap: 14px;
+}
+
+.summary-hero,
+.summary-card {
+  border: 3px solid var(--border);
+  box-shadow: inset 0 -3px rgba(0,0,0,0.18), 3px 3px #000;
+  background: rgba(255, 250, 229, 0.92);
+}
+
+.summary-hero {
+  padding: 12px 14px;
+  color: #3e3d3b;
+  background: rgba(255, 250, 229, 0.84);
+}
+
+.summary-kicker {
+  margin-bottom: 6px;
+  font-size: 7px;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  color: #8c3b2a;
+}
+
+.summary-title {
+  margin-bottom: 0;
+  font-size: clamp(12px, 2.2vw, 16px);
+  line-height: 1.25;
+  color: #083c3c;
+  text-shadow: 1px 1px rgba(255,255,255,0.45);
+}
+
+.summary-intro,
+.summary-text,
+.summary-note {
+  font-family: 'fondamento', Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: #3e3d3b;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.summary-card {
+  display: flex;
+  min-width: 0;
+  min-height: 390px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.summary-card--image-bottom {
+  flex-direction: column-reverse;
+}
+
+.summary-card--image-bottom .summary-card-media {
+  aspect-ratio: 16 / 9;
+  border-top: 3px solid var(--border);
+  border-bottom: none;
+}
+
+.summary-card-media {
+  position: relative;
+  aspect-ratio: var(--image-aspect-ratio);
+  border-bottom: 3px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(240,180,60,0.45) 0%, rgba(58,134,255,0.32) 100%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0 10px, rgba(0,0,0,0.08) 10px 20px);
+}
+
+.summary-card-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.summary-card-body {
+  display: flex;
+  flex: 1;
+  text-align: center;
+  min-height: 0;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+}
+
+.summary-card-title {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 4px 6px;
+  border: 1px solid rgba(55, 87, 145, 0.4);
+  background: rgba(121, 162, 232, 0.12);
+  font-size: 7px;
+  line-height: 1.4;
+  letter-spacing: 0.25px;
+  color: #4d6291;
+}
+
+.summary-text {
+  font-size: 19px;
+}
+
+.summary-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  min-height: 32px;
+  margin-top: auto;
+  padding: 8px 10px;
+  color: #414854;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  background: linear-gradient(180deg, var(--silver-1) 0%, var(--silver-2) 45%, var(--silver-3) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.55), inset 0 -2px rgba(0,0,0,0.12), 2px 2px var(--bubble-shadow);
+  font-size: 7px;
+  line-height: 1.35;
+  letter-spacing: 0.35px;
+}
+
+.summary-card-link:hover {
+  transform: translateY(-1px);
+}
+
+.summary-card-link:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px rgba(255,255,255,0.45), inset 0 -2px rgba(0,0,0,0.16), 1px 1px var(--bubble-shadow);
+}
+
+.summary-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0 0;
+  background: transparent;
+}
+
+.story-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  max-width: min(100%, 520px);
+  padding: 13px 18px;
+  color: #3d2c13;
+  border: 3px solid var(--panel-deep);
+  background: linear-gradient(180deg, #fff7d6 0%, var(--accent) 48%, var(--accent-2) 100%);
+  box-shadow: inset 0 2px rgba(255,255,255,0.6), inset 0 -3px rgba(0,0,0,0.16), 3px 3px var(--bubble-shadow);
+  font-size: 8px;
+  line-height: 1.45;
+  letter-spacing: 0.4px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.story-start-btn:hover {
+  transform: translateY(-1px);
+}
+
+.story-start-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px rgba(255,255,255,0.45), inset 0 -2px rgba(0,0,0,0.16), 1px 1px var(--bubble-shadow);
+}
+
 .story-stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -629,6 +811,36 @@ body {
 }
 
 @media (max-width: 860px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: minmax(160px, 0.72fr) minmax(0, 1fr);
+  }
+
+  .summary-card--image-bottom {
+    flex-direction: column;
+  }
+
+  .summary-card-media,
+  .summary-card--image-bottom .summary-card-media {
+    aspect-ratio: var(--image-aspect-ratio);
+    border-top: none;
+    border-right: 3px solid var(--border);
+    border-bottom: none;
+  }
+
+  .summary-action {
+    grid-template-columns: 1fr;
+  }
+
+  .story-start-btn {
+    justify-self: center;
+  }
+
   .wrapper {
     max-width: 760px;
     margin: 18px auto;
@@ -707,6 +919,58 @@ body {
   .story-board {
     padding: 8px;
     min-height: var(--mobile-stage-height);
+  }
+
+  .story-board.summary-mode {
+    min-height: auto;
+  }
+
+  .summary-hero,
+  .summary-action {
+    padding: 14px;
+  }
+
+  .summary-title {
+    font-size: 18px;
+  }
+
+  .summary-intro,
+  .summary-note {
+    font-size: 18px;
+  }
+
+  .summary-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .summary-card--image-bottom {
+    flex-direction: column;
+  }
+
+  .summary-card-media,
+  .summary-card--image-bottom .summary-card-media {
+    aspect-ratio: var(--image-aspect-ratio);
+    border-top: none;
+    border-right: none;
+    border-bottom: 3px solid var(--border);
+  }
+
+  .summary-text {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .summary-card-link {
+    width: 100%;
+    font-size: 9px;
+    align-self: stretch;
+  }
+
+  .story-start-btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 10px;
   }
 
   .story-stack {
@@ -869,7 +1133,7 @@ body {
         </a>
       </div>
 
-      <main class="story-board" id="storyBoard" aria-live="polite">
+      <main class="story-board summary-mode" id="storyBoard" aria-live="polite" tabindex="-1">
         <div class="story-stack" id="storyStack">
           <div class="loading-card">LOADING THE WIZARD...</div>
         </div>
@@ -895,7 +1159,8 @@ const state = {
   rows: [],
   isReady: false,
   hasEnded: false,
-  isTransitioning: false
+  isTransitioning: false,
+  view: 'summary'
 };
 
 function syncSpeechBubbleTail(row) {
@@ -1321,6 +1586,145 @@ async function advanceDialogue() {
   addEndCard();
 }
 
+function createSummaryImageFallback(label) {
+  const fallback = document.createElement('div');
+  fallback.className = 'fallback-art';
+  fallback.textContent = label || 'ABOUT IMAGE';
+  return fallback;
+}
+
+function getSummaryText(speech) {
+  if (speech && typeof speech.summary === 'string' && speech.summary.trim()) {
+    return speech.summary.trim();
+  }
+
+  const firstParagraph = speech?.paragraphs?.[0];
+  const fallbackText = firstParagraph?.plainText || '';
+  const firstSentence = fallbackText.split(/\.\.\.|[.!?]/).find((part) => part.trim());
+  return firstSentence ? `${firstSentence.trim()}...` : 'A chapter from the wizard\'s tale awaits.';
+}
+
+function createSummaryCard(speech, speechIndex) {
+  const card = document.createElement('article');
+  card.className = speechIndex === 1 ? 'summary-card summary-card--image-bottom' : 'summary-card';
+
+  const media = document.createElement('div');
+  media.className = 'summary-card-media';
+
+  const image = new Image();
+  image.src = speech.image || '';
+  image.alt = speech.imageAlt || `${speech.imageLabel || 'About'} image`;
+  image.loading = 'lazy';
+  image.addEventListener('error', () => {
+    media.innerHTML = '';
+    media.appendChild(createSummaryImageFallback(speech.imageLabel));
+  }, { once: true });
+  media.appendChild(image);
+
+  const body = document.createElement('div');
+  body.className = 'summary-card-body';
+
+  const title = document.createElement('h2');
+  title.className = 'summary-card-title';
+  title.textContent = `CHAPTER ${speechIndex + 1}: ${speech.imageLabel || 'ABOUT'}`;
+
+  const text = document.createElement('p');
+  text.className = 'summary-text';
+  text.textContent = getSummaryText(speech);
+
+  body.append(title, text);
+
+  if (speechIndex === 0 || speechIndex === 2) {
+    const link = document.createElement('a');
+    link.className = 'summary-card-link';
+    link.href = speechIndex === 0 ? 'credits.html' : 'waterlinks.html';
+    link.textContent = speechIndex === 0 ? 'CREDITS >' : 'WATERLOG >';
+    body.appendChild(link);
+  }
+
+  card.append(media, body);
+  return card;
+}
+
+function renderSummaryView() {
+  state.view = 'summary';
+  state.isReady = true;
+  state.hasEnded = false;
+  state.isTransitioning = false;
+  state.currentSpeechIndex = 0;
+  state.currentParagraphIndex = 0;
+  state.rows = [];
+  if (state.typingFrame) {
+    clearTimeout(state.typingFrame);
+    state.typingFrame = null;
+  }
+  state.isTyping = false;
+
+  storyBoard.classList.add('summary-mode');
+  storyBoard.classList.remove('story-mode');
+  storyStack.innerHTML = '';
+
+  const summaryView = document.createElement('section');
+  summaryView.className = 'summary-view';
+  summaryView.setAttribute('aria-labelledby', 'summaryTitle');
+
+  const hero = document.createElement('header');
+  hero.className = 'summary-hero';
+  hero.innerHTML = `
+    <div class="summary-kicker">>>></div>
+    <h1 class="summary-title" id="summaryTitle">DOM SHAW</h1>
+    <p class="summary-intro">Grammy Award-Winning Engineer, Producer, Mixer & Songwriter</p>
+  `;
+
+  const grid = document.createElement('div');
+  grid.className = 'summary-grid';
+  state.speeches.forEach((speech, index) => {
+    grid.appendChild(createSummaryCard(speech, index));
+  });
+
+  const action = document.createElement('div');
+  action.className = 'summary-action';
+
+  const startButton = document.createElement('button');
+  startButton.className = 'story-start-btn';
+  startButton.type = 'button';
+  startButton.textContent = 'HEAR THE EXTENDED TALE >';
+  startButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    startFullStory();
+  });
+
+  action.append(startButton);
+  summaryView.append(hero, grid, action);
+  storyStack.appendChild(summaryView);
+}
+
+function startFullStory() {
+  if (!state.speeches.length) return;
+
+  if (state.typingFrame) {
+    clearTimeout(state.typingFrame);
+    state.typingFrame = null;
+  }
+
+  state.view = 'story';
+  state.currentSpeechIndex = 0;
+  state.currentParagraphIndex = 0;
+  state.isTyping = false;
+  state.typedText = '';
+  state.rows = [];
+  state.hasEnded = false;
+  state.isTransitioning = false;
+  state.isReady = true;
+
+  storyBoard.classList.remove('summary-mode');
+  storyBoard.classList.add('story-mode');
+  storyStack.innerHTML = '';
+  createStage(state.speeches[0], 0);
+  typeParagraph(0, 0);
+  storyBoard.focus({ preventScroll: true });
+}
+
 async function loadStory() {
   try {
     const response = await fetch(DATA_PATH);
@@ -1335,9 +1739,7 @@ async function loadStory() {
       return;
     }
 
-    state.isReady = true;
-    createStage(state.speeches[0], 0);
-    typeParagraph(0, 0);
+    renderSummaryView();
   } catch (error) {
     console.error('Failed to load about dialogue:', error);
     storyStack.innerHTML = '<div class="error-card">FAILED TO LOAD THE WIZARD SCRIPT.</div>';
@@ -1345,11 +1747,13 @@ async function loadStory() {
 }
 
 storyBoard.addEventListener('click', (event) => {
-  if (event.target.closest('.home-btn')) return;
+  if (state.view !== 'story') return;
+  if (event.target.closest('.home-btn, button, a')) return;
   advanceDialogue();
 });
 
 window.addEventListener('keydown', (event) => {
+  if (state.view !== 'story') return;
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
     advanceDialogue();

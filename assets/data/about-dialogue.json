@@ -14,7 +14,8 @@
       ],
       "image": "assets/images/about-rw.png",
       "imageAlt": "Real World Image",
-      "imageLabel": "REAL WORLD"
+      "imageLabel": "REAL WORLD STUDIOS",
+      "summary": "In-House Engineer at Real World Studios from 2019-2023."
     },
     {
       "paragraphs": [
@@ -30,7 +31,8 @@
       ],
       "image": "assets/images/about-live.png",
       "imageAlt": "Live Image",
-      "imageLabel": "LIVE"
+      "imageLabel": "BACKLINE TECHNICIAN",
+      "summary": "Backline for Snow Patrol, Peter Gabriel and Birdy."
     },
     {
       "paragraphs": [
@@ -43,7 +45,8 @@
       ],
       "image": "assets/images/about-wlog.png",
       "imageAlt": "Waterlog Image",
-      "imageLabel": "IMAGE THREE"
+      "imageLabel": "WATERLOG",
+      "summary": "Frontman and principle songwriter for the band Waterlog."
     }
   ]
 }
