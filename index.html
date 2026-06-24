@@ -125,6 +125,25 @@
     margin-bottom: clamp(15px, 2vh, 30px);
   }
 
+  #kfsh-link {
+    display: block;
+    margin-bottom: clamp(10px, 1.5vh, 20px);
+  }
+
+  #kfsh-logo {
+    display: block;
+    max-width: min(50vw, 260px);
+    width: auto;
+    image-rendering: pixelated;
+    filter: invert(1);
+    transition: filter 0.15s ease;
+  }
+
+  #kfsh-link:hover #kfsh-logo,
+  #kfsh-link:focus-visible #kfsh-logo {
+    animation: kfsh-blink-yellow 0.2s step-start infinite;
+  }
+
   #menu {
     display: flex;
     flex-direction: column;
@@ -309,6 +328,15 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+
+  @keyframes kfsh-blink-yellow {
+    0%, 100% {
+      filter: invert(1);
+    }
+    50% {
+      filter: invert(1) sepia(1) saturate(8) hue-rotate(2deg) brightness(1.05);
+    }
+  }
 </style>
 </head>
 <body>
@@ -323,6 +351,10 @@
     <p>Dom Shaw is a Grammy Award-winning engineer, a music producer, songwriter and multi-instrumentalist frontman of Waterlog.</p>
   </section>
   <div id="title-spacer" aria-hidden="true"></div>
+  
+  <a id="kfsh-link" href="waterlinks.html" aria-label="Waterlinks">
+    <img id="kfsh-logo" src="assets/images/kfsh.png" alt="">
+  </a>
   
   <img id="main-title" src="assets/images/maintitle.png" alt="Dom Shaw">
 
