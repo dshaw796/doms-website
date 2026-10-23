@@ -1,5 +1,42 @@
 [
   {
+    "name": "O/I",
+    "artist": "PETER GABRIEL",
+    "year": "2026",
+    "role": "ENGINEER / CHOIR ARRANGEMENT",
+    "types": [
+      "ENGINEERING"
+    ],
+    "tracks": "ALL (ENG.), 3 (ARR.)",
+    "power": "90",
+    "image": "assets/images/oi.png"
+  },
+  {
+    "name": "HARBOUR",
+    "artist": "FAYE DOLLE",
+    "year": "2026",
+    "role": "ENGINEER / PERFORMER",
+    "types": [
+      "ENGINEERING",
+      "PERFORMING"
+    ],
+    "tracks": "3,4",
+    "power": "78",
+    "image": "assets/images/harb.png"
+  },
+  {
+    "name": "SHE'S THE BEST",
+    "artist": "TROYE SIVAN",
+    "year": "2026",
+    "role": "ASSISTANT ENGINEER",
+    "types": [
+      "ASST. ENG"
+    ],
+    "tracks": "4,5,10",
+    "power": "77",
+    "image": "assets/images/stb.png"
+  },
+  {
     "name": "AND SO WE SETTLE, PT. 2",
     "artist": "WATERLOG",
     "year": "2025",
@@ -16,7 +53,7 @@
   {
     "name": "I/O",
     "artist": "PETER GABRIEL",
-    "year": "2024",
+    "year": "2023",
     "role": "ENGINEER / CHOIR ARRANGEMENT",
     "types": [
       "ENGINEERING"
